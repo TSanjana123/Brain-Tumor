@@ -65,13 +65,8 @@ function Home() {
           </div>
         </div>
 
-        <div className="card">
-          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" alt="Card Image 3" className="card-image" />
-          <div className="card-body">
-            <h3 className="card-title">Research and Development</h3>
-            <p className="card-description">We focus on continuous research to improve prediction accuracy and treatment options.</p>
-          </div>
-        </div>
+        
+        
       </div>
       <h1>Brain Tumor Prediction</h1>
       <hr/>
