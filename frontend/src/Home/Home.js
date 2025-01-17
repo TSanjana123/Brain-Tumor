@@ -144,15 +144,15 @@ function Home() {
       <div className="contact-section">
         <div className="contact-details">
           <h2>Contact Us</h2>
-          <p><strong>Email:</strong> sanjanathumpally@gmail.com</p>
-          <p><strong>Phone:</strong> +19 812 549 9990</p>
-          <p><strong>Address:</strong> langar house ki vachi trident school opposit la sanjana nilayam ani untadi</p>
+          <p><strong>Email:</strong> braintumor@gmail.com</p>
+          <p><strong>Phone:</strong> +19 812 80 99700</p>
+          <p><strong>Address:</strong>9/898/9097 pune </p>
         </div>
 
         <div className="useful-links">
           <h3>Useful Links</h3>
           <ul>
-            <li><a href="https://www.instagram.com/sanjana__215/?utm_source=ig_web_button_share_sheet">instagram</a></li>
+          
             <li><a href="/services">Our Services</a></li>
             <li><a href="/research">Research and Development</a></li>
             <li><a href="/contact">Contact Us</a></li>
