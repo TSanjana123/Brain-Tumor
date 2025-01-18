@@ -6,6 +6,8 @@ import Home from './Home/Home'; // Import pages (create these in the next steps)
 // import About from './pages/About';
 // import Services from './pages/Services';
 // import Contact from './pages/Contact';
+import Signup from './Signup/Signup';
+import Login from './Login/Login';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/Signup" element={<Signup />} />
+            <Route path="/Login" element={<Login />} />
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/services" element={<Services />} /> */}
             {/* <Route path="/contact" element={<Contact />} /> */}

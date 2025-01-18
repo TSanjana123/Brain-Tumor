@@ -18,6 +18,12 @@ function Navbar() {
           <li className="navbar-item">
             <Link to="/contact" className="navbar-link">Contact</Link>
           </li>
+          <li className="navbar-item">
+            <Link to="/Signup" className="navbar-link">Signup</Link>
+          </li>
+          <li className="navbar-item">
+            <Link to="/Login" className="navbar-link">Login</Link>
+          </li>
         </ul>
       </div>
     </nav>
