@@ -8,6 +8,7 @@ import Home from './Home/Home'; // Import pages (create these in the next steps)
 // import Contact from './pages/Contact';
 import Signup from './Signup/Signup';
 import Login from './Login/Login';
+import Predict from './Predict/Predict';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/Predict" element={<Predict />} />
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/services" element={<Services />} /> */}
             {/* <Route path="/contact" element={<Contact />} /> */}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css'
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -8,7 +9,7 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -24,6 +25,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token); // Store the JWT token
       setSuccessMessage('Login successful!');
       setError('');
+      navigate('/Predict');
     } catch (err) {
       setError('Invalid email or password');
       setSuccessMessage('');

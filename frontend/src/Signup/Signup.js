@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Signup.css';
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -41,9 +41,21 @@ const Signup = () => {
     setError('');
     try {
       const response = await axios.post('http://localhost:5001/api/signup', formData);
-      setSuccessMessage(response.data.message);
+
+      // Check if the response has data
+      if (response && response.data) {
+        setSuccessMessage(response.data.message); // Display success message from response
+      } else {
+        setError('Unknown error occurred');
+      }
     } catch (err) {
-      setError(err.response.data.message);
+      console.error(err); // Log the error to the console
+      // Check if there's a response from the server
+      if (err.response) {
+        setError(err.response.data.message || 'An error occurred');
+      } else {
+        setError('An unexpected error occurred');
+      }
     }
   };
 

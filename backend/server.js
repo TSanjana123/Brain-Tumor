@@ -3,13 +3,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cors = require('cors'); // Import CORS
 const User = require('./models/User');
 
 const app = express();
+
+// Enable CORS for all origins (you can customize this later)
+app.use(cors());
+
+// Middleware to parse JSON bodies
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
+// mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -60,27 +67,32 @@ app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log('Login request received:', req.body);  // Log the incoming request data
+
     // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
+      console.log('User not found');  // Log when user is not found
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     // Check if the password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log('Incorrect password');  // Log when password does not match
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     // Create a JWT token
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+    // const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id, role: user.role }, "4fX9@pZ1j3gPl3Xx8G#qT!91&nAkxZ7s", {
       expiresIn: '1h',
     });
 
     // Send the token in the response
     res.status(200).json({ token });
   } catch (err) {
-    console.error(err);
+    console.error('Error during login:', err);  // Log the error if something goes wrong
     res.status(500).json({ message: 'Server error' });
   }
 });
