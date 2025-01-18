@@ -60,70 +60,109 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          required
-        />
-        <select name="role" onChange={handleRoleChange} value={formData.role} required>
-          <option value="">Select Role</option>
-          <option value="patient">Patient</option>
-          <option value="medicalStaff">Medical Staff</option>
-        </select>
-        {formData.role === 'patient' && (
-          <input
-            type="text"
-            name="patientId"
-            placeholder="Patient ID"
-            value={formData.patientId}
-            onChange={handleInputChange}
-            required
-          />
-        )}
-        {formData.role === 'medicalStaff' && (
-          <input
-            type="text"
-            name="organizationName"
-            placeholder="Organization Name"
-            value={formData.organizationName}
-            onChange={handleInputChange}
-            required
-          />
-        )}
-        <button type="submit">Sign Up</button>
-      </form>
+    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div className="card shadow-lg p-4 rounded" style={{ maxWidth: '500px', width: '100%' }}>
+        <h2 className="text-center mb-4">Sign Up</h2>
+
+        {error && <div className="alert alert-danger">{error}</div>}
+        {successMessage && <div className="alert alert-success">{successMessage}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              type="text"
+              name="name"
+              className="form-control"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="password"
+              name="confirmPassword"
+              className="form-control"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <select
+              name="role"
+              className="form-select"
+              onChange={handleRoleChange}
+              value={formData.role}
+              required
+            >
+              <option value="">Select Role</option>
+              <option value="patient">Patient</option>
+              <option value="medicalStaff">Medical Staff</option>
+            </select>
+          </div>
+
+          {formData.role === 'patient' && (
+            <div className="mb-3">
+              <input
+                type="text"
+                name="patientId"
+                className="form-control"
+                placeholder="Patient ID"
+                value={formData.patientId}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          )}
+
+          {formData.role === 'medicalStaff' && (
+            <div className="mb-3">
+              <input
+                type="text"
+                name="organizationName"
+                className="form-control"
+                placeholder="Organization Name"
+                value={formData.organizationName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          )}
+
+          <button type="submit" className="btn btn-primary w-100 mt-3">
+            Sign Up
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
