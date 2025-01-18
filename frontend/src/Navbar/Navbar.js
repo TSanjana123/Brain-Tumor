@@ -139,7 +139,15 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import logo from '../images/home.png';
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    // <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    // <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    // <nav className="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+    // <nav className="navbar navbar-expand-lg navbar-light bg-transparent shadow">
+    // <nav className="navbar navbar-expand-lg navbar-light bg-primary shadow-sm">
+    // <nav className="navbar navbar-expand-lg navbar-light bg-danger shadow-sm">
+    // <nav className="navbar navbar-expand-lg navbar-light" style={{background: "linear-gradient(45deg,rgb(124, 41, 34),rgb(54, 100, 75))"}}>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm" style={{borderBottom: "4px solid gold"}}>
+      
       <div className="container-fluid">
         {/* Replace Home text with an image */}
         <Link to="/" className="navbar-brand">
