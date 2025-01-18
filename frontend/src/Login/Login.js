@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import './Login.css';
-
+import axios from 'axios';
+import './Login.css'
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,54 +17,42 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Basic validation for email and password
-    if (!formData.email || !formData.password) {
-      setError('Please fill out both fields.');
-      return;
+    try {
+      const response = await axios.post('http://localhost:5001/api/login', formData);
+      localStorage.setItem('token', response.data.token); // Store the JWT token
+      setSuccessMessage('Login successful!');
+      setError('');
+    } catch (err) {
+      setError('Invalid email or password');
+      setSuccessMessage('');
     }
-
-    // Clear the error if validation passes
-    setError('');
-
-    // Add login logic here (e.g., API call)
-    console.log('Logging in with:', formData);
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit} className="login-form">
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-
-        <button type="submit" className="submit-btn">
-          Login
-        </button>
+    <div>
+      <h2>Login</h2>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleInputChange}
+          required
+        />
+        <button type="submit">Login</button>
       </form>
     </div>
   );

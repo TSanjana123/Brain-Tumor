@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Signup.css';
-
 const Signup = () => {
-  const [role, setRole] = useState('');
-  const [patientId, setPatientId] = useState('');
-  const [organizationName, setOrganizationName] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
+    role: '',
+    patientId: '',
+    organizationName: '',
   });
-  const [error, setError] = useState('');
 
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-  };
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,121 +23,94 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleRoleChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      role: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Check if password and confirm password match
+
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match!');
+      setError('Passwords do not match');
       return;
     }
 
-    // Reset error if passwords match
     setError('');
-
-    // Add form submission logic here (e.g., API call)
-    console.log(formData, role, patientId, organizationName);
+    try {
+      const response = await axios.post('http://localhost:5001/api/signup', formData);
+      setSuccessMessage(response.data.message);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
   };
 
   return (
-    <div className="signup-container">
-      <form onSubmit={handleSubmit} className="signup-form">
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
+    <div>
+      <h2>Signup</h2>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleInputChange}
+          required
+        />
+        <select name="role" onChange={handleRoleChange} value={formData.role} required>
+          <option value="">Select Role</option>
+          <option value="patient">Patient</option>
+          <option value="medicalStaff">Medical Staff</option>
+        </select>
+        {formData.role === 'patient' && (
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            name="patientId"
+            placeholder="Patient ID"
+            value={formData.patientId}
             onChange={handleInputChange}
             required
           />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-
-        <div className="form-group">
-          <label htmlFor="role">Role</label>
-          <select
-            id="role"
-            name="role"
-            value={role}
-            onChange={handleRoleChange}
-            required
-          >
-            <option value="">Select Role</option>
-            <option value="patient">Patient</option>
-            <option value="medicalStaff">Medical Staff</option>
-          </select>
-        </div>
-
-        {role === 'patient' && (
-          <div className="form-group">
-            <label htmlFor="patientId">Patient ID</label>
-            <input
-              type="text"
-              id="patientId"
-              name="patientId"
-              value={patientId}
-              onChange={(e) => setPatientId(e.target.value)}
-              required
-            />
-          </div>
         )}
-
-        {role === 'medicalStaff' && (
-          <div className="form-group">
-            <label htmlFor="organizationName">Organization Name</label>
-            <input
-              type="text"
-              id="organizationName"
-              name="organizationName"
-              value={organizationName}
-              onChange={(e) => setOrganizationName(e.target.value)}
-              required
-            />
-          </div>
+        {formData.role === 'medicalStaff' && (
+          <input
+            type="text"
+            name="organizationName"
+            placeholder="Organization Name"
+            value={formData.organizationName}
+            onChange={handleInputChange}
+            required
+          />
         )}
-
-        <button type="submit" className="submit-btn">
-          Submit
-        </button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
