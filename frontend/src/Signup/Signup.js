@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -11,7 +11,7 @@ const Signup = () => {
     patientId: '',
     organizationName: '',
   });
-
+  const navigate = useNavigate();
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -45,6 +45,7 @@ const Signup = () => {
       // Check if the response has data
       if (response && response.data) {
         setSuccessMessage(response.data.message); // Display success message from response
+        navigate('/Login');
       } else {
         setError('Unknown error occurred');
       }
@@ -126,7 +127,7 @@ const Signup = () => {
             >
               <option value="">Select Role</option>
               <option value="patient">Patient</option>
-              <option value="medicalStaff">Medical Staff</option>
+              <option value="medicalStaff">Organization</option>
             </select>
           </div>
 
@@ -159,7 +160,10 @@ const Signup = () => {
           )}
 
           <button type="submit" className="btn btn-primary w-100 mt-3">
-            Sign Up
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            </svg>
           </button>
         </form>
       </div>

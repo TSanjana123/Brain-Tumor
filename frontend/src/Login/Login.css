@@ -10,7 +10,7 @@
     background-color: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(35, 156, 47, 0.1);
     width: 400px;
     max-width: 100%;
   }
@@ -37,29 +37,39 @@
     width: 100%;
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #a72323;
     border-radius: 4px;
     outline: none;
   }
   
   input:focus {
-    border-color: #4a90e2;
+    border-color: #133357;
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
   }
   
   .submit-btn {
     width: 100%;
     padding: 10px;
-    background-color: #4a90e2;
-    color: #fff;
+    background-color: #001023;
+    color: #200101;
     font-size: 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
+  .btn-s{
+    width: 90%;
+    padding: 5px;
+    background-color: #2e2e2e;
+    color: #d1d1d1;
+    font-size: 15px;
+    border: none;
+    border-radius: 7px;
+    cursor: crosshair;
+  }
   
   .submit-btn:hover {
-    background-color: #357ab7;
+    background-color: #000000;
   }
   
   /* Error message styling */
