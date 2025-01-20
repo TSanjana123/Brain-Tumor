@@ -110,10 +110,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5001/api/login', formData);
-      const { token, role, patientId, organizationName } = response.data;
+      const { name, email, role, token, patientId, organizationName } = response.data;
 
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
+      localStorage.setItem('name',name);
+      localStorage.setItem('email',email);
+
       if (role === 'patient') {
         localStorage.setItem('patientId', patientId);
         navigate('/Patient');

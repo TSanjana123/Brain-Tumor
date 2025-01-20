@@ -91,8 +91,10 @@ app.post('/api/login', async (req, res) => {
 
     // Send the token in the response
     res.status(200).json({
-      token,
+      name: user.name,
+      email: user.email,
       role: user.role,
+      token,
       patientId: user.patientId,
       organizationName: user.organizationName,
     });
