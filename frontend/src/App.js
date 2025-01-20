@@ -10,6 +10,8 @@ import Signup from './Signup/Signup';
 import Login from './Login/Login';
 import Predict from './Predict/Predict';
 import Test from './Test_random/Test';
+import Patient from './Predict/Patient';
+import Organization from './Predict/Organization';
 
 function App() {
   return (
@@ -22,7 +24,9 @@ function App() {
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Predict" element={<Predict />} />
-            <Route path="/Test" element={<Test />} />
+            <Route path="/Patient" element={<Patient />} />
+            <Route path="/Organization" element={<Organization />} />
+
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/services" element={<Services />} /> */}
             {/* <Route path="/contact" element={<Contact />} /> */}

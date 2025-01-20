@@ -90,7 +90,13 @@ app.post('/api/login', async (req, res) => {
     });
 
     // Send the token in the response
-    res.status(200).json({ token });
+    res.status(200).json({
+      token,
+      role: user.role,
+      patientId: user.patientId,
+      organizationName: user.organizationName,
+    });
+
   } catch (err) {
     console.error('Error during login:', err);  // Log the error if something goes wrong
     res.status(500).json({ message: 'Server error' });

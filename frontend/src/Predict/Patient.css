@@ -1,0 +1,13 @@
+.side-navbar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 2px solid #ddd;
+  }
+  
+  .patient-id {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
