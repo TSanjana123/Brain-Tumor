@@ -84,7 +84,6 @@
 // export default Patient;
 
 
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
 
@@ -113,7 +112,7 @@ const Patient = () => {
                 <div className="navbar-top">
                     <h4>Patient ID: {patientId}</h4>
                     <button onClick={toggleDetails} className="details-btn">
-                        My Details
+                        {showDetails ? 'Hide Details' : 'My Details'}
                     </button>
                     <button onClick={handleLogout} className="logout-btn">
                         Logout 
@@ -126,12 +125,19 @@ const Patient = () => {
             </div>
             <div className="content">
                 <h2>Welcome, {name}</h2>
-                {showDetails && (
+                
+                {/* Render either details or other content based on showDetails */}
+                {showDetails ? (
                     <div className="user-details">
                         <p><strong>Name:</strong> {name}</p>
                         <p><strong>Patient ID:</strong> {patientId}</p>
-                        <p><strong>Total Images:</strong>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+                        <p><strong>Total Images:</strong> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
                         {/* Add other details if needed */}
+                    </div>
+                ) : (
+                    <div>
+                        {/* Your other content goes here */}
+                        <p>Here goes other content when details are hidden</p>
                     </div>
                 )}
             </div>

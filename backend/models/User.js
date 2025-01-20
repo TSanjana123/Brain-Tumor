@@ -1,3 +1,19 @@
+// // const mongoose = require('mongoose');
+
+// // const userSchema = new mongoose.Schema({
+// //   name: { type: String, required: true },
+// //   email: { type: String, required: true, unique: true },
+// //   password: { type: String, required: true },
+// //   role: { type: String, required: true },
+// //   patientId: { type: String },
+// //   organizationName: { type: String },
+// // });
+
+// // const User = mongoose.model('User', userSchema);
+
+// // module.exports = User;
+
+
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -7,6 +23,14 @@ const userSchema = new mongoose.Schema({
   role: { type: String, required: true },
   patientId: { type: String },
   organizationName: { type: String },
+  imageData: [
+    {
+      imageName: { type: String},
+      imageId: { type: String },
+      imagePath: { type: String },
+      uploadDate: { type: Date },
+    },
+  ],
 });
 
 const User = mongoose.model('User', userSchema);
