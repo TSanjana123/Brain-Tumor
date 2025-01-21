@@ -136,7 +136,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
-import logo from '../images/home.png';
+
 function Navbar() {
   return (
     // <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
