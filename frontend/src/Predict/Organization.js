@@ -1,43 +1,151 @@
-// // import React, { useState } from "react";
-// // function Organization() {
+// // // import React, { useState } from "react";
+// // // function Organization() {
 
-// //     return (
-// //         <div className="main-content">
-// //             <div className="side-navbar">
+// // //     return (
+// // //         <div className="main-content">
+// // //             <div className="side-navbar">
 
-// //             </div>
+// // //             </div>
+// // //         </div>
+// // //     );
+// // // }
+// // // export default Organization;
+
+
+// // import React from 'react';
+// // import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
+
+// // const Organization = () => {
+// //   const organizationName = localStorage.getItem('organizationName');
+// //   const navigate = useNavigate();
+// //   const handleLogout = () => {
+// //     localStorage.clear(); // Clears all data from localStorage
+// //     navigate('/Login'); // Redirects to the login page
+// //   };
+// //   return (
+// //     <div className="main-content">
+// //       <div className="side-navbar">
+// //         <div className="navbar-top">
+// //           <h4>Organization: {organizationName}</h4>
+// //           <button onClick={handleLogout} className="logout-btn">
+// //             Logout
+// //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+// //               <path fillRule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+// //               <path fillRule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+// //             </svg>
+// //           </button>
 // //         </div>
-// //     );
-// // }
+// //       </div>
+// //       <div className="content">
+// //         <h2>Welcome, Organization!</h2>
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
 // // export default Organization;
 
 
-// import React from 'react';
-// import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
 // const Organization = () => {
 //   const organizationName = localStorage.getItem('organizationName');
 //   const navigate = useNavigate();
+
+//   const [patients, setPatients] = useState([]);
+//   const [selectedPatientId, setSelectedPatientId] = useState('');
+//   const [file, setFile] = useState(null);
+//   const [isFormVisible, setIsFormVisible] = useState(false);
+
+//   useEffect(() => {
+//     const fetchPatients = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
+//         console.log('Fetched Patients:', response.data); // Debugging log
+//         setPatients(response.data);
+//       } catch (error) {
+//         console.error('Error fetching patients:', error);
+//       }
+//     };
+  
+//     fetchPatients();
+//   }, []);
+  
+
 //   const handleLogout = () => {
-//     localStorage.clear(); // Clears all data from localStorage
-//     navigate('/Login'); // Redirects to the login page
+//     localStorage.clear();
+//     navigate('/Login');
 //   };
+
+//   const handleUpload = async (e) => {
+//     e.preventDefault();
+
+//     if (!selectedPatientId || !file) {
+//       alert('Please select a patient ID and an image.');
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append('patientId', selectedPatientId);
+//     formData.append('image', file);
+
+//     try {
+//       const response = await axios.post('http://localhost:5001/api/upload', formData, {
+//         headers: { 'Content-Type': 'multipart/form-data' },
+//       });
+//       alert(response.data.message);
+//       setFile(null);
+//       setSelectedPatientId('');
+//     } catch (error) {
+//       console.error('Error uploading file:', error);
+//       alert('Failed to upload image.');
+//     }
+//   };
+
 //   return (
 //     <div className="main-content">
 //       <div className="side-navbar">
 //         <div className="navbar-top">
 //           <h4>Organization: {organizationName}</h4>
-//           <button onClick={handleLogout} className="logout-btn">
-//             Logout
-//             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-//               <path fillRule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-//               <path fillRule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-//             </svg>
+//           <button onClick={() => setIsFormVisible(!isFormVisible)} className="upload-btn">
+//             Upload Patient Details
 //           </button>
+//           <button onClick={handleLogout} className="logout-btn">Logout</button>
 //         </div>
 //       </div>
 //       <div className="content">
 //         <h2>Welcome, Organization!</h2>
+//         {isFormVisible && (
+//           <form onSubmit={handleUpload} className="upload-form">
+//             <div>
+//               <label htmlFor="patientId">Patient ID:</label>
+//               <select
+//                 id="patientId"
+//                 value={selectedPatientId}
+//                 onChange={(e) => setSelectedPatientId(e.target.value)}
+//               >
+//                 <option value="">Select a patient</option>
+//                 {patients.map((patient, index) => (
+//                   <option key={index} value={patient.patientId}>
+//                     {patient.patientId}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div>
+//               <label htmlFor="file">Upload Image:</label>
+//               <input
+//                 type="file"
+//                 id="file"
+//                 accept="image/*"
+//                 onChange={(e) => setFile(e.target.files[0])}
+//               />
+//             </div>
+//             <button type="submit">Upload</button>
+//           </form>
+//         )}
 //       </div>
 //     </div>
 //   );
@@ -47,60 +155,77 @@
 
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import './Organization.css';
+
 
 const Organization = () => {
   const organizationName = localStorage.getItem('organizationName');
   const navigate = useNavigate();
-
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState('');
-  const [file, setFile] = useState(null);
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [showUploadForm, setShowUploadForm] = useState(false);
+  const [showImages, setShowImages] = useState(false);
 
   useEffect(() => {
+    // Fetch patient IDs
     const fetchPatients = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
-        console.log('Fetched Patients:', response.data); // Debugging log
+        const response = await axios.get('http://localhost:5001/api/patients');
         setPatients(response.data);
       } catch (error) {
         console.error('Error fetching patients:', error);
       }
     };
-  
     fetchPatients();
   }, []);
-  
 
   const handleLogout = () => {
     localStorage.clear();
     navigate('/Login');
   };
 
-  const handleUpload = async (e) => {
+  const handleUploadForm = () => {
+    setShowUploadForm(true);
+    setShowImages(false);
+  };
+
+  const handleViewImages = async () => {
+    setShowUploadForm(false);
+    setShowImages(true);
+
+    try {
+      const response = await axios.get('http://localhost:5001/api/images');
+      setUploadedImages(response.data);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
     e.preventDefault();
 
-    if (!selectedPatientId || !file) {
-      alert('Please select a patient ID and an image.');
+    if (!selectedPatientId || !selectedFile) {
+      alert('Please select a patient and upload a file.');
       return;
     }
 
     const formData = new FormData();
     formData.append('patientId', selectedPatientId);
-    formData.append('image', file);
+    formData.append('file', selectedFile);
 
     try {
       const response = await axios.post('http://localhost:5001/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert(response.data.message);
-      setFile(null);
       setSelectedPatientId('');
+      setSelectedFile(null);
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Failed to upload image.');
     }
   };
 
@@ -109,18 +234,27 @@ const Organization = () => {
       <div className="side-navbar">
         <div className="navbar-top">
           <h4>Organization: {organizationName}</h4>
-          <button onClick={() => setIsFormVisible(!isFormVisible)} className="upload-btn">
+          <button onClick={handleUploadForm} className="upload-btn">
             Upload Patient Details
           </button>
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
+          <button onClick={handleViewImages} className="view-images-btn">
+            View Uploaded Images
+          </button>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+              <path fillRule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            </svg>
+          </button>
         </div>
       </div>
       <div className="content">
-        <h2>Welcome, Organization!</h2>
-        {isFormVisible && (
-          <form onSubmit={handleUpload} className="upload-form">
-            <div>
-              <label htmlFor="patientId">Patient ID:</label>
+        {showUploadForm && (
+          <div className="upload-form">
+            <h3>Upload Patient Details</h3>
+            <form onSubmit={handleFileUpload}>
+              <label htmlFor="patientId">Select Patient:</label>
               <select
                 id="patientId"
                 value={selectedPatientId}
@@ -133,18 +267,35 @@ const Organization = () => {
                   </option>
                 ))}
               </select>
-            </div>
-            <div>
               <label htmlFor="file">Upload Image:</label>
               <input
                 type="file"
                 id="file"
-                accept="image/*"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => setSelectedFile(e.target.files[0])}
               />
-            </div>
-            <button type="submit">Upload</button>
-          </form>
+              <button type="submit">Upload</button>
+            </form>
+          </div>
+        )}
+
+        {showImages && (
+          <div className="uploaded-images">
+            <h3>Uploaded Images</h3>
+            {uploadedImages.length > 0 ? (
+              <ul>
+                {uploadedImages.map((image, index) => (
+                  <li key={index}>
+                    <p><strong>Patient ID:</strong> {image.patientId}</p>
+                    <p><strong>Image Name:</strong> {image.imageName}</p>
+                    <p><strong>Upload Date:</strong> {new Date(image.uploadDate).toLocaleString()}</p>
+                    <img src={`http://localhost:5001/${image.imagePath}`} alt={image.imageName} style={{ width: '200px' }} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No images uploaded yet.</p>
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -152,6 +303,44 @@ const Organization = () => {
 };
 
 export default Organization;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

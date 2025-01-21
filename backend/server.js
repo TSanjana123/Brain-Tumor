@@ -248,6 +248,25 @@ app.get('/api/patients', async (req, res) => {
   }
 });
 
+app.get('/api/images', async (req, res) => {
+  try {
+    const usersWithImages = await User.find({ 'imageData.0': { $exists: true } }, 'patientId imageData');
+    const images = usersWithImages.flatMap((user) =>
+      user.imageData.map((img) => ({
+        patientId: user.patientId,
+        imageName: img.imageName,
+        imagePath: img.imagePath,
+        uploadDate: img.uploadDate,
+      }))
+    );
+    res.status(200).json(images);
+  } catch (err) {
+    console.error('Error fetching images:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 // Route to upload patient image
 app.post('/api/upload', upload.single('image'), async (req, res) => {

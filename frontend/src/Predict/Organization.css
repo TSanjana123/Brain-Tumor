@@ -1,88 +1,169 @@
+/* General styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Main content */
 .main-content {
-    display: flex;
-  }
-  
-  .side-navbar {
-    width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-  }
-  
-  .navbar-top {
-    display: flex;
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Sidebar navigation */
+.side-navbar {
+  width: 250px;
+  background-color: #2c3e50;
+  padding: 20px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  color: white;
+}
+
+.navbar-top h4 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.upload-btn, .view-images-btn, .logout-btn {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.upload-btn:hover, .view-images-btn:hover, .logout-btn:hover {
+  background-color: #2980b9;
+}
+
+.upload-btn svg, .logout-btn svg {
+  margin-left: 8px;
+}
+
+/* Content section */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+h3 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.upload-form, .uploaded-images {
+  background-color: #ecf0f1;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.upload-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-form label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #555;
+}
+
+.upload-form select, .upload-form input[type="file"] {
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.upload-form button {
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.upload-form button:hover {
+  background-color: #27ae60;
+}
+
+.uploaded-images ul {
+  list-style: none;
+  padding: 0;
+}
+
+.uploaded-images li {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.uploaded-images p {
+  font-size: 16px;
+  color: #333;
+}
+
+.uploaded-images img {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+.uploaded-images h3 {
+  font-size: 22px;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
     flex-direction: column;
-    gap: 10px;
   }
-  
-  .logout-btn,
-  .update-details-btn {
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .logout-btn:hover,
-  .update-details-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-  }
-  
-  .form-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .form-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  
-  input,
-  select {
+
+  .side-navbar {
     width: 100%;
+    border-radius: 8px;
+  }
+
+  .content {
     padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
   }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
+
+  .upload-form button {
+    width: 100%;
   }
-  
-  button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
+
+  .upload-btn, .view-images-btn, .logout-btn {
+    display: block;
+    width: 100%;
+    font-size: 14px;
   }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+}
