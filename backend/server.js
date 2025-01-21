@@ -267,10 +267,8 @@ app.get('/api/images', async (req, res) => {
 });
 
 
-
-// Route to upload patient image
 app.post('/api/upload', upload.single('image'), async (req, res) => {
-  const { patientId } = req.body;
+  const { patientId, organizationName } = req.body; // Destructure organizationName from the request body
   const imagePath = req.file.path;
 
   try {
@@ -279,9 +277,10 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
       {
         $push: {
           imageData: {
+            organizationName, // Save organization name
             imageName: req.file.originalname,
             imagePath,
-            uploadDate: new Date(),
+            uploadDate: new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
           },
         },
       }
@@ -293,6 +292,7 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // Start the server
 const PORT = process.env.PORT || 5001;

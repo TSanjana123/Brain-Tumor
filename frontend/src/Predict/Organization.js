@@ -79,19 +79,20 @@ const Organization = () => {
     localStorage.clear();
     navigate('/Login');
   };
-
+  
   const handleUpload = async (e) => {
     e.preventDefault();
-
+  
     if (!selectedPatientId || !file) {
       alert('Please select a patient ID and an image.');
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('patientId', selectedPatientId);
+    formData.append('organizationName', organizationName); // Include organization name
     formData.append('image', file);
-
+  
     try {
       const response = await axios.post('http://localhost:5001/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -104,6 +105,7 @@ const Organization = () => {
       alert('Failed to upload image.');
     }
   };
+  
 
   return (
     <div className="main-content">

@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   organizationName: { type: String },
   imageData: [
     {
+      organizationName: { type: String }, // Ensure this is defined
       imageName: { type: String },
       imagePath: { type: String },
       uploadDate: { type: Date },
