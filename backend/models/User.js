@@ -13,7 +13,6 @@
 
 // // module.exports = User;
 
-
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -25,10 +24,21 @@ const userSchema = new mongoose.Schema({
   organizationName: { type: String },
   imageData: [
     {
-      imageName: { type: String},
-      imageId: { type: String },
+      imageName: { type: String },
       imagePath: { type: String },
       uploadDate: { type: Date },
+    },
+  ],
+  chatHistory: [
+    {
+      imagePath: { type: String },
+      imageName: { type: String },
+      uploadDate: { type: Date },
+      allChat: [
+        {
+          prompt: { type: String },
+        },
+      ],
     },
   ],
 });
