@@ -1,83 +1,183 @@
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+}
+
+/* Main Layout */
+.main-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  height: 100vh;
 }
 
-.modal-content {
-  max-width: 90%;
-  max-height: 90%;
+.side-navbar {
+  background-color: rgb(52, 53, 55);
+  /* background-color: #292a2c; */
+  color: rgb(255, 255, 255);
+  width: 250px;
+  padding: 20px;
+  display: flex;
+  font-family: 'Rockwell', 'Bebas Neue', 'Oswald', sans-serif;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.modal-content img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
-
-.modal:hover {
-  cursor: pointer;
-}
-
-.display {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.display th, .display td {
-  padding: 10px;
+.navbar-top {
+  margin-top: 30px;
   text-align: center;
 }
 
-.display th {
-  background-color: #007bff;
+.navbar-top h4 {
+  margin-bottom: 30px;
+  font-size: 1.6rem;
+}
+
+.upload-btn, .logout-btn {
+  background-color: #3498db;
   color: white;
-}
-
-
-.side-navbar .navbar-top {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.upload-btn, .view-images-btn, .logout-btn {
+  padding: 10px 15px;
   margin: 10px 0;
-  padding: 10px;
-  font-size: 16px;
+  border: none;
   cursor: pointer;
+  font-family: 'Rockwell', 'Bebas Neue', 'Oswald', sans-serif;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
 }
 
+.upload-btn:hover, .logout-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 50px;
+  background-color: #ffffff;
+}
+
+/* Form Styling */
 .upload-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 400px;
-  margin: 20px 0;
+  /* background-color: #afab67; */
+  background-color: rgb(225, 241, 227);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 10 10px 20px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  width: 85%;
+}
+
+.upload-form div {
+  margin-bottom: 30px;
 }
 
 .upload-form label {
+  display: block;
+  margin-bottom: 10px;
   font-weight: bold;
+  font-family: 'Rockwell', 'Bebas Neue', 'Oswald', sans-serif;
 }
 
-.upload-form select, .upload-form input {
+.upload-form select, .upload-form input[type="file"] {
+  width: 100%;
   padding: 10px;
-  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  font-size: 1rem;
+  background-color: #ffffff;
 }
 
-.uploaded-images {
-  margin-top: 20px;
+.upload-form select:focus, .upload-form input[type="file"]:focus {
+  outline: none;
+  border-color: #326181;
 }
 
-.uploaded-images img {
-  margin-top: 5px;
-  max-width: 100px;
+.upload-form button {
+  background-color: #000000;
+  color: rgb(251, 251, 251);
+  padding: 15px 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.upload-form button:hover {
+  background-color: rgb(97, 122, 100);
+}
+
+/* Table Styling */
+.table-container {
+  margin-top: 40px;
+}
+
+#imagesTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(185, 42, 42, 0.1);
+}
+
+#imagesTable th, #imagesTable td {
+  padding: 12px;
+  text-align: center;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+#imagesTable th {
+  background-color: #3498db;
+  color: white;
+}
+
+#imagesTable tr:nth-child(even) {
+  background-color: #f4f7fc;
+}
+
+#imagesTable tr:hover {
+  background-color: #ecf0f1;
+  cursor: pointer;
+}
+
+#imagesTable img {
+  max-width: 50px;
   height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#imagesTable img:hover {
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .side-navbar {
+    width: 100%;
+    padding: 20px 10px;
+  }
+
+  .navbar-top h4 {
+    font-size: 1.2rem;
+  }
+
+  .upload-form {
+    width: 80%;
+  }
+
+  #imagesTable {
+    width: 100%;
+    font-size: 0.9rem;
+  }
 }

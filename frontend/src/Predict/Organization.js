@@ -1,166 +1,55 @@
-// // // // import React, { useState } from "react";
-// // // // function Organization() {
+// // // import React, { useState } from "react";
+// // // function Organization() {
 
-// // // //     return (
-// // // //         <div className="main-content">
-// // // //             <div className="side-navbar">
+// // //     return (
+// // //         <div className="main-content">
+// // //             <div className="side-navbar">
 
-// // // //             </div>
-// // // //         </div>
-// // // //     );
-// // // // }
-// // // // export default Organization;
-
-
-// // // import React from 'react';
-// // // import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
-
-// // // const Organization = () => {
-// // //   const organizationName = localStorage.getItem('organizationName');
-// // //   const navigate = useNavigate();
-// // //   const handleLogout = () => {
-// // //     localStorage.clear(); // Clears all data from localStorage
-// // //     navigate('/Login'); // Redirects to the login page
-// // //   };
-// // //   return (
-// // //     <div className="main-content">
-// // //       <div className="side-navbar">
-// // //         <div className="navbar-top">
-// // //           <h4>Organization: {organizationName}</h4>
-// // //           <button onClick={handleLogout} className="logout-btn">
-// // //             Logout
-// // //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-// // //               <path fillRule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-// // //               <path fillRule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-// // //             </svg>
-// // //           </button>
+// // //             </div>
 // // //         </div>
-// // //       </div>
-// // //       <div className="content">
-// // //         <h2>Welcome, Organization!</h2>
-// // //       </div>
-// // //     </div>
-// // //   );
-// // // };
-
+// // //     );
+// // // }
 // // // export default Organization;
 
 
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+// // import React from 'react';
+// // import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
 
-// const Organization = () => {
-//   const organizationName = localStorage.getItem('organizationName');
-//   const navigate = useNavigate();
+// // const Organization = () => {
+// //   const organizationName = localStorage.getItem('organizationName');
+// //   const navigate = useNavigate();
+// //   const handleLogout = () => {
+// //     localStorage.clear(); // Clears all data from localStorage
+// //     navigate('/Login'); // Redirects to the login page
+// //   };
+// //   return (
+// //     <div className="main-content">
+// //       <div className="side-navbar">
+// //         <div className="navbar-top">
+// //           <h4>Organization: {organizationName}</h4>
+// //           <button onClick={handleLogout} className="logout-btn">
+// //             Logout
+// //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+// //               <path fillRule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+// //               <path fillRule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+// //             </svg>
+// //           </button>
+// //         </div>
+// //       </div>
+// //       <div className="content">
+// //         <h2>Welcome, Organization!</h2>
+// //       </div>
+// //     </div>
+// //   );
+// // };
 
-//   const [patients, setPatients] = useState([]);
-//   const [selectedPatientId, setSelectedPatientId] = useState('');
-//   const [file, setFile] = useState(null);
-//   const [isFormVisible, setIsFormVisible] = useState(false);
-
-//   useEffect(() => {
-//     const fetchPatients = async () => {
-//       try {
-//         const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
-//         console.log('Fetched Patients:', response.data); // Debugging log
-//         setPatients(response.data);
-//       } catch (error) {
-//         console.error('Error fetching patients:', error);
-//       }
-//     };
-  
-//     fetchPatients();
-//   }, []);
-  
-
-//   const handleLogout = () => {
-//     localStorage.clear();
-//     navigate('/Login');
-//   };
-
-//   const handleUpload = async (e) => {
-//     e.preventDefault();
-
-//     if (!selectedPatientId || !file) {
-//       alert('Please select a patient ID and an image.');
-//       return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append('patientId', selectedPatientId);
-//     formData.append('image', file);
-
-//     try {
-//       const response = await axios.post('http://localhost:5001/api/upload', formData, {
-//         headers: { 'Content-Type': 'multipart/form-data' },
-//       });
-//       alert(response.data.message);
-//       setFile(null);
-//       setSelectedPatientId('');
-//     } catch (error) {
-//       console.error('Error uploading file:', error);
-//       alert('Failed to upload image.');
-//     }
-//   };
-
-//   return (
-//     <div className="main-content">
-//       <div className="side-navbar">
-//         <div className="navbar-top">
-//           <h4>Organization: {organizationName}</h4>
-//           <button onClick={() => setIsFormVisible(!isFormVisible)} className="upload-btn">
-//             Upload Patient Details
-//           </button>
-//           <button onClick={handleLogout} className="logout-btn">Logout</button>
-//         </div>
-//       </div>
-//       <div className="content">
-//         <h2>Welcome, Organization!</h2>
-//         {isFormVisible && (
-//           <form onSubmit={handleUpload} className="upload-form">
-//             <div>
-//               <label htmlFor="patientId">Patient ID:</label>
-//               <select
-//                 id="patientId"
-//                 value={selectedPatientId}
-//                 onChange={(e) => setSelectedPatientId(e.target.value)}
-//               >
-//                 <option value="">Select a patient</option>
-//                 {patients.map((patient, index) => (
-//                   <option key={index} value={patient.patientId}>
-//                     {patient.patientId}
-//                   </option>
-//                 ))}
-//               </select>
-//             </div>
-//             <div>
-//               <label htmlFor="file">Upload Image:</label>
-//               <input
-//                 type="file"
-//                 id="file"
-//                 accept="image/*"
-//                 onChange={(e) => setFile(e.target.files[0])}
-//               />
-//             </div>
-//             <button type="submit">Upload</button>
-//           </form>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Organization;
-
-
-
-
+// // export default Organization;
 
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Organization.css';
 
 const Organization = () => {
   const organizationName = localStorage.getItem('organizationName');
@@ -170,13 +59,11 @@ const Organization = () => {
   const [selectedPatientId, setSelectedPatientId] = useState('');
   const [file, setFile] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState([]);
-  const [isImagesVisible, setIsImagesVisible] = useState(false);
 
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/patients');
+        const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
         console.log('Fetched Patients:', response.data); // Debugging log
         setPatients(response.data);
       } catch (error) {
@@ -186,6 +73,7 @@ const Organization = () => {
   
     fetchPatients();
   }, []);
+  
 
   const handleLogout = () => {
     localStorage.clear();
@@ -217,22 +105,6 @@ const Organization = () => {
     }
   };
 
-  const handleViewImages = async () => {
-    if (!selectedPatientId) {
-      alert('Please select a patient to view images.');
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:5001/api/images`);
-      const patientImages = response.data.filter(image => image.patientId === selectedPatientId);
-      setUploadedImages(patientImages);
-      setIsImagesVisible(true);
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    }
-  };
-
   return (
     <div className="main-content">
       <div className="side-navbar">
@@ -245,13 +117,10 @@ const Organization = () => {
         </div>
       </div>
       <div className="content">
-        <h2>Welcome, Organization!</h2>
-        
-        {/* Upload form */}
         {isFormVisible && (
           <form onSubmit={handleUpload} className="upload-form">
             <div>
-              <label htmlFor="patientId">Patient ID:</label>
+              <label htmlFor="patientId">Patient ID</label>
               <select
                 id="patientId"
                 value={selectedPatientId}
@@ -266,7 +135,7 @@ const Organization = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="file">Upload Image:</label>
+              <label htmlFor="file">Upload Image</label>
               <input
                 type="file"
                 id="file"
@@ -277,41 +146,172 @@ const Organization = () => {
             <button type="submit">Upload</button>
           </form>
         )}
-
-        {/* Button to view uploaded images */}
-        <button onClick={handleViewImages} className="view-images-btn">
-          View Uploaded Images
-        </button>
-
-        {/* Display uploaded images */}
-        {isImagesVisible && uploadedImages.length > 0 && (
-          <div className="uploaded-images">
-            <h3>Uploaded Images for Patient {selectedPatientId}:</h3>
-            <ul>
-              {uploadedImages.map((image, index) => (
-                <li key={index}>
-                  <p>Image Name: {image.imageName}</p>
-                  <p>Uploaded on: {new Date(image.uploadDate).toLocaleString()}</p>
-                  <img
-                    src={`http://localhost:5001/${image.imagePath}`}
-                    alt={image.imageName}
-                    style={{ width: '100px', height: '100px' }}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {isImagesVisible && uploadedImages.length === 0 && (
-          <p>No images uploaded for this patient.</p>
-        )}
       </div>
     </div>
   );
 };
 
 export default Organization;
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+
+// const Organization = () => {
+//   const organizationName = localStorage.getItem('organizationName');
+//   const navigate = useNavigate();
+
+//   const [patients, setPatients] = useState([]);
+//   const [selectedPatientId, setSelectedPatientId] = useState('');
+//   const [file, setFile] = useState(null);
+//   const [isFormVisible, setIsFormVisible] = useState(false);
+//   const [uploadedImages, setUploadedImages] = useState([]);
+//   const [isImagesVisible, setIsImagesVisible] = useState(false);
+
+//   useEffect(() => {
+//     const fetchPatients = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5001/api/patients');
+//         console.log('Fetched Patients:', response.data); // Debugging log
+//         setPatients(response.data);
+//       } catch (error) {
+//         console.error('Error fetching patients:', error);
+//       }
+//     };
+  
+//     fetchPatients();
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.clear();
+//     navigate('/Login');
+//   };
+
+//   const handleUpload = async (e) => {
+//     e.preventDefault();
+
+//     if (!selectedPatientId || !file) {
+//       alert('Please select a patient ID and an image.');
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append('patientId', selectedPatientId);
+//     formData.append('image', file);
+
+//     try {
+//       const response = await axios.post('http://localhost:5001/api/upload', formData, {
+//         headers: { 'Content-Type': 'multipart/form-data' },
+//       });
+//       alert(response.data.message);
+//       setFile(null);
+//       setSelectedPatientId('');
+//     } catch (error) {
+//       console.error('Error uploading file:', error);
+//       alert('Failed to upload image.');
+//     }
+//   };
+
+//   const handleViewImages = async () => {
+//     if (!selectedPatientId) {
+//       alert('Please select a patient to view images.');
+//       return;
+//     }
+
+//     try {
+//       const response = await axios.get(`http://localhost:5001/api/images`);
+//       const patientImages = response.data.filter(image => image.patientId === selectedPatientId);
+//       setUploadedImages(patientImages);
+//       setIsImagesVisible(true);
+//     } catch (error) {
+//       console.error('Error fetching images:', error);
+//     }
+//   };
+
+//   return (
+//     <div className="main-content">
+//       <div className="side-navbar">
+//         <div className="navbar-top">
+//           <h4>Organization: {organizationName}</h4>
+//           <button onClick={() => setIsFormVisible(!isFormVisible)} className="upload-btn">
+//             Upload Patient Details
+//           </button>
+//         {/* Button to view uploaded images */}
+//           <button onClick={handleLogout} className="logout-btn">Logout</button>
+//         </div>
+//       </div>
+//       <div className="content">
+//         <h2>Welcome, Organization!</h2>
+
+//         {isFormVisible && (
+//           <form onSubmit={handleUpload} className="upload-form">
+//             <div>
+//               <label htmlFor="patientId">Patient ID:</label>
+//               <select
+//                 id="patientId"
+//                 value={selectedPatientId}
+//                 onChange={(e) => setSelectedPatientId(e.target.value)}
+//               >
+//                 <option value="">Select a patient</option>
+//                 {patients.map((patient, index) => (
+//                   <option key={index} value={patient.patientId}>
+//                     {patient.patientId}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div>
+//               <label htmlFor="file">Upload Image:</label>
+//               <input
+//                 type="file"
+//                 id="file"
+//                 accept="image/*"
+//                 onChange={(e) => setFile(e.target.files[0])}
+//               />
+//             </div>
+//             <button type="submit">Upload</button>
+//           </form>
+//         )}
+
+
+//         {/* Display uploaded images */}
+//         {isImagesVisible && uploadedImages.length > 0 && (
+//           <div className="uploaded-images">
+//             <h3>Uploaded Images for Patient {selectedPatientId}:</h3>
+//             <ul>
+//               {uploadedImages.map((image, index) => (
+//                 <li key={index}>
+//                   <p>Image Name: {image.imageName}</p>
+//                   <p>Uploaded on: {new Date(image.uploadDate).toLocaleString()}</p>
+//                   <img
+//                     src={`http://localhost:5001/${image.imagePath}`}
+//                     alt={image.imageName}
+//                     style={{ width: '100px', height: '100px' }}
+//                   />
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         )}
+
+//         {isImagesVisible && uploadedImages.length === 0 && (
+//           <p>No images uploaded for this patient.</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Organization;
+
+
+
+
 
 
 
