@@ -4,8 +4,10 @@
   /* background-color: #faf7f4; */
   /* background-color: #f5f5f0; */
   background-color: rgb(248,249,250);
+  background-image: url(https://cdn.deepseek.com/blog/banner-background.webp);
+  background-size: auto;
+  background-position: center;
 }
-
 /* Card styling */
 .card {
   border: none;

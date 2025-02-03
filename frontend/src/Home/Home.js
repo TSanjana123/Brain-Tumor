@@ -81,6 +81,7 @@
 
 
 
+
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
@@ -89,135 +90,137 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function Home() {
   return (
-    <div className="home-container">
-      <header className="text-center text-white py-5">
-        <h1 className="display-4">Brain Tumor Prediction</h1>
-        <p className="lead">Explore our website for more information about our services and tools.</p>
-      </header>
+    <>
+      <div className="home-container">
+        <header className="text-center text-white py-5">
+          <h1 className="display-4">Brain Tumor Prediction</h1>
+          <p className="lead">Explore our website for more information about our services and tools.</p>
+        </header>
 
-      <section className="container my-5">
-        <div className="row">
-          <div className="col-md-6 col-lg-3 mb-4">
-            <div className="card shadow h-100">
-              <img
-                src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
-                alt="AI-based Prediction"
-                className="card-img-top"
-              />
-              <div className="card-body">
-                <h5 className="card-title">AI-based Prediction</h5>
-                <p className="card-text">
-                  Our AI tool helps in predicting brain tumor severity with high accuracy.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3 mb-4">
-            <div className="card shadow h-100">
-              <img
-                src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
-                alt="Early Diagnosis"
-                className="card-img-top"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Early Diagnosis</h5>
-                <p className="card-text">
-                  Learn how early diagnosis can improve patient outcomes significantly.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3 mb-4">
-            <div className="card shadow h-100">
-              <img
-                src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
-                alt="Research and Development"
-                className="card-img-top"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Research and Development</h5>
-                <p className="card-text">
-                  We focus on continuous research to improve prediction accuracy and treatment options.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-3 mb-4">
-            <div className="card shadow h-100">
-              <img
-                src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
-                alt="Research and Development"
-                className="card-img-top"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Research and Development</h5>
-                <p className="card-text">
-                  We focus on continuous research to improve prediction accuracy and treatment options.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="text-center my-5">
-        <h2 className="mb-4">Brain Tumor Research</h2>
-        <img
-          src="https://www.mdpi.com/sensors/sensors-21-02222/article_deploy/html/images/sensors-21-02222-g002.png"
-          alt="Brain Tumor Research"
-          className="img-fluid rounded shadow"
-        />
-      </section>
-
-      <footer className="bg-dark text-white py-5">
-        <div className="container">
+        <section className="container my-5">
           <div className="row">
-            {/* Contact Section */}
-            <div className="col-md-6 mb-4">
-              <h5 className="footer-title">Contact Us</h5>
-              <p><i className="fas fa-envelope me-2"></i> meenakshibende@gmail.com</p>
-              <p><i className="fas fa-phone-alt me-2"></i> +19 812 80 1234</p>
-              <p><i className="fas fa-map-marker-alt me-2"></i> 9/898/9097 Pune</p>
+            <div className="col-md-6 col-lg-3 mb-4">
+              <div className="card shadow h-100">
+                <img
+                  src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
+                  alt="AI-based Prediction"
+                  className="card-img-top"
+                />
+                <div className="card-body">
+                  <h5 className="card-title">AI-based Prediction</h5>
+                  <p className="card-text">
+                    Our AI tool helps in predicting brain tumor severity with high accuracy.
+                  </p>
+                </div>
+              </div>
             </div>
-
-            {/* Useful Links */}
-            <div className="col-md-6">
-              <h5 className="footer-title">Useful Links</h5>
-              <ul className="list-unstyled">
-                <li><a href="/services" className="footer-link"><i className="fas fa-chevron-right me-2"></i>Our Services</a></li>
-                <li><a href="/research" className="footer-link"><i className="fas fa-chevron-right me-2"></i>Research and Development</a></li>
-                <li><a href="/contact" className="footer-link"><i className="fas fa-chevron-right me-2"></i>Contact Us</a></li>
-              </ul>
+            <div className="col-md-6 col-lg-3 mb-4">
+              <div className="card shadow h-100">
+                <img
+                  src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
+                  alt="Early Diagnosis"
+                  className="card-img-top"
+                />
+                <div className="card-body">
+                  <h5 className="card-title">Early Diagnosis</h5>
+                  <p className="card-text">
+                    Learn how early diagnosis can improve patient outcomes significantly.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 col-lg-3 mb-4">
+              <div className="card shadow h-100">
+                <img
+                  src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
+                  alt="Research and Development"
+                  className="card-img-top"
+                />
+                <div className="card-body">
+                  <h5 className="card-title">Research and Development</h5>
+                  <p className="card-text">
+                    We focus on continuous research to improve prediction accuracy and treatment options.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 col-lg-3 mb-4">
+              <div className="card shadow h-100">
+                <img
+                  src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg"
+                  alt="Research and Development"
+                  className="card-img-top"
+                />
+                <div className="card-body">
+                  <h5 className="card-title">Research and Development</h5>
+                  <p className="card-text">
+                    We focus on continuous research to improve prediction accuracy and treatment options.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Social Media Section */}
-          <div className="text-center mt-4">
-            <h6>Follow Us</h6>
-            <div className="social-icons">
-              <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-              <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-instagram"></i>
-              </a>
+        <section className="text-center my-5">
+          <h2 className="mb-4">Brain Tumor Research</h2>
+          <img
+            src="https://www.mdpi.com/sensors/sensors-21-02222/article_deploy/html/images/sensors-21-02222-g002.png"
+            alt="Brain Tumor Research"
+            className="img-fluid rounded shadow"
+          />
+        </section>
+
+        <footer className="bg-dark text-white py-5">
+          <div className="container">
+            <div className="row">
+              {/* Contact Section */}
+              <div className="col-md-6 mb-4">
+                <h5 className="footer-title">Contact Us</h5>
+                <p><i className="fas fa-envelope me-2"></i> meenakshibende@gmail.com</p>
+                <p><i className="fas fa-phone-alt me-2"></i> +19 812 80 1234</p>
+                <p><i className="fas fa-map-marker-alt me-2"></i> 9/898/9097 Pune</p>
+              </div>
+
+              {/* Useful Links */}
+              <div className="col-md-6">
+                <h5 className="footer-title">Useful Links</h5>
+                <ul className="list-unstyled">
+                  <li><a href="/services" className="footer-link"><i className="fas fa-chevron-right me-2"></i>Our Services</a></li>
+                  <li><a href="/research" className="footer-link"><i className="fas fa-chevron-right me-2"></i>Research and Development</a></li>
+                  <li><a href="/contact" className="footer-link"><i className="fas fa-chevron-right me-2"></i>Contact Us</a></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Social Media Section */}
+            <div className="text-center mt-4">
+              <h6>Follow Us</h6>
+              <div className="social-icons">
+                <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-twitter"></i>
+                </a>
+                <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+
+            {/* Copyright */}
+            <div className="text-center mt-4">
+              <p className="mb-0">&copy; {new Date().getFullYear()} Brain Tumor Prediction. All Rights Reserved.</p>
             </div>
           </div>
+        </footer>
 
-          {/* Copyright */}
-          <div className="text-center mt-4">
-            <p className="mb-0">&copy; {new Date().getFullYear()} Brain Tumor Prediction. All Rights Reserved.</p>
-          </div>
-        </div>
-      </footer>
-
-    </div>
+      </div>
+    </>
   );
 }
 
