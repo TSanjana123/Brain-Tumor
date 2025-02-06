@@ -171,13 +171,13 @@ function Home() {
           />
         </section>
 
-        <footer className="bg-black text-white py-5">
+        <footer className="bg-dark text-white py-5">
           <div className="container">
             <div className="row">
               {/* Contact Section */}
               <div className="col-md-6 mb-4">
                 <h5 className="footer-title">Contact Us</h5>
-                <p><i className="fas fa-envelope me-2"></i> meenakshibende@gmail.com</p>
+                <p><i className="fas fa-envelope me-2"></i> braintumor@gmail.com</p>
                 <p><i className="fas fa-phone-alt me-2"></i> +19 812 80 1234</p>
                 <p><i className="fas fa-map-marker-alt me-2"></i> 9/898/9097 Pune</p>
               </div>

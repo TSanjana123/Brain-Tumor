@@ -425,8 +425,10 @@ const Login = () => {
 
   return (
     <div className="d-flex vh-100">
-      {/* Left Half: Bar Graph */}
       <div className="w-50 d-flex flex-column justify-content-center align-items-center bg-light">
+      {/* <div className="container w-50 d-flex flex-column justify-content-center align-items-center bg-success text-white p-4 shadow rounded"> */}
+
+      {/* <div className="w-50 d-flex flex-column justify-content-center align-items-center"> */}
         <h2>Performance Metrics</h2>
         <div className="graph-placeholder" style={{ width: '80%', height: '400px' }}>
           <Bar data={barData} options={barOptions} />
@@ -434,7 +436,8 @@ const Login = () => {
       </div>
 
       {/* Right Half: Login Form */}
-      <div className="w-50 d-flex justify-content-center align-items-center bg-white">
+      {/* <div className="w-50 d-flex justify-content-center align-items-center bg-white"> */}
+      <div className="w-50 d-flex justify-content-center align-items-center">
         <div className="card shadow-lg p-4 rounded" style={{ maxWidth: '400px', width: '100%' }}>
           <h2 className="text-center mb-4">Login</h2>
           {error && <div className="alert alert-danger">{error}</div>}
@@ -461,7 +464,8 @@ const Login = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">
+            {/* <button type="submit" className="btn btn-success w-100"> */}
+            <button type="submit" className="btn-login_click">
               Login
             </button>
           </form>

@@ -28,3 +28,32 @@
   color: #6c757d;
   font-size: 1.2rem;
 }
+
+.btn-sign_click {
+  background-color: #ff0000; /* Primary blue background */
+  color: #ffffff; /* White text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add padding */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.btn-sign_click:hover {
+  background-color: #960000; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+.btn-sign_click:active {
+  background-color: #680101; /* Even darker blue on click */
+  transform: scale(0.95); /* Slightly smaller on click */
+}
+
+.btn-sign_click:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5); /* Custom focus outline */
+}
