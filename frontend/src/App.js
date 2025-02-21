@@ -9,6 +9,10 @@ import Home from './Home/Home'; // Import pages (create these in the next steps)
 import Signup from './Signup/Signup';
 import Login from './Login/Login';
 import Predict from './Predict/Predict';
+import Test from './Test_random/Test';
+import Patient from './Predict/Patient';
+import Organization from './Predict/Organization';
+import About from './About/About';
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Predict" element={<Predict />} />
+            <Route path="/Patient" element={<Patient />} />
+            <Route path="/Organization" element={<Organization />} />
+            <Route path="/About" element={<About/>}/>
+            <Route path="/Test" element={<Test/>}/>
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/services" element={<Services />} /> */}
             {/* <Route path="/contact" element={<Contact />} /> */}
