@@ -158,8 +158,29 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+// Add new patient
+app.post('/api/patients', async (req, res) => {
+  try {
+    const { name, age, gender, referredDoctor } = req.body;
+    const newPatient = new Patient({ name, age, gender, referredDoctor });
+    await newPatient.save();
+    res.status(201).json({ message: 'Patient added successfully', patient: newPatient });
+  } catch (error) {
+    console.error('Error adding patient:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
-
+// Get all patients
+app.get('/api/patients', async (req, res) => {
+  try {
+    const patients = await Patient.find();
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error('Error fetching patients:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 // Start the server
 const PORT = process.env.PORT || 5001;
