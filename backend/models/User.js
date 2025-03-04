@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, required: true },
   patientId: { type: String },
   organizationName: { type: String },
+
   imageData: [
     {
       organizationName: { type: String }, // Ensure this is defined
