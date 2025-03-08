@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 // MongoDB Connection
-mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/", {
+mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/brain_tumor?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
