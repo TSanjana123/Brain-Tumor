@@ -133,7 +133,7 @@ app.get('/api/images', async (req, res) => {
 });
 
 
-app.post('/api/upload', upload.single('image'), async (req, res) => {
+app.post('/api/uploads', upload.single('image'), async (req, res) => {
   const { patientId, organizationName } = req.body; // Destructure organizationName from the request body
   const imagePath = req.file.path;
 

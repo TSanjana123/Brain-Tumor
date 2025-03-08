@@ -164,7 +164,7 @@ const Organization = () => {
     formData.append('referredDoctor', newPatient.referredDoctor);
 
     try {
-      const response = await axios.post('http://localhost:5001/api/upload', formData, {
+      const response = await axios.post('http://localhost:5001/api/uploads', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert(response.data.message);
