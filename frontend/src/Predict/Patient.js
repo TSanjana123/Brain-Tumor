@@ -116,50 +116,90 @@
 // };
 
 // export default Patient;
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Patient = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [prediction, setPrediction] = useState("");
+    const patientId = localStorage.getItem('patientId');
+    const name = localStorage.getItem('name');
+    const navigate = useNavigate();
+    const organizationName = localStorage.getItem('organizationName');
 
-    const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]);
-    };
+    const [age, setAge] = useState('');
+    const [sex, setSex] = useState('');
+    const [date, setDate] = useState('');
+    const [refDoctor, setRefDoctor] = useState('');
+    const [imageUrl, setImageUrl] = useState(null); // State for MRI image
 
-    const handleUpload = async () => {
-        if (!selectedFile) {
-            alert("Please select an image first.");
-            return;
+    useEffect(() => {
+        const fetchPatientData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5001/api/patients/${patientId}`);
+                const { age, sex, date, refDoctor } = response.data;
+                setAge(age);
+                setSex(sex);
+                setDate(date);
+                setRefDoctor(refDoctor);
+            } catch (error) {
+                console.error('Error fetching patient data:', error);
+            }
+        };
+
+        const fetchImage = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5001/api/images/${patientId}`);
+                setImageUrl(response.data.imageUrl); // Assuming backend returns { imageUrl: "image_link" }
+            } catch (error) {
+                console.error('Error fetching MRI image:', error);
+            }
+        };
+
+        if (patientId) {
+            fetchPatientData();
+            fetchImage();
         }
+    }, [patientId]);
 
-        const formData = new FormData();
-        formData.append('image', selectedFile);
-
-        try {
-            const response = await axios.post('http://localhost:8000/api/uploadImage', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-
-            setPrediction(response.data.prediction);
-        } catch (error) {
-            console.error('Error predicting tumor:', error);
-            alert("Failed to get prediction.");
-        }
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/Login');
     };
 
     return (
-        <div>
-            <h2>Brain Tumor Prediction</h2>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
-            <button onClick={handleUpload}>Predict</button>
-
-            {prediction && (
-                <div>
-                    <h3>Prediction Result:</h3>
-                    <p>{prediction}</p>
+        <div className="d-flex">
+            <div className="bg-light border-end p-3" style={{ width: '300px', height: '100vh' }}>
+                <div className="d-flex flex-column gap-2">
+                    <h4>Organization: {organizationName}</h4>
+                    <h4>Patient ID: {patientId}</h4>
+                    <h4>Name: {name}</h4>
+                    <div className="d-flex flex-column gap-1">
+                        <small><strong>Age:</strong> {age || 'N/A'}</small>
+                        <small><strong>Sex:</strong> {sex || 'N/A'}</small>
+                        <small><strong>Date:</strong> {date || 'N/A'}</small>
+                        <small><strong>Ref. Doctor:</strong> {refDoctor || 'N/A'}</small>
+                    </div>
+                    <button 
+                        onClick={handleLogout} 
+                        className="btn btn-danger mt-3 d-flex align-items-center justify-content-center"
+                    >
+                        Logout
+                    </button>
                 </div>
-            )}
+            </div>
+
+            <div className="flex-grow-1 p-4">
+                <h2 className="mb-4">Welcome, {name}</h2>
+                {imageUrl ? (
+                    <div>
+                        <h4>Your MRI Image:</h4>
+                        <img src={imageUrl} alt="MRI Scan" style={{ maxWidth: '100%', height: 'auto' }} />
+                    </div>
+                ) : (
+                    <p>No MRI image uploaded yet.</p>
+                )}
+            </div>
         </div>
     );
 };
