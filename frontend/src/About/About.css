@@ -64,4 +64,54 @@
     margin-bottom: 5px;
     font-size: 18px;
     color: #333;
+  } 
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    justify-items: center; /* Center the cards inside the grid */
+    align-items: center; /* Center the entire grid of cards vertically within its container */
+    flex-grow: 1; /* This allows the container to grow and take up available space */
+    margin-bottom: 40px; /* Add space at the bottom of the cards */
+    width: 80%; /* Ensures the card container takes the full width of its parent */
+    max-width: 1800px; /* Optional: Add a max-width to prevent it from stretching too wide */
   }
+  
+  .card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .card-description {
+    font-size: 1rem;
+    color: #555;
+  }
+  
