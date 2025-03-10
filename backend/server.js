@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 // MongoDB Connection
-mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/", {
+mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/brain_tumor?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -29,7 +29,7 @@ mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, 'C:\\Users\\Dell\\Desktop\\BRAIN_TUMOR\\Brain-Tumor\\uploads\\');
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -181,6 +181,28 @@ app.get('/api/patients', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+app.get('/api/patients/:patientId', async (req, res) => {
+  const { patientId } = req.params;
+
+  try {
+      const patient = await Patient.findOne({ patientId });
+      if (!patient) {
+          return res.status(404).json({ message: 'Patient not found' });
+      }
+
+      // Ensure the backend sends the image URL along with patient details
+      res.json({
+          age: patient.age,
+          gender: patient.gender,
+          referredDoctor: patient.referredDoctor,
+          imageUrl: patient.imageUrl, // Ensure this is stored in DB
+      });
+
+  } catch (error) {
+      res.status(500).json({ error: 'Error fetching patient data' });
+  }
+});
+
 
 // Start the server
 const PORT = process.env.PORT || 5001;

@@ -127,21 +127,19 @@ const Patient = () => {
     const navigate = useNavigate();
     const organizationName = localStorage.getItem('organizationName');
 
-    const [age, setAge] = useState('');
-    const [sex, setSex] = useState('');
-    const [date, setDate] = useState('');
-    const [refDoctor, setRefDoctor] = useState('');
-    const [imageUrl, setImageUrl] = useState(null); // State for MRI image
+    const [patientData, setPatientData] = useState({
+        age: '',
+        gender: '',
+        referredDoctor: '',
+        imageUrl: null,
+    });
 
     useEffect(() => {
         const fetchPatientData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5001/api/patients/${patientId}`);
-                const { age, sex, date, refDoctor } = response.data;
-                setAge(age);
-                setSex(sex);
-                setDate(date);
-                setRefDoctor(refDoctor);
+                const { age, gender, referredDoctor } = response.data;
+                setPatientData(prev => ({ ...prev, age, gender, referredDoctor }));
             } catch (error) {
                 console.error('Error fetching patient data:', error);
             }
@@ -150,7 +148,7 @@ const Patient = () => {
         const fetchImage = async () => {
             try {
                 const response = await axios.get(`http://localhost:5001/api/images/${patientId}`);
-                setImageUrl(response.data.imageUrl); // Assuming backend returns { imageUrl: "image_link" }
+                setPatientData(prev => ({ ...prev, imageUrl: response.data.imageUrl }));
             } catch (error) {
                 console.error('Error fetching MRI image:', error);
             }
@@ -175,10 +173,9 @@ const Patient = () => {
                     <h4>Patient ID: {patientId}</h4>
                     <h4>Name: {name}</h4>
                     <div className="d-flex flex-column gap-1">
-                        <small><strong>Age:</strong> {age || 'N/A'}</small>
-                        <small><strong>Sex:</strong> {sex || 'N/A'}</small>
-                        <small><strong>Date:</strong> {date || 'N/A'}</small>
-                        <small><strong>Ref. Doctor:</strong> {refDoctor || 'N/A'}</small>
+                        <small><strong>Age:</strong> {patientData.age || 'N/A'}</small>
+                        <small><strong>Gender:</strong> {patientData.gender || 'N/A'}</small>
+                        <small><strong>Referred Doctor:</strong> {patientData.referredDoctor || 'N/A'}</small>
                     </div>
                     <button 
                         onClick={handleLogout} 
@@ -191,10 +188,10 @@ const Patient = () => {
 
             <div className="flex-grow-1 p-4">
                 <h2 className="mb-4">Welcome, {name}</h2>
-                {imageUrl ? (
+                {patientData.imageUrl ? (
                     <div>
                         <h4>Your MRI Image:</h4>
-                        <img src={imageUrl} alt="MRI Scan" style={{ maxWidth: '100%', height: 'auto' }} />
+                        <img src={patientData.imageUrl} alt="MRI Scan" style={{ maxWidth: '100%', height: 'auto' }} />
                     </div>
                 ) : (
                     <p>No MRI image uploaded yet.</p>
