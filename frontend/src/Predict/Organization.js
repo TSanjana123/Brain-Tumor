@@ -16,7 +16,8 @@ const Organization = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
+        // const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
+        const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`); // Use full URL if needed
         console.log('Fetched Patients:', response.data); // Debugging log
         setPatients(response.data);
       } catch (error) {
