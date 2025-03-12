@@ -185,13 +185,33 @@
   margin-bottom: 10px;
 }
 
-.brain-icon::before {
+/* .brain-icon::before {
   content: "🧠";
+ 
+} */
+
+
+.brain-icon {
+  color: #fffcfc;      /* Light color for consistency */
+  font-size: 67px;     /* Enlarged size for emphasis */
+  width: 100%;         /* Full width to center naturally */
+  height: auto;        
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0px;    /* Spacing between icon and content */
 }
 
-.symptoms-icon::before {
-  content: "📄";
- 
+
+.symptoms-icon {
+  color: #e3d8d8;      /* Light color to match theme */
+  font-size: 60px;     /* Enlarged for emphasis */
+  width: 30%;         /* Full width for easy centering */
+  height: auto;        
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;    /* Space between icon and text */
 }
 
 .toolkit-icon::before {

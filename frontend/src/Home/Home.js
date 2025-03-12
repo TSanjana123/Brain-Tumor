@@ -167,6 +167,10 @@
 
 import React from "react";
 import "./Home.css";  // Import the CSS file for styling
+import { GiBrain } from "react-icons/gi";
+import { TbReportSearch } from "react-icons/tb";
+
+
 
 function Home() {
   return (
@@ -214,8 +218,12 @@ function Home() {
         <div className="info-card">
           <div className="info-content">
             <i className="icon brain-icon"></i>
+            <div className="brain-icon">
+              <GiBrain />
+            </div>
             <h3>About Brain Tumors</h3>
           </div>
+
           <div className="info-hover">
             Learn about brain tumors, their types, and treatments available.
           </div>
@@ -225,6 +233,9 @@ function Home() {
         <div className="info-card">
           <div className="info-content">
             <i className="icon symptoms-icon"></i>
+            <div className="symptoms-icon">
+              <TbReportSearch />
+            </div>
             <h3>Signs & Symptoms</h3>
           </div>
           <div className="info-hover">
