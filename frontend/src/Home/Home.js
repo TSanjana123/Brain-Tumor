@@ -171,7 +171,9 @@ import "./Home.css";  // Import the CSS file for styling
 function Home() {
   return (
     <div className="container">
-      <h1 className="title">Brain Tumor Prediction</h1>
+      
+       <h1 className="title">Brain Tumor Prediction</h1> 
+      
 
       <p>Explore our website for more information about our services and tools.</p>
 
@@ -217,7 +219,7 @@ function Home() {
           <div className="info-hover">
             Learn about brain tumors, their types, and treatments available.
           </div>
-          <div className="corner-icon">▶</div>
+          
         </div>
 
         <div className="info-card">
@@ -228,7 +230,7 @@ function Home() {
           <div className="info-hover">
             Understand common symptoms for early diagnosis and better outcomes.
           </div>
-          <div className="corner-icon">▶</div>
+          
         </div>
 
         <div className="info-card">
@@ -239,7 +241,7 @@ function Home() {
           <div className="info-hover">
             Resources to support patients and their caregivers effectively.
           </div>
-          <div className="corner-icon">▶</div>
+         
         </div>
       </div>
     </div>
