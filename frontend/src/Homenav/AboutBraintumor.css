@@ -1,0 +1,94 @@
+.about-brain-tumors-page {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    max-width: 960px; /* Limit page width for better readability */
+    margin: 0 auto; /* Center the page content */
+    background-color: #f8f8f8; /* Light gray background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px;
+  }
+  
+  .page-title {
+    font-size: 2.8rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #5c96c6; /* More prominent line */
+    padding-bottom: 10px;
+  }
+  
+  .what-is-brain-tumor,
+  .types-of-brain-tumors,
+  .important-note {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff; /* White background for sections */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Softer shadow */
+  }
+  
+  .what-is-brain-tumor h2,
+  .types-of-brain-tumors h2,
+  .important-note h2 {
+    font-size: 2.2rem;
+    color: #5c96c6; /* Brighter blue */
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .types-of-brain-tumors ul {
+    list-style-type: none; /* Remove default bullet points */
+    padding-left: 0;
+    display: grid; /* Use grid for layout */
+    grid-template-columns: 1fr; /* Single column on small screens */
+    gap: 15px;
+  }
+  
+  @media (min-width: 768px) {
+    .types-of-brain-tumors ul {
+      grid-template-columns: repeat(2, 1fr); /* Two columns on larger screens */
+    }
+  }
+  
+  .types-of-brain-tumors ul li {
+    background-color: #f0f0f0; /* Light background for list items */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+  }
+  
+  .types-of-brain-tumors ul li:hover {
+    transform: scale(1.02); /* Slight scale on hover */
+  }
+  
+  .types-of-brain-tumors ul li h3 {
+    font-size: 1.4rem;
+    font-weight: 600; /* Slightly bolder */
+    color: #444;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .types-of-brain-tumors ul li ul {
+    list-style-type: circle; /* Use circle bullets for nested lists */
+    padding-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .types-of-brain-tumors ul li ul li {
+    background-color: transparent; /* No background for nested items */
+    box-shadow: none;
+    padding: 5px 0;
+  }
+  
+  .important-note {
+    margin-top: 50px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    font-style: italic; /* Italicize the important note */
+    color: #666;
+  }

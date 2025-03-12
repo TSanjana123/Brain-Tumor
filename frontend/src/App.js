@@ -14,6 +14,13 @@ import Patient from './Predict/Patient';
 import Organization from './Predict/Organization';
 import About from './About/About';
 
+
+//new
+import AboutBraintumor from './Homenav/AboutBraintumor';
+import Symptoms from './Homenav/Symptoms';
+import PatientToolkit from './Homenav/PatientToolkit';
+
+
 function App() {
   return (
     <Router>
@@ -32,6 +39,11 @@ function App() {
             {/* <Route path="/about" element={<About />} /> */}
             {/* <Route path="/services" element={<Services />} /> */}
             {/* <Route path="/contact" element={<Contact />} /> */}
+
+            <Route path="/AboutBraintumor" element={<AboutBraintumor />} />
+            <Route path="/Symptoms" element={<Symptoms />} />
+            <Route path="/PatientToolkit" element={<PatientToolkit />} />
+
           </Routes>
         </main>
       </div>

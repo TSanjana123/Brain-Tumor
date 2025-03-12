@@ -1,0 +1,71 @@
+.signs-symptoms-page {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff; /* Light blue background */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .page-header {
+    display: flex;
+    justify-content: center; /* Center content in header */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff; /* White header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-section {
+    /* background-image: url('/path/to/your/background-image.jpg'); Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    height: 200px; /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .intro-section {
+    margin-bottom: 20px;
+  }
+  
+  .symptoms-list-section {
+    margin-bottom: 20px;
+  }
+  
+  .symptoms-list {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .call-to-action-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .areas-of-the-brain-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .areas-of-the-brain-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
