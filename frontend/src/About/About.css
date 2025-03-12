@@ -11,8 +11,8 @@ body {
 }
 
 .hero {
-  background: linear-gradient(135deg, #4CAF50, #45a049);
-  color: #fff;
+  background: linear-gradient(135deg, #c9e0e5, #dac5e3);
+  color: #000000;
   padding: 100px 20px;
   display: flex;
   align-items: center;
@@ -63,23 +63,4 @@ body {
 .feature-box h3 {
   color: #4CAF50;
   margin-bottom: 10px;
-}
-
-.footer {
-  background: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-  margin-top: 40px;
-}
-
-.footer-links a {
-  color: #4CAF50;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
 }

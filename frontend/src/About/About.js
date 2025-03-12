@@ -152,12 +152,7 @@ const About = () => {
                 </div>
             </div>
 
-            <div className="footer">
-                <p>&copy; 2024 Brain Tumor Detection | Designed for Your Health and Safety</p>
-                <div className="footer-links">
-                    <a href="#">Contact Us</a> | <a href="#">FAQs</a> | <a href="#">Privacy Policy</a>
-                </div>
-            </div>
+            
         </div>
     );
 };

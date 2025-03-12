@@ -172,20 +172,23 @@ function Home() {
   return (
     <div className="container">
       <h1 className="title">Brain Tumor Prediction</h1>
-     
+
       <p>Explore our website for more information about our services and tools.</p>
-      
+
       <div className="card-container">
+        {/* Original Cards */}
         <div className="card">
-          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" alt="Card Image 1" className="card-image" />
+          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" 
+               alt="Card Image 1" className="card-image" />
           <div className="card-body">
             <h3 className="card-title">AI-based Prediction</h3>
-            <p className="card-description">Our AI tool helps in predicting brain tumor severity with high accuracy.Our AI tool helps in</p>
+            <p className="card-description">Our AI tool helps in predicting brain tumor severity with high accuracy.</p>
           </div>
         </div>
 
         <div className="card">
-          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" alt="Card Image 2" className="card-image" />
+          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" 
+               alt="Card Image 2" className="card-image" />
           <div className="card-body">
             <h3 className="card-title">Early Diagnosis</h3>
             <p className="card-description">Learn how early diagnosis can improve patient outcomes significantly.</p>
@@ -193,16 +196,54 @@ function Home() {
         </div>
 
         <div className="card">
-          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" alt="Card Image 3" className="card-image" />
+          <img src="https://d2jx2rerrg6sh3.cloudfront.net/image-handler/ts/20200107063435/ri/1000/picture/2020/1/shutterstock_565415560.jpg" 
+               alt="Card Image 3" className="card-image" />
           <div className="card-body">
             <h3 className="card-title">Research Development</h3>
             <p className="card-description">We focus on continuous research to improve prediction accuracy and treatment options.</p>
           </div>
         </div>
+      </div>
 
-       
+      {/* Newly Diagnosed Section */}
+      <h2 className="title"></h2>
+
+      <div className="card-container">
+        <div className="info-card">
+          <div className="info-content">
+            <i className="icon brain-icon"></i>
+            <h3>About Brain Tumors</h3>
+          </div>
+          <div className="info-hover">
+            Learn about brain tumors, their types, and treatments available.
+          </div>
+          <div className="corner-icon">▶</div>
+        </div>
+
+        <div className="info-card">
+          <div className="info-content">
+            <i className="icon symptoms-icon"></i>
+            <h3>Signs & Symptoms</h3>
+          </div>
+          <div className="info-hover">
+            Understand common symptoms for early diagnosis and better outcomes.
+          </div>
+          <div className="corner-icon">▶</div>
+        </div>
+
+        <div className="info-card">
+          <div className="info-content">
+            <i className="icon toolkit-icon"></i>
+            <h3>Patient & Caregiver Toolkit</h3>
+          </div>
+          <div className="info-hover">
+            Resources to support patients and their caregivers effectively.
+          </div>
+          <div className="corner-icon">▶</div>
+        </div>
       </div>
     </div>
-  )
-};
+  );
+}
+
 export default Home;
