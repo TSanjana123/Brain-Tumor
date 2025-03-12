@@ -1,33 +1,93 @@
-/* Ensure the body and html take up full height and width */
-html, body {
-  height: 100%;
-  margin: 0;
+
+.container {
   font-family: Arial, sans-serif;
-}
-
-/* This will ensure the whole page takes up the full height of the viewport */
-.home-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center; /* Centers content horizontally */
-  min-height: 100vh; /* Full viewport height */
-  text-align: center;
+  margin: 20px;
   padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  justify-content: center;
 }
 
-/* Center the card-container within the home-container */
-.card-container {
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #666;
+  margin-top: 20px;
+}
+
+.description {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.list {
+  list-style-type: disc;
+  margin-left: 20px;
+  color: #333;
+}
+
+.grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-  margin-top: 30px;
-  justify-items: center; /* Center the cards inside the grid */
-  align-items: center; /* Center the entire grid of cards vertically within its container */
-  flex-grow: 1; /* This allows the container to grow and take up available space */
-  margin-bottom: 30px; /* Add space at the bottom of the cards */
-  width: 100%; /* Ensures the card container takes the full width of its parent */
-  max-width: 1200px; /* Optional: Add a max-width to prevent it from stretching too wide */
+  margin-bottom: 20px;
+}
+
+.grid-item {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
+
+.grid-item h4 {
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #333;
+} 
+
+.container {
+  font-family: Arial, sans-serif;
+  margin: auto; /* Centers the container */
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  width: 80%; /* Limits width for proper centering */
+  max-width: 1200px;
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center; /* Centers the cards */
+  align-items: center; /* Aligns vertically */
+  gap: 30px;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  margin: 40px auto;
+  max-width: 1000px; /* Limits width */
 }
 
 .card {
@@ -37,8 +97,8 @@ html, body {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  width: 100%;
-  max-width: 300px;
+  flex: 1 1 300px; /* Equal width */
+  max-width: 300px; /* Prevents excessive stretching */
 }
 
 .card:hover {
@@ -46,9 +106,9 @@ html, body {
 }
 
 .card-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+  width: 100%; /* Ensures equal width */
+  height: 200px; /* Ensures equal height */
+  object-fit: cover; /* Crops to fit */
 }
 
 .card-body {
@@ -64,116 +124,4 @@ html, body {
 .card-description {
   font-size: 1rem;
   color: #555;
-}
-
-/* New styles for the image after hr */
-.image-container {
-  margin-top: 30px;
-  padding: 20px;
-}
-
-.home-image {
-  width: 100%;
-  max-width: 900px;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-}
-
-.home-image:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Main contact section with black background */
-.contact-section {
-  background-color: black; /* Black background */
-  color: white; /* White text */
-  padding: 30px 20px; /* Add padding around the section */
-  margin-top: 40px; /* Add space above the section */
-  display: flex; /* Flexbox for horizontal layout */
-  justify-content: space-between; /* Space between left and right sections */
-  align-items: flex-start; /* Align items at the top */
-  flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
-  width: 100%; /* Ensure it takes full width */
-}
-
-/* Contact details (Left section) */
-.contact-details {
-  flex: 1; /* Take up available space */
-  margin-right: 30px; /* Add space between contact details and links */
-  min-width: 250px; /* Minimum width to prevent shrinking */
-}
-
-.contact-details p {
-  font-size: 16px;
-  margin: 10px 0;
-}
-
-/* Useful links (Right section) */
-.useful-links {
-  flex: 1; /* Take up available space */
-  text-align: right; /* Align links to the right */
-  min-width: 250px; /* Minimum width for right section */
-}
-
-.useful-links h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-.useful-links ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.useful-links li {
-  margin: 8px 0;
-}
-
-.useful-links a {
-  color: #ffcc00; /* Yellow color for links */
-  text-decoration: none;
-}
-
-.useful-links a:hover {
-  text-decoration: underline;
-}
-
-/* Media Query for small screens (Mobile) */
-@media (max-width: 768px) {
-  .contact-section {
-    flex-direction: column; /* Stack elements vertically on small screens */
-    text-align: center; /* Center the text on small screens */
-  }
-
-  .contact-details, .useful-links {
-    margin-right: 0; /* Remove margin */
-    min-width: auto; /* Allow sections to take full width */
-  }
-
-  .useful-links {
-    text-align: center; /* Center links for better appearance on mobile */
-    margin-top: 20px; /* Add space between sections */
-  }
-
-  .useful-links ul {
-    padding: 0; /* Ensure the padding is reset for better mobile alignment */
-  }
-
-  .useful-links li {
-    margin: 10px 0; /* Add more space between the links */
-  }
-}
-
-/* Media Query for extra-small screens (e.g., phones in portrait mode) */
-@media (max-width: 480px) {
-  .contact-section {
-    padding: 20px 15px; /* Reduce padding on smaller screens */
-  }
-
-  .contact-details p, .useful-links a {
-    font-size: 14px; /* Reduce font size for better readability on small screens */
-  }
 }
