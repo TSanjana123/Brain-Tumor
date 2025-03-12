@@ -10,6 +10,7 @@
     "cra-template": "1.2.0",
     "datatables.net": "^2.2.1",
     "datatables.net-dt": "^2.2.1",
+    "dotenv": "^16.4.7",
     "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
