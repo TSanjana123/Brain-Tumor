@@ -12,7 +12,8 @@ const UploadDetails = () => {
   useEffect(() => {
     const fetchPatientIds = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/patient-ids');
+        // const response = await axios.get('http://localhost:5001/api/patient-ids');
+        const response = await axios.get(`${process.env.REACT_APP_fetchPatientIds_RESPONSE_URL}/api/patient-ids`);
         setPatientIds(response.data);
       } catch (err) {
         console.error(err);
@@ -36,7 +37,8 @@ const UploadDetails = () => {
     formData.append('image', image);
 
     try {
-      const response = await axios.post('http://localhost:5001/api/upload-details', formData, {
+      // const response = await axios.post('http://localhost:5001/api/upload-details', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_UPLOADDETAILS_RESPONSE_URL}/api/upload-details`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setSuccessMessage(response.data.message);
