@@ -1,86 +1,75 @@
-import React from 'react';
-import './Symptoms.css'; // Import CSS file
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
-function Symptoms() {
+import "./Symptoms.css"; // Import the CSS file
+
+const Symptoms = () => {
+  const symptoms = [
+    {
+      title: "Headaches",
+      desc: "Frequent headaches that worsen over time, especially in the morning.",
+      icon: "💥",
+    },
+    {
+      title: "Nausea & Vomiting",
+      desc: "Unexplained nausea, morning sickness, or persistent vomiting.",
+      icon: "🤢",
+    },
+    {
+      title: "Memory Loss",
+      desc: "Difficulty remembering things, confusion, or cognitive impairment.",
+      icon: "🧠",
+    },
+    {
+      title: "Seizures",
+      desc: "Involuntary movements, muscle spasms, or sudden loss of consciousness.",
+      icon: "⚡",
+    },
+    {
+      title: "Vision & Hearing Problems",
+      desc: "Blurred vision, double vision, hearing impairment, or ringing in the ears.",
+      icon: "👁️",
+    },
+    {
+      title: "Personality Changes",
+      desc: "Mood swings, confusion, or behavioral changes.",
+      icon: "🤯",
+    },
+    {
+      title: "Dizziness & Balance Issues",
+      desc: "Trouble walking, loss of coordination, or feeling unsteady.",
+      icon: "⚖️",
+    },
+    {
+      title: "Weakness or Numbness",
+      desc: "Weakness, numbness, or tingling, usually in one side of the body.",
+      icon: "🦵",
+    }
+  ];
+
   return (
     <div className="signs-symptoms-page">
-      <header className="page-header">
-        {/* Navigation menu is removed */}
-      </header>
-
       <section className="hero-section">
-        <h1 className="hero-title">Signs & Symptoms</h1>
-        {/* Background image will be handled in CSS */}
+        <h1>Signs & Symptoms of Brain Tumor</h1>
+        <p>Recognizing symptoms early can be crucial for effective treatment.</p>
       </section>
-
       <main className="main-content">
-        <section className="intro-section">
-          <p>
-            When brain tumors are very small, some people may not experience
-            any symptoms or the symptoms are so minimal they don't notice
-            them.
-          </p>
-          <p>
-            As brain tumors grow, signs and symptoms can vary and largely
-            depend on the tumor's location within the brain, its size, and how
-            quickly it grows.
-          </p>
-          <p>
-            Some of the more common signs and symptoms caused by brain tumors
-            include the following:
-          </p>
-        </section>
-
-        <section className="symptoms-list-section">
-          <ul className="symptoms-list">
-            <li>Headaches</li>
-            <li>Seizures</li>
-            <li>Difficulty thinking, speaking, or finding words</li>
-            <li>Changes in personality or behavior</li>
-            <li>Weakness, numbness, or loss of movement in one part or one side of the body</li>
-            <li>Difficulty with balance or dizziness</li>
-            <li>Sensory changes like difficulty hearing, difficulty seeing, or loss of smell</li>
-            <li>Memory loss</li>
-            <li>Confusion in everyday matters or disorientation</li>
-            <li>Unexplained nausea or vomiting</li>
-            <li>Hearing, difficulty seeing, or loss of smell</li>
-            <li>Memory loss</li>
-            <li>Confusion in everyday matters or disorientation</li>
-            <li>Unexplained nausea or vomiting</li>
-            <li>Fatigue or muscle weakness</li>
-            <li>Other possible signs and symptoms can include abnormal eye movements, trouble swallowing, trouble walking, weakness or drooping of one side of the face, loss of appetite or weight loss, and slurred speech.</li>
-          </ul>
-        </section>
-
-        <section className="call-to-action-section">
-          <p>
-            If you are experiencing any new, persistent, or concerning symptoms
-            or you suspect you may have a brain tumor, please talk to your
-            healthcare provider as soon as possible.
-          </p>
-        </section>
-
-        <section className="areas-of-the-brain-section">
-          <h2>Areas of the Brain</h2>
-          <p>
-            Some people with brain tumors experience general symptoms like
-            headaches, seizures, and fatigue. Other symptoms can be more specific
-            to the location of the tumor in the brain.
-          </p>
-          <p>
-            Brain tumors can damage healthy tissue, press on healthy brain
-            tissue, or cause pressure in the brain and negatively impact certain
-            functions.
-          </p>
-          <p>
-            If you are diagnosed with a brain tumor, ask your provider where it
-            is located in the brain to better prepare for possible symptoms and
-            safety concerns.
-          </p>
-        </section>
+        <Container>
+          <section className="symptoms-list-section">
+            <Row>
+              {symptoms.map((symptom, index) => (
+                <div key={index} className="col-md-4 symptom-card">
+                  <span className="icon">{symptom.icon}</span>
+                  <h3>{symptom.title}</h3>
+                  <p>{symptom.desc}</p>
+                </div>
+              ))}
+            </Row>
+          </section>
+        </Container>
       </main>
     </div>
   );
-}
+};
 
 export default Symptoms;
