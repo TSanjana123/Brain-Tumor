@@ -233,7 +233,7 @@
 
 .toolkit-icon:hover {
   transform: scale(1.1); /* Slight zoom-in effect on hover */
-  background-color: #f1a7a7;  /* Light red on hover */
+  background-color: #f7f3f3;  /* Light red on hover */
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 
