@@ -1,76 +1,78 @@
 import React from 'react';
-import './AboutBraintumor.css'; // You can create a CSS file for this page
+import './AboutBraintumor.css';
 
 function AboutBraintumor() {
   return (
     <div className="about-brain-tumors-page">
       <h1 className="page-title">About Brain Tumors</h1>
 
-      <section className="what-is-brain-tumor">
-        <h2>What is a Brain Tumor?</h2>
+      <section className="tumor-categories">
+        <h2>Brain Tumor Types by Imaging Categories</h2>
         <p>
-          A brain tumor is an abnormal growth of cells within the brain or the central spinal canal. These tumors can disrupt normal brain function, causing a range of symptoms and health problems. It's important to understand that not all brain tumors are cancerous (malignant); some are benign (non-cancerous).
-        </p>
-      </section>
-
-      <section className="types-of-brain-tumors">
-        <h2>Types of Brain Tumors</h2>
-        <p>
-          Brain tumors are classified based on the type of cells involved, their location in the brain, and their growth rate. There are many different types, but some of the most common include:
+          Brain tumors are often identified using MRI scans, specifically T1, T1C+, and T2 imaging. Below are descriptions of various tumor types and their characteristics:
         </p>
         <ul>
           <li>
-            <h3>Gliomas</h3>
+            <h3>Glioblastoma</h3>
             <p>
-              Gliomas begin in the glial cells, which are the supportive tissue of the brain. Types of gliomas include:
-            </p>
-            <ul>
-              <li>
-                <strong>Astrocytomas:</strong> Arise from astrocytes.
-              </li>
-              <li>
-                <strong>Oligodendrogliomas:</strong> Develop from oligodendrocytes.
-              </li>
-              <li>
-                <strong>Glioblastomas:</strong> A fast-growing and aggressive type of astrocytoma.
-              </li>
-            </ul>
-          </li>
-          <li>
-            <h3>Meningiomas</h3>
-            <p>
-              Meningiomas develop from the meninges, the membranes that surround the brain and spinal cord. They are usually benign but can cause problems due to their location.
+              Glioblastoma is an aggressive brain tumor that forms from astrocytes. It often shows rapid growth and is usually diagnosed using T1 (tumor mass visibility), T1C+ (enhanced contrast imaging), and T2 (showing surrounding edema). Glioblastomas are the most common and aggressive primary brain tumors in adults, often requiring intensive treatment.
             </p>
           </li>
           <li>
-            <h3>Pituitary Tumors</h3>
+            <h3>Granuloma</h3>
             <p>
-              These tumors occur in the pituitary gland, a small gland at the base of the brain that controls hormones.
+              Granulomas are inflammatory masses often linked to infections like tuberculosis. They appear as well-defined masses in T1, T1C+, and T2 images, depending on inflammation levels. Granulomas are the body's defensive response to persistent infection or irritants, forming small nodules in affected tissues.
             </p>
           </li>
           <li>
-            <h3>Acoustic Neuromas (Schwannomas)</h3>
+            <h3>Medulloblastoma</h3>
             <p>
-              These tumors develop on the vestibulocochlear nerve, which leads from the inner ear to the brain. They can affect hearing and balance.
+              A fast-growing cancerous tumor that commonly affects children. It originates in the cerebellum and is often detected in T1, T1C+, and T2 imaging with distinct patterns. Medulloblastomas tend to spread through cerebrospinal fluid pathways, making early diagnosis crucial for effective treatment.
             </p>
           </li>
           <li>
-            <h3>Medulloblastomas</h3>
+            <h3>Meningioma</h3>
             <p>
-              These are cancerous tumors that occur most often in children and develop in the cerebellum at the back of the brain.
+              Meningiomas develop in the membranes surrounding the brain and spinal cord. They are often benign and appear prominently in T1, T1C+, and T2 imaging. Although usually slow-growing, larger meningiomas can compress brain structures, causing neurological symptoms.
+            </p>
+          </li>
+          <li>
+            <h3>Neurocytoma</h3>
+            <p>
+              A rare tumor typically found near the brain's ventricles. Neurocytomas are often detected with clear mass visibility in T1, T1C+, and T2 scans. These tumors are generally benign but may occasionally recur after treatment, requiring ongoing monitoring.
+            </p>
+          </li>
+          <li>
+            <h3>Oligodendroglioma</h3>
+            <p>
+              These tumors arise from oligodendrocytes, appearing well-defined in T1, enhancing in T1C+, and showing edema patterns in T2 imaging. Oligodendrogliomas are known for their slow growth and better response to therapy compared to other gliomas.
+            </p>
+          </li>
+          <li>
+            <h3>Papilloma</h3>
+            <p>
+              Papillomas are rare tumors that develop in the choroid plexus, showing as soft tissue masses in T1, T1C+, and T2 imaging. These tumors are most common in children and infants, potentially causing excessive cerebrospinal fluid production.
+            </p>
+          </li>
+          <li>
+            <h3>Schwannoma</h3>
+            <p>
+              Schwannomas are benign tumors that develop on the nerves responsible for balance and hearing. These tumors appear in T1, T1C+, and T2 imaging based on their growth stage. Originating from Schwann cells, these tumors are typically slow-growing and treatable through surgery.
+            </p>
+          </li>
+          <li>
+            <h3>Tuberculoma</h3>
+            <p>
+              Tuberculomas are inflammatory lesions caused by tuberculosis infections. They are identified with enhanced clarity in T1, T1C+, and T2 imaging scans. Tuberculomas result from bacterial infection spreading to the brain, forming dense masses that may mimic tumors.
+            </p>
+          </li>
+          <li>
+            <h3>_NORMAL (T1 and T2)</h3>
+            <p>
+              Normal T1 and T2 images indicate healthy brain tissue with no abnormal growth, inflammation, or lesions. This ensures the absence of tumors or other neurological issues.
             </p>
           </li>
         </ul>
-        <p>
-          It's crucial to note that this is not an exhaustive list. Each type of brain tumor has its own characteristics, treatment options, and prognosis. Accurate diagnosis and classification are essential for effective management.
-        </p>
-      </section>
-
-      <section className="important-note">
-        <h2>Important Note</h2>
-        <p>
-          The information provided here is intended for general knowledge and informational purposes only, and does not constitute medical advice. It is essential to consult with a qualified healthcare professional for any health concerns or before making any decisions related to your health or treatment.
-        </p>
       </section>
     </div>
   );
