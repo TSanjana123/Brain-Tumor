@@ -637,7 +637,8 @@ const Signup = () => {
 
     setError('');
     try {
-      const response = await axios.post('http://localhost:5001/api/signup', formData);
+      // const response = await axios.post('http://localhost:5001/api/signup', formData);
+      const response = await axios.post(`${process.env.REACT_APP_SIGNUP_RESPONSE_URL}/api/signup`, formData);
 
       if (response && response.data) {
         setSuccessMessage(response.data.message);

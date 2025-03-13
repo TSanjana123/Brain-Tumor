@@ -405,6 +405,8 @@ const Login = () => {
     try {
       console.log("shashi")
       // console.log("Environment URL:", process.env.REACT_APP_LOGIN_RESPONSE_URL);
+      console.log(formData)
+      // const response = await axios.post("http://localhost:5001/api/login", formData);
       const response = await axios.post(`${process.env.REACT_APP_LOGIN_RESPONSE_URL}/api/login`, formData);
       const { name, email, role, token, patientId, organizationName } = response.data;
 
