@@ -183,7 +183,7 @@ const Organization = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content2">
       <div className="side-navbar">
         <div className="navbar-top">
           <h4>Organization: {organizationName}</h4>
