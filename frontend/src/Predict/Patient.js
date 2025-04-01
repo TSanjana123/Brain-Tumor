@@ -128,10 +128,10 @@ const Patient = () => {
     const organizationName = localStorage.getItem('organizationName');
 
     const [patientData, setPatientData] = useState({
-        age: '',
-        gender: '',
-        referredDoctor: '',
-        imageUrl: null,
+        age: localStorage.getItem('age') || '',
+        gender: localStorage.getItem('gender') || '',
+        referredDoctor: localStorage.getItem('referredDoctor') || '',
+        imageUrl: localStorage.getItem('imageUrl') || null,
     });
 
     useEffect(() => {
@@ -139,7 +139,18 @@ const Patient = () => {
             try {
                 const response = await axios.get(`http://localhost:5001/api/patients/${patientId}`);
                 const { age, gender, referredDoctor } = response.data;
-                setPatientData(prev => ({ ...prev, age, gender, referredDoctor }));
+
+                setPatientData(prev => ({
+                    ...prev,
+                    age: age || localStorage.getItem('age'),
+                    gender: gender || localStorage.getItem('gender'),
+                    referredDoctor: referredDoctor || localStorage.getItem('referredDoctor'),
+                }));
+
+                // Save to localStorage in case of page reload
+                localStorage.setItem('age', age);
+                localStorage.setItem('gender', gender);
+                localStorage.setItem('referredDoctor', referredDoctor);
             } catch (error) {
                 console.error('Error fetching patient data:', error);
             }
@@ -149,6 +160,9 @@ const Patient = () => {
             try {
                 const response = await axios.get(`http://localhost:5001/api/images/${patientId}`);
                 setPatientData(prev => ({ ...prev, imageUrl: response.data.imageUrl }));
+
+                // Save to localStorage
+                localStorage.setItem('imageUrl', response.data.imageUrl);
             } catch (error) {
                 console.error('Error fetching MRI image:', error);
             }
