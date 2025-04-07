@@ -2,31 +2,37 @@
 
 .toolkit-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background: linear-gradient(135deg, #e0f7fa, #e1bee7);
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
   .toolkit-card {
     background-color: #ffffff;
     padding: 2.5rem;
     border-radius: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
     max-width: 700px;
     width: 100%;
     text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .toolkit-card:hover {
+    transform: scale(1.02);
   }
   
   .toolkit-title {
     font-size: 2.5rem;
-    color: #4b0082;
+    color: #6a1b9a;
     margin-bottom: 1rem;
   }
   
   .toolkit-description {
-    font-size: 1.125rem;
+    font-size: 1.2rem;
     color: #555;
     margin-bottom: 2rem;
   }
@@ -41,8 +47,14 @@
   
   .toolkit-list li {
     margin-bottom: 1rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  
+  .toolkit-list li::before {
+    content: '✔️';
+    position: absolute;
+    left: 0;
+    top: 0;
   }
   

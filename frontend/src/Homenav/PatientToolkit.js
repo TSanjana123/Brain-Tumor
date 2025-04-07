@@ -4,17 +4,17 @@ import './PatientToolkit.css';
 const PatientToolkit = () => (
   <div className="toolkit-container">
     <div className="toolkit-card">
-      <h1 className="toolkit-title">🧠 Brain Tumor Toolkit</h1>
+      <h1 className="toolkit-title">🧠 Brain Tumor Care Toolkit</h1>
       <p className="toolkit-description">
-        Simple tips to support brain tumor patients and caregivers:
+        Helpful tips for patients and caregivers to stay strong and positive:
       </p>
       <ul className="toolkit-list">
-        <li>👨‍⚕️ Follow your doctor’s advice carefully</li>
-        <li>🥗 Eat healthy and drink plenty of water</li>
-        <li>🛌 Rest well and don’t overdo things</li>
-        <li>🧘 Stay calm with light exercise or meditation</li>
-        <li>💬 Talk to someone you trust about how you feel</li>
-        <li>📅 Keep track of your appointments and meds</li>
+        <li>👨‍⚕️ Listen to your doctor and follow the treatment plan</li>
+        <li>🥦 Eat brain-friendly foods and stay hydrated</li>
+        <li>🛌 Get plenty of sleep and take breaks when needed</li>
+        <li>🧘‍♀️ Practice mindfulness or gentle stretching daily</li>
+        <li>💖 Stay connected with loved ones for support</li>
+        <li>🗓️ Use a calendar to manage meds and appointments</li>
       </ul>
     </div>
   </div>
