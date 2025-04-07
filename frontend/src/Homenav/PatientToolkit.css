@@ -1,0 +1,48 @@
+/* PatientToolkit.css */
+
+.toolkit-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .toolkit-card {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .toolkit-title {
+    font-size: 2.5rem;
+    color: #4b0082;
+    margin-bottom: 1rem;
+  }
+  
+  .toolkit-description {
+    font-size: 1.125rem;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .toolkit-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    color: #333;
+    font-size: 1.05rem;
+  }
+  
+  .toolkit-list li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  

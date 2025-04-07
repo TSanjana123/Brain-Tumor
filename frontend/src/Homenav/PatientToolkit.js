@@ -1,16 +1,23 @@
 import React from 'react';
+import './PatientToolkit.css';
 
 const PatientToolkit = () => (
-    <div className="page-content">
-        <h1>Patient & Caregiver Toolkit</h1>
-        <p>Tips for managing health and ensuring well-being:</p>
-        <ul>
-            <li>Follow medical advice carefully</li>
-            <li>Maintain a balanced diet and exercise regularly</li>
-            <li>Join support groups for emotional strength</li>
-            <li>Stay informed about treatment plans</li>
-        </ul>
+  <div className="toolkit-container">
+    <div className="toolkit-card">
+      <h1 className="toolkit-title">🧠 Brain Tumor Toolkit</h1>
+      <p className="toolkit-description">
+        Simple tips to support brain tumor patients and caregivers:
+      </p>
+      <ul className="toolkit-list">
+        <li>👨‍⚕️ Follow your doctor’s advice carefully</li>
+        <li>🥗 Eat healthy and drink plenty of water</li>
+        <li>🛌 Rest well and don’t overdo things</li>
+        <li>🧘 Stay calm with light exercise or meditation</li>
+        <li>💬 Talk to someone you trust about how you feel</li>
+        <li>📅 Keep track of your appointments and meds</li>
+      </ul>
     </div>
+  </div>
 );
 
 export default PatientToolkit;
