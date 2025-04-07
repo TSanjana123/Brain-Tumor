@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
   role: { type: String, required: true },
   patientId: { type: String },
   organizationName: { type: String },
+  age: { type: Number },                  // 👈 Add this
+  gender: { type: String },               // 👈 Add this
+  referredDoctor: { type: String },
 
   imageData: [
     {

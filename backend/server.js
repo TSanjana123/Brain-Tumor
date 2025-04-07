@@ -38,8 +38,39 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Signup Route
+// app.post('/api/signup', async (req, res) => {
+//   const { name, email, password, confirmPassword, role, patientId, organizationName } = req.body;
+
+//   if (password !== confirmPassword) {
+//     return res.status(400).json({ message: 'Passwords do not match' });
+//   }
+
+//   try {
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ message: 'Email already in use' });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newUser = new User({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       role,
+//       patientId: role === 'patient' ? patientId : undefined,
+//       organizationName: role === 'medicalStaff' ? organizationName : undefined,
+//     });
+
+//     await newUser.save();
+//     res.status(201).json({ message: 'User registered successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
+// Signup Route
 app.post('/api/signup', async (req, res) => {
-  const { name, email, password, confirmPassword, role, patientId, organizationName } = req.body;
+  const { name, email, password, confirmPassword, role, patientId, organizationName, age, gender, referredDoctor } = req.body;
 
   if (password !== confirmPassword) {
     return res.status(400).json({ message: 'Passwords do not match' });
@@ -59,6 +90,9 @@ app.post('/api/signup', async (req, res) => {
       role,
       patientId: role === 'patient' ? patientId : undefined,
       organizationName: role === 'medicalStaff' ? organizationName : undefined,
+      age: role === 'patient' ? age : undefined,
+      gender: role === 'patient' ? gender : undefined,
+      referredDoctor: role === 'patient' ? referredDoctor : undefined
     });
 
     await newUser.save();
@@ -68,6 +102,7 @@ app.post('/api/signup', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+/////////
 
 // Login Route
 app.post('/api/login', async (req, res) => {
@@ -172,34 +207,57 @@ app.post('/api/patients', async (req, res) => {
 });
 
 // Get all patients
-app.get('/api/patients', async (req, res) => {
-  try {
-    const patients = await Patient.find();
-    res.status(200).json(patients);
-  } catch (error) {
-    console.error('Error fetching patients:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-app.get('/api/patients/:patientId', async (req, res) => {
+// app.get('/api/patients', async (req, res) => {
+//   try {
+//     const patients = await Patient.find();
+//     res.status(200).json(patients);
+//   } catch (error) {
+//     console.error('Error fetching patients:', error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
+// app.get('/api/patients/:patientId', async (req, res) => {
+//   const { patientId } = req.params;
+
+//   try {
+//       const patient = await Patient.findOne({ patientId });
+//       if (!patient) {
+//           return res.status(404).json({ message: 'Patient not found' });
+//       }
+
+//       // Ensure the backend sends the image URL along with patient details
+//       res.json({
+//           age: patient.age,
+//           gender: patient.gender,
+//           referredDoctor: patient.referredDoctor,
+//           imageUrl: patient.imageUrl, // Ensure this is stored in DB
+//       });
+
+//   } catch (error) {
+//       res.status(500).json({ error: 'Error fetching patient data' });
+//   }
+// });
+
+app.get('/api/patient/:patientId', async (req, res) => {
   const { patientId } = req.params;
 
   try {
-      const patient = await Patient.findOne({ patientId });
-      if (!patient) {
-          return res.status(404).json({ message: 'Patient not found' });
-      }
+    const patient = await User.findOne({ patientId, role: 'patient' });
 
-      // Ensure the backend sends the image URL along with patient details
-      res.json({
-          age: patient.age,
-          gender: patient.gender,
-          referredDoctor: patient.referredDoctor,
-          imageUrl: patient.imageUrl, // Ensure this is stored in DB
-      });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
 
-  } catch (error) {
-      res.status(500).json({ error: 'Error fetching patient data' });
+    res.status(200).json({
+      name: patient.name,
+      age: patient.age,
+      gender: patient.gender,
+      referredDoctor: patient.referredDoctor,
+      email: patient.email,
+    });
+  } catch (err) {
+    console.error('Error fetching patient details:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
