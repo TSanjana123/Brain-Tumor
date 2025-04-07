@@ -4,14 +4,14 @@
   background-color: #f8f9fa;
   color: #333;
   text-align: center;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 }
 
 /* Hero Section */
 .hero-section {
   background: url('https://source.unsplash.com/1600x900/?brain,healthcare') no-repeat center center/cover;
-  color: white;
-  padding: 80px 20px;
+  color: rgb(27, 24, 24);
+  padding: 20px ;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
@@ -27,7 +27,7 @@
 
 /* Symptoms List Section */
 .symptoms-list-section {
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .symptoms-list-section .row {
@@ -40,7 +40,7 @@
 .symptom-card {
   background: white;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   margin: 15px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
