@@ -183,7 +183,7 @@ const Patient = () => {
         <div className="d-flex">
             <div className="bg-light border-end p-3" style={{ width: '300px', height: '100vh' }}>
                 <div className="d-flex flex-column gap-2">
-                    <h4>Organization: {organizationName}</h4>
+                    {/* <h4>Organization: {organizationName}</h4> */}
                     <h4>Patient ID: {patientId}</h4>
                     <h4>Name: {name}</h4>
                     <div className="d-flex flex-column gap-1">
