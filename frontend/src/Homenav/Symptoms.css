@@ -3,49 +3,49 @@
   font-family: 'Arial', sans-serif;
   background-color: #f8f9fa;
   color: #333;
-  text-align: center;
-  padding-bottom: 30px;
+  padding: 20px 0; /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Hero Section */
 .hero-section {
   background: url('https://source.unsplash.com/1600x900/?brain,healthcare') no-repeat center center/cover;
   color: rgb(27, 24, 24);
-  padding: 20px ;
+  padding: 20px 10px;
+  width: 100%;
+  text-align: center;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.hero-section h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.hero-section p {
-  font-size: 1.2rem;
-  margin-top: 10px;
+  max-width: 1200px;
 }
 
 /* Symptoms List Section */
 .symptoms-list-section {
-  margin-top: 10px;
+  margin-top: 20px;
+  padding: 0 10px;
+  max-width: 1200px; /* Limit outer width */
+  width: 100%;
 }
 
+/* Symptom Cards Row */
 .symptoms-list-section .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 20px; /* Add spacing between cards */
 }
 
 /* Symptom Card Styling */
 .symptom-card {
   background: white;
   border-radius: 10px;
-  padding: 10px;
-  margin: 15px;
+  padding: 20px 15px;
+  margin: 0;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 300px;
+  width: 260px;
 }
 
 .symptom-card:hover {
@@ -53,7 +53,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Symptom Icon */
+/* Icon Styling */
 .icon {
   font-size: 2.5rem;
   display: block;
@@ -62,15 +62,16 @@
 
 /* Symptom Title */
 .symptom-card h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
 /* Symptom Description */
 .symptom-card p {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #555;
+  margin: 0;
 }
 
 /* Responsive Design */
