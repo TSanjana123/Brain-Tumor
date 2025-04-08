@@ -437,7 +437,7 @@ const Login = () => {
         <div className="graph-placeholder" style={{ width: '80%', height: '400px' }}>
           <Bar data={barData} options={barOptions} />
         </div>
-      </div>
+      </div> 
 
       {/* Right Half: Login Form */}
       {/* <div className="w-50 d-flex justify-content-center align-items-center bg-white"> */}
@@ -468,7 +468,7 @@ const Login = () => {
                 required
               />
             </div>
-            {/* <button type="submit" className="btn btn-success w-100"> */}
+            {/* <button type="submit" className="btn btn-success cretere the t hghuio mn ytik  w-100"> */}
             <button type="submit" className="btn-login_click">
               Login
             </button>
