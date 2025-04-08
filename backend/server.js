@@ -30,7 +30,7 @@ mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // cb(null, 'C:\\Users\\Dell\\Desktop\\BRAIN_TUMOR\\Brain-Tumor\\uploads\\');
-    cb(null, 'uploads\\');
+    cb(null, 'Brain-Tumor\\backend\\uploads\\');
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
