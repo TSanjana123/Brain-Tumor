@@ -285,7 +285,7 @@ function Home() {
             className="card-image"
           />
           <div className="card-body">
-            <h3 className="card-title">AI-based Prediction shashi</h3>
+            <h3 className="card-title">AI-based Prediction</h3>
             <p className="card-description">Our AI tool helps in predicting brain tumor severity with high accuracy.</p>
           </div>
         </div>
