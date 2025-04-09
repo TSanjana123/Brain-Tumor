@@ -1565,14 +1565,20 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
   }
 });
 
-// Route to update user details
+
+// Route to update image path in imageData array
 app.put('/api/users/:id', async (req, res) => {
-  const { name, email, patientId, organizationName } = req.body;
+  const { imageData } = req.body; // Only the imageData field will be updated
 
   try {
+    // Find the user and update the imageData
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { name, email, patientId, organizationName },
+      {
+        $set: {
+          "imageData": imageData, // Update the image data with new path
+        },
+      },
       { new: true }
     );
 
@@ -1582,7 +1588,7 @@ app.put('/api/users/:id', async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (err) {
-    console.error('Error updating user:', err);
+    console.error('Error updating image path:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
