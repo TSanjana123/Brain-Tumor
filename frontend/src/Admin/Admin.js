@@ -1223,7 +1223,7 @@ const Admin = () => {
               <th>Email</th>
               <th>Patient ID</th>
               <th>Image Data</th>
-              <th>Actions</th>
+              {/* <th>Actions</th> */}
             </tr>
           </thead>
           <tbody>
@@ -1257,7 +1257,7 @@ const Admin = () => {
                       <span>No images uploaded</span>
                     )}
                   </td>
-                  <td></td>
+                  {/* <td></td> */}
                 </tr>
               ))}
           </tbody>
@@ -1289,3 +1289,4 @@ const Admin = () => {
 };
 
 export default Admin;
+

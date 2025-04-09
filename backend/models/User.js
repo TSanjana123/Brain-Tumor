@@ -1,30 +1,22 @@
-// // const mongoose = require('mongoose');
-
-// // const userSchema = new mongoose.Schema({
-// //   name: { type: String, required: true },
-// //   email: { type: String, required: true, unique: true },
-// //   password: { type: String, required: true },
-// //   role: { type: String, required: true },
-// //   patientId: { type: String },
-// //   organizationName: { type: String },
-// // });
-
-// // const User = mongoose.model('User', userSchema);
-
-// // module.exports = User;
-
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, required: true },
-  patientId: { type: String },
+  role: { type: String, required: true, enum: ['patient', 'medicalStaff', 'admin'] },
+  patientId: { 
+    type: String, 
+    required: function() { return this.role === 'patient'; },  // Only required if the role is 'patient'
+  },
+  gender: { type: String, required: false },
+  dateOfBirth: { type: Date, required: false },
+  dateOfRegistration: { type: Date, default: Date.now },
+  referredDoctor: { type: String, required: false },
   organizationName: { type: String },
   imageData: [
     {
-      organizationName: { type: String }, // Ensure this is defined
+      organizationName: { type: String },
       imageName: { type: String },
       imagePath: { type: String },
       uploadDate: { type: Date },
