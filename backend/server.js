@@ -1508,16 +1508,17 @@ app.post('/api/login', async (req, res) => {
 // Route to fetch all patient IDs
 app.get('/api/patients', async (req, res) => {
   try {
-    const patients = await User.find({ role: 'patient' }, { patientId: 1, _id: 0 });
+    const patients = await User.find({ role: 'patient' }); // Fetch all fields
     if (!patients.length) {
       return res.status(404).json({ message: 'No patients found' });
     }
-    res.status(200).json(patients);
+    res.status(200).json(patients); // Return the full patient objects
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 app.get('/api/images', async (req, res) => {
   try {
