@@ -1565,6 +1565,27 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+// Route to update user details
+app.put('/api/users/:id', async (req, res) => {
+  const { name, email, patientId, organizationName } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { name, email, patientId, organizationName },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error('Error updating user:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 
 
