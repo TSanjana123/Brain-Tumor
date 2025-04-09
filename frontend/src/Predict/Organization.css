@@ -42,6 +42,8 @@
 
 .header-section {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -52,6 +54,21 @@
   color: #333;
 }
 
+/* Search input styles */
+.search-container {
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+}
+
+/* New patient button */
 .new-patient-btn {
   padding: 0.5rem 1rem;
   background: #2980b9;
@@ -121,7 +138,15 @@
 .upload-submit-btn {
   padding: 0.5rem 1rem;
   background: #27ae60;
-  color: white;
+  color: rgb(242, 242, 242);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.upload-btn {
+  padding: 0.5rem 1rem;
+  background: #2980b9;
+  color: rgb(242, 242, 242);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -149,7 +174,8 @@
   border-radius: 8px;
   padding: 25px;
   position: relative;
-  animation: slideIn 0.4s ease;
+  animation: slideInLeft 0.4s ease;
+  /* Centered by default */
 }
 
 /* Modal Form Fields */
@@ -202,7 +228,7 @@
   to { opacity: 1; }
 }
 
-@keyframes slideIn {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }

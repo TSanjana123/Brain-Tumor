@@ -1,91 +1,216 @@
 
-// // // // // // // // // // // // // import React, { useState, useEffect } from 'react';
-// // // // // // // // // // // // // import axios from 'axios';
-// // // // // // // // // // // // // import { useNavigate } from 'react-router-dom';
-// // // // // // // // // // // // // import './Organization.css';
+// // // // // // // // // // // // // // import React, { useState, useEffect } from 'react';
+// // // // // // // // // // // // // // import axios from 'axios';
+// // // // // // // // // // // // // // import { useNavigate } from 'react-router-dom';
+// // // // // // // // // // // // // // import './Organization.css';
+
+// // // // // // // // // // // // // // const Organization = () => {
+// // // // // // // // // // // // // //   const organizationName = localStorage.getItem('organizationName');
+// // // // // // // // // // // // // //   const navigate = useNavigate();
+
+// // // // // // // // // // // // // //   const [patients, setPatients] = useState([]);
+// // // // // // // // // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState('');
+// // // // // // // // // // // // // //   const [file, setFile] = useState(null);
+// // // // // // // // // // // // // //   const [isFormVisible, setIsFormVisible] = useState(false);
+
+// // // // // // // // // // // // // //   useEffect(() => {
+// // // // // // // // // // // // // //     const fetchPatients = async () => {
+// // // // // // // // // // // // // //       try {
+// // // // // // // // // // // // // //         // const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
+// // // // // // // // // // // // // //         const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`); // Use full URL if needed
+// // // // // // // // // // // // // //         console.log('Fetched Patients:', response.data); // Debugging log
+// // // // // // // // // // // // // //         setPatients(response.data);
+// // // // // // // // // // // // // //       } catch (error) {
+// // // // // // // // // // // // // //         console.error('Error fetching patients:', error);
+// // // // // // // // // // // // // //       }
+// // // // // // // // // // // // // //     };
+  
+// // // // // // // // // // // // // //     fetchPatients();
+// // // // // // // // // // // // // //   }, []);
+  
+
+// // // // // // // // // // // // // //   const handleLogout = () => {
+// // // // // // // // // // // // // //     localStorage.clear();
+// // // // // // // // // // // // // //     navigate('/Login');
+// // // // // // // // // // // // // //   };
+  
+// // // // // // // // // // // // // //   const handleUpload = async (e) => {
+// // // // // // // // // // // // // //     e.preventDefault();
+  
+// // // // // // // // // // // // // //     if (!selectedPatientId || !file) {
+// // // // // // // // // // // // // //       alert('Please select a patient ID and an image.');
+// // // // // // // // // // // // // //       return;
+// // // // // // // // // // // // // //     }
+  
+// // // // // // // // // // // // // //     const formData = new FormData();
+// // // // // // // // // // // // // //     formData.append('patientId', selectedPatientId);
+// // // // // // // // // // // // // //     formData.append('organizationName', organizationName); // Include organization name
+// // // // // // // // // // // // // //     formData.append('image', file);
+  
+// // // // // // // // // // // // // //     try {
+// // // // // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
+// // // // // // // // // // // // // //       // const response = await axios.post('http://localhost:5001/api/upload', formData, {
+// // // // // // // // // // // // // //         headers: { 'Content-Type': 'multipart/form-data' },
+// // // // // // // // // // // // // //       });
+// // // // // // // // // // // // // //       alert(response.data.message);
+// // // // // // // // // // // // // //       setFile(null);
+// // // // // // // // // // // // // //       setSelectedPatientId('');
+// // // // // // // // // // // // // //     } catch (error) {
+// // // // // // // // // // // // // //       console.error('Error uploading file:', error);
+// // // // // // // // // // // // // //       alert('Failed to upload image.');
+// // // // // // // // // // // // // //     }
+// // // // // // // // // // // // // //   };
+  
+
+// // // // // // // // // // // // // //   return (
+// // // // // // // // // // // // // //     <div className="main-content">
+// // // // // // // // // // // // // //       <div className="side-navbar">
+// // // // // // // // // // // // // //         <div className="navbar-top">
+// // // // // // // // // // // // // //           <h4>Organization: {organizationName}</h4>
+// // // // // // // // // // // // // //           <button onClick={() => setIsFormVisible(!isFormVisible)} className="upload-btn">
+// // // // // // // // // // // // // //             Upload Patient Details
+// // // // // // // // // // // // // //           </button>
+// // // // // // // // // // // // // //           <button onClick={handleLogout} className="logout-btn">Logout</button>
+// // // // // // // // // // // // // //         </div>
+// // // // // // // // // // // // // //       </div>
+// // // // // // // // // // // // // //       <div className="content">
+// // // // // // // // // // // // // //         {isFormVisible && (
+// // // // // // // // // // // // // //           <form onSubmit={handleUpload} className="upload-form">
+// // // // // // // // // // // // // //             <div>
+// // // // // // // // // // // // // //               <label htmlFor="patientId">Patient ID</label>
+// // // // // // // // // // // // // //               <select
+// // // // // // // // // // // // // //                 id="patientId"
+// // // // // // // // // // // // // //                 value={selectedPatientId}
+// // // // // // // // // // // // // //                 onChange={(e) => setSelectedPatientId(e.target.value)}
+// // // // // // // // // // // // // //               >
+// // // // // // // // // // // // // //                 <option value="">Select a patient</option>
+// // // // // // // // // // // // // //                 {patients.map((patient, index) => (
+// // // // // // // // // // // // // //                   <option key={index} value={patient.patientId}>
+// // // // // // // // // // // // // //                     {patient.patientId}
+// // // // // // // // // // // // // //                   </option>
+// // // // // // // // // // // // // //                 ))}
+// // // // // // // // // // // // // //               </select>
+// // // // // // // // // // // // // //             </div>
+// // // // // // // // // // // // // //             <div>
+// // // // // // // // // // // // // //               <label htmlFor="file">Upload Image</label>
+// // // // // // // // // // // // // //               <input
+// // // // // // // // // // // // // //                 type="file"
+// // // // // // // // // // // // // //                 id="file"
+// // // // // // // // // // // // // //                 accept="image/*"
+// // // // // // // // // // // // // //                 onChange={(e) => setFile(e.target.files[0])}
+// // // // // // // // // // // // // //               />
+// // // // // // // // // // // // // //             </div>
+// // // // // // // // // // // // // //             <button type="submit">Upload</button>
+// // // // // // // // // // // // // //           </form>
+// // // // // // // // // // // // // //         )}
+// // // // // // // // // // // // // //       </div>
+// // // // // // // // // // // // // //     </div>
+// // // // // // // // // // // // // //   );
+// // // // // // // // // // // // // // };
+
+// // // // // // // // // // // // // // export default Organization;
+
+
+// // // // // // // // // // // // // import React, { useState, useEffect } from "react";
+// // // // // // // // // // // // // import axios from "axios";
+// // // // // // // // // // // // // import { useNavigate } from "react-router-dom";
+// // // // // // // // // // // // // import "./Organization.css";
 
 // // // // // // // // // // // // // const Organization = () => {
-// // // // // // // // // // // // //   const organizationName = localStorage.getItem('organizationName');
+// // // // // // // // // // // // //   const organizationName = localStorage.getItem("organizationName");
 // // // // // // // // // // // // //   const navigate = useNavigate();
 
 // // // // // // // // // // // // //   const [patients, setPatients] = useState([]);
-// // // // // // // // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState('');
+// // // // // // // // // // // // //   const [patientIds, setPatientIds] = useState([]);
+// // // // // // // // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState("");
 // // // // // // // // // // // // //   const [file, setFile] = useState(null);
-// // // // // // // // // // // // //   const [isFormVisible, setIsFormVisible] = useState(false);
+// // // // // // // // // // // // //   const [error, setError] = useState("");
+// // // // // // // // // // // // //   const [successMessage, setSuccessMessage] = useState("");
 
 // // // // // // // // // // // // //   useEffect(() => {
 // // // // // // // // // // // // //     const fetchPatients = async () => {
 // // // // // // // // // // // // //       try {
-// // // // // // // // // // // // //         // const response = await axios.get('http://localhost:5001/api/patients'); // Use full URL if needed
-// // // // // // // // // // // // //         const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`); // Use full URL if needed
-// // // // // // // // // // // // //         console.log('Fetched Patients:', response.data); // Debugging log
+// // // // // // // // // // // // //         const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`);
 // // // // // // // // // // // // //         setPatients(response.data);
 // // // // // // // // // // // // //       } catch (error) {
-// // // // // // // // // // // // //         console.error('Error fetching patients:', error);
+// // // // // // // // // // // // //         console.error("Error fetching patients:", error);
 // // // // // // // // // // // // //       }
 // // // // // // // // // // // // //     };
-  
+
+// // // // // // // // // // // // //     // const fetchPatientIds = async () => {
+// // // // // // // // // // // // //     //   // try {
+// // // // // // // // // // // // //     //   //   const response = await axios.get(`${process.env.REACT_APP_fetchPatientIds_RESPONSE_URL}/api/patient-ids`);
+// // // // // // // // // // // // //     //   //   setPatientIds(response.data);
+// // // // // // // // // // // // //     //   // } catch (err) {
+// // // // // // // // // // // // //     //   //   console.error(err);
+// // // // // // // // // // // // //     //   //   setError("Failed to fetch patient IDs");
+// // // // // // // // // // // // //     //   // }
+// // // // // // // // // // // // //     // };
+
 // // // // // // // // // // // // //     fetchPatients();
+// // // // // // // // // // // // //     // fetchPatientIds();
 // // // // // // // // // // // // //   }, []);
-  
 
 // // // // // // // // // // // // //   const handleLogout = () => {
 // // // // // // // // // // // // //     localStorage.clear();
-// // // // // // // // // // // // //     navigate('/Login');
+// // // // // // // // // // // // //     navigate("/Login");
 // // // // // // // // // // // // //   };
-  
+
 // // // // // // // // // // // // //   const handleUpload = async (e) => {
 // // // // // // // // // // // // //     e.preventDefault();
-  
 // // // // // // // // // // // // //     if (!selectedPatientId || !file) {
-// // // // // // // // // // // // //       alert('Please select a patient ID and an image.');
+// // // // // // // // // // // // //       setError("Please select a patient ID and upload an image.");
 // // // // // // // // // // // // //       return;
 // // // // // // // // // // // // //     }
-  
+
 // // // // // // // // // // // // //     const formData = new FormData();
-// // // // // // // // // // // // //     formData.append('patientId', selectedPatientId);
-// // // // // // // // // // // // //     formData.append('organizationName', organizationName); // Include organization name
-// // // // // // // // // // // // //     formData.append('image', file);
-  
+// // // // // // // // // // // // //     formData.append("patientId", selectedPatientId);
+// // // // // // // // // // // // //     formData.append("organizationName", organizationName);
+// // // // // // // // // // // // //     formData.append("image", file);
+
 // // // // // // // // // // // // //     try {
 // // // // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
-// // // // // // // // // // // // //       // const response = await axios.post('http://localhost:5001/api/upload', formData, {
-// // // // // // // // // // // // //         headers: { 'Content-Type': 'multipart/form-data' },
+// // // // // // // // // // // // //         headers: {
+// // // // // // // // // // // // //           "Content-Type": "multipart/form-data",
+// // // // // // // // // // // // //         },
 // // // // // // // // // // // // //       });
-// // // // // // // // // // // // //       alert(response.data.message);
+// // // // // // // // // // // // //       setSuccessMessage(response.data.message);
+// // // // // // // // // // // // //       setError("");
 // // // // // // // // // // // // //       setFile(null);
-// // // // // // // // // // // // //       setSelectedPatientId('');
+// // // // // // // // // // // // //       setSelectedPatientId("");
 // // // // // // // // // // // // //     } catch (error) {
-// // // // // // // // // // // // //       console.error('Error uploading file:', error);
-// // // // // // // // // // // // //       alert('Failed to upload image.');
+// // // // // // // // // // // // //       console.error("Error uploading file:", error);
+// // // // // // // // // // // // //       setError("Failed to upload image.");
 // // // // // // // // // // // // //     }
 // // // // // // // // // // // // //   };
-  
 
 // // // // // // // // // // // // //   return (
-// // // // // // // // // // // // //     <div className="main-content">
-// // // // // // // // // // // // //       <div className="side-navbar">
-// // // // // // // // // // // // //         <div className="navbar-top">
-// // // // // // // // // // // // //           <h4>Organization: {organizationName}</h4>
-// // // // // // // // // // // // //           <button onClick={() => setIsFormVisible(!isFormVisible)} className="upload-btn">
-// // // // // // // // // // // // //             Upload Patient Details
-// // // // // // // // // // // // //           </button>
-// // // // // // // // // // // // //           <button onClick={handleLogout} className="logout-btn">Logout</button>
-// // // // // // // // // // // // //         </div>
+// // // // // // // // // // // // //     <div className="organization-page">
+// // // // // // // // // // // // //       {/* Sidebar */}
+// // // // // // // // // // // // //       <div className="sidebar">
+// // // // // // // // // // // // //         <h4>Organization: {organizationName}</h4>
+// // // // // // // // // // // // //         <button onClick={handleLogout} className="logout-btn">
+// // // // // // // // // // // // //           Logout
+// // // // // // // // // // // // //         </button>
 // // // // // // // // // // // // //       </div>
-// // // // // // // // // // // // //       <div className="content">
-// // // // // // // // // // // // //         {isFormVisible && (
+
+// // // // // // // // // // // // //       {/* Main Content */}
+// // // // // // // // // // // // //       <div className="main-content">
+// // // // // // // // // // // // //         <div className="upload-section">
+// // // // // // // // // // // // //           <h2>Upload Patient Details</h2>
+// // // // // // // // // // // // //           {error && <div className="alert alert-danger">{error}</div>}
+// // // // // // // // // // // // //           {successMessage && <div className="alert alert-success">{successMessage}</div>}
 // // // // // // // // // // // // //           <form onSubmit={handleUpload} className="upload-form">
 // // // // // // // // // // // // //             <div>
-// // // // // // // // // // // // //               <label htmlFor="patientId">Patient ID</label>
+// // // // // // // // // // // // //               <label htmlFor="patientId">Select Patient ID</label>
 // // // // // // // // // // // // //               <select
 // // // // // // // // // // // // //                 id="patientId"
 // // // // // // // // // // // // //                 value={selectedPatientId}
 // // // // // // // // // // // // //                 onChange={(e) => setSelectedPatientId(e.target.value)}
 // // // // // // // // // // // // //               >
 // // // // // // // // // // // // //                 <option value="">Select a patient</option>
-// // // // // // // // // // // // //                 {patients.map((patient, index) => (
-// // // // // // // // // // // // //                   <option key={index} value={patient.patientId}>
+// // // // // // // // // // // // //                 {patients.map((patient) => (
+// // // // // // // // // // // // //                   <option key={patient.patientId} value={patient.patientId}>
 // // // // // // // // // // // // //                     {patient.patientId}
 // // // // // // // // // // // // //                   </option>
 // // // // // // // // // // // // //                 ))}
@@ -102,13 +227,14 @@
 // // // // // // // // // // // // //             </div>
 // // // // // // // // // // // // //             <button type="submit">Upload</button>
 // // // // // // // // // // // // //           </form>
-// // // // // // // // // // // // //         )}
+// // // // // // // // // // // // //         </div>
 // // // // // // // // // // // // //       </div>
 // // // // // // // // // // // // //     </div>
 // // // // // // // // // // // // //   );
 // // // // // // // // // // // // // };
 
 // // // // // // // // // // // // // export default Organization;
+
 
 
 // // // // // // // // // // // // import React, { useState, useEffect } from "react";
@@ -126,6 +252,19 @@
 // // // // // // // // // // // //   const [file, setFile] = useState(null);
 // // // // // // // // // // // //   const [error, setError] = useState("");
 // // // // // // // // // // // //   const [successMessage, setSuccessMessage] = useState("");
+// // // // // // // // // // // //   const [newPatient, setNewPatient] = useState({
+// // // // // // // // // // // //     name: "",
+// // // // // // // // // // // //     email: "",
+// // // // // // // // // // // //     password: "",
+// // // // // // // // // // // //     confirmPassword: "",
+// // // // // // // // // // // //     role: "patient",
+// // // // // // // // // // // //     patientId: "",
+// // // // // // // // // // // //     age: "",
+// // // // // // // // // // // //     gender: "",
+// // // // // // // // // // // //     dateOfBirth: "",
+// // // // // // // // // // // //     referredDoctor: "",
+// // // // // // // // // // // //   });
+// // // // // // // // // // // //   const [view, setView] = useState("existing"); // 'existing' or 'new'
 
 // // // // // // // // // // // //   useEffect(() => {
 // // // // // // // // // // // //     const fetchPatients = async () => {
@@ -137,18 +276,7 @@
 // // // // // // // // // // // //       }
 // // // // // // // // // // // //     };
 
-// // // // // // // // // // // //     // const fetchPatientIds = async () => {
-// // // // // // // // // // // //     //   // try {
-// // // // // // // // // // // //     //   //   const response = await axios.get(`${process.env.REACT_APP_fetchPatientIds_RESPONSE_URL}/api/patient-ids`);
-// // // // // // // // // // // //     //   //   setPatientIds(response.data);
-// // // // // // // // // // // //     //   // } catch (err) {
-// // // // // // // // // // // //     //   //   console.error(err);
-// // // // // // // // // // // //     //   //   setError("Failed to fetch patient IDs");
-// // // // // // // // // // // //     //   // }
-// // // // // // // // // // // //     // };
-
 // // // // // // // // // // // //     fetchPatients();
-// // // // // // // // // // // //     // fetchPatientIds();
 // // // // // // // // // // // //   }, []);
 
 // // // // // // // // // // // //   const handleLogout = () => {
@@ -169,7 +297,7 @@
 // // // // // // // // // // // //     formData.append("image", file);
 
 // // // // // // // // // // // //     try {
-// // // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
+// // // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/uploadExistingPatientImage`, formData, {
 // // // // // // // // // // // //         headers: {
 // // // // // // // // // // // //           "Content-Type": "multipart/form-data",
 // // // // // // // // // // // //         },
@@ -184,9 +312,41 @@
 // // // // // // // // // // // //     }
 // // // // // // // // // // // //   };
 
+// // // // // // // // // // // //   const handleAddPatient = async (e) => {
+// // // // // // // // // // // //     e.preventDefault();
+// // // // // // // // // // // //     const { name, email, password, confirmPassword, role, patientId, age, gender, dateOfBirth, referredDoctor } = newPatient;
+
+// // // // // // // // // // // //     if (password !== confirmPassword) {
+// // // // // // // // // // // //       setError("Passwords do not match.");
+// // // // // // // // // // // //       return;
+// // // // // // // // // // // //     }
+
+// // // // // // // // // // // //     try {
+// // // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/addPatient`, {
+// // // // // // // // // // // //         name, email, password, confirmPassword, role, patientId, age, gender, dateOfBirth, referredDoctor
+// // // // // // // // // // // //       });
+// // // // // // // // // // // //       setSuccessMessage(response.data.message);
+// // // // // // // // // // // //       setError("");
+// // // // // // // // // // // //       setNewPatient({
+// // // // // // // // // // // //         name: "",
+// // // // // // // // // // // //         email: "",
+// // // // // // // // // // // //         password: "",
+// // // // // // // // // // // //         confirmPassword: "",
+// // // // // // // // // // // //         role: "patient",
+// // // // // // // // // // // //         patientId: "",
+// // // // // // // // // // // //         age: "",
+// // // // // // // // // // // //         gender: "",
+// // // // // // // // // // // //         dateOfBirth: "",
+// // // // // // // // // // // //         referredDoctor: "",
+// // // // // // // // // // // //       });
+// // // // // // // // // // // //     } catch (error) {
+// // // // // // // // // // // //       console.error("Error adding patient:", error);
+// // // // // // // // // // // //       setError("Failed to add patient.");
+// // // // // // // // // // // //     }
+// // // // // // // // // // // //   };
+
 // // // // // // // // // // // //   return (
 // // // // // // // // // // // //     <div className="organization-page">
-// // // // // // // // // // // //       {/* Sidebar */}
 // // // // // // // // // // // //       <div className="sidebar">
 // // // // // // // // // // // //         <h4>Organization: {organizationName}</h4>
 // // // // // // // // // // // //         <button onClick={handleLogout} className="logout-btn">
@@ -194,46 +354,128 @@
 // // // // // // // // // // // //         </button>
 // // // // // // // // // // // //       </div>
 
-// // // // // // // // // // // //       {/* Main Content */}
 // // // // // // // // // // // //       <div className="main-content">
-// // // // // // // // // // // //         <div className="upload-section">
-// // // // // // // // // // // //           <h2>Upload Patient Details</h2>
-// // // // // // // // // // // //           {error && <div className="alert alert-danger">{error}</div>}
-// // // // // // // // // // // //           {successMessage && <div className="alert alert-success">{successMessage}</div>}
-// // // // // // // // // // // //           <form onSubmit={handleUpload} className="upload-form">
-// // // // // // // // // // // //             <div>
-// // // // // // // // // // // //               <label htmlFor="patientId">Select Patient ID</label>
-// // // // // // // // // // // //               <select
-// // // // // // // // // // // //                 id="patientId"
-// // // // // // // // // // // //                 value={selectedPatientId}
-// // // // // // // // // // // //                 onChange={(e) => setSelectedPatientId(e.target.value)}
-// // // // // // // // // // // //               >
-// // // // // // // // // // // //                 <option value="">Select a patient</option>
-// // // // // // // // // // // //                 {patients.map((patient) => (
-// // // // // // // // // // // //                   <option key={patient.patientId} value={patient.patientId}>
-// // // // // // // // // // // //                     {patient.patientId}
-// // // // // // // // // // // //                   </option>
-// // // // // // // // // // // //                 ))}
-// // // // // // // // // // // //               </select>
-// // // // // // // // // // // //             </div>
-// // // // // // // // // // // //             <div>
-// // // // // // // // // // // //               <label htmlFor="file">Upload Image</label>
-// // // // // // // // // // // //               <input
-// // // // // // // // // // // //                 type="file"
-// // // // // // // // // // // //                 id="file"
-// // // // // // // // // // // //                 accept="image/*"
-// // // // // // // // // // // //                 onChange={(e) => setFile(e.target.files[0])}
-// // // // // // // // // // // //               />
-// // // // // // // // // // // //             </div>
-// // // // // // // // // // // //             <button type="submit">Upload</button>
-// // // // // // // // // // // //           </form>
+// // // // // // // // // // // //         <div className="buttons-section">
+// // // // // // // // // // // //           <button onClick={() => setView("existing")}>Existing Patients</button>
+// // // // // // // // // // // //           <button onClick={() => setView("new")}>Add New Patient</button>
 // // // // // // // // // // // //         </div>
+
+// // // // // // // // // // // //         {view === "existing" && (
+// // // // // // // // // // // //           <div className="upload-section">
+// // // // // // // // // // // //             <h2>Upload Image for Existing Patient</h2>
+// // // // // // // // // // // //             {error && <div className="alert alert-danger">{error}</div>}
+// // // // // // // // // // // //             {successMessage && <div className="alert alert-success">{successMessage}</div>}
+// // // // // // // // // // // //             <form onSubmit={handleUpload}>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label htmlFor="patientId">Select Patient ID</label>
+// // // // // // // // // // // //                 <select
+// // // // // // // // // // // //                   id="patientId"
+// // // // // // // // // // // //                   value={selectedPatientId}
+// // // // // // // // // // // //                   onChange={(e) => setSelectedPatientId(e.target.value)}
+// // // // // // // // // // // //                 >
+// // // // // // // // // // // //                   <option value="">Select a patient</option>
+// // // // // // // // // // // //                   {patients.map((patient) => (
+// // // // // // // // // // // //                     <option key={patient.patientId} value={patient.patientId}>
+// // // // // // // // // // // //                       {patient.patientId}
+// // // // // // // // // // // //                     </option>
+// // // // // // // // // // // //                   ))}
+// // // // // // // // // // // //                 </select>
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label htmlFor="file">Upload Image</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="file"
+// // // // // // // // // // // //                   id="file"
+// // // // // // // // // // // //                   accept="image/*"
+// // // // // // // // // // // //                   onChange={(e) => setFile(e.target.files[0])}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <button type="submit">Upload</button>
+// // // // // // // // // // // //             </form>
+// // // // // // // // // // // //           </div>
+// // // // // // // // // // // //         )}
+
+// // // // // // // // // // // //         {view === "new" && (
+// // // // // // // // // // // //           <div className="new-patient-section">
+// // // // // // // // // // // //             <h2>Add New Patient</h2>
+// // // // // // // // // // // //             {error && <div className="alert alert-danger">{error}</div>}
+// // // // // // // // // // // //             {successMessage && <div className="alert alert-success">{successMessage}</div>}
+// // // // // // // // // // // //             <form onSubmit={handleAddPatient}>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Name</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="text"
+// // // // // // // // // // // //                   value={newPatient.name}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Email</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="email"
+// // // // // // // // // // // //                   value={newPatient.email}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, email: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Password</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="password"
+// // // // // // // // // // // //                   value={newPatient.password}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, password: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Confirm Password</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="password"
+// // // // // // // // // // // //                   value={newPatient.confirmPassword}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, confirmPassword: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Age</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="number"
+// // // // // // // // // // // //                   value={newPatient.age}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, age: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Gender</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="text"
+// // // // // // // // // // // //                   value={newPatient.gender}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Date of Birth</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="date"
+// // // // // // // // // // // //                   value={newPatient.dateOfBirth}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, dateOfBirth: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <div>
+// // // // // // // // // // // //                 <label>Referred Doctor</label>
+// // // // // // // // // // // //                 <input
+// // // // // // // // // // // //                   type="text"
+// // // // // // // // // // // //                   value={newPatient.referredDoctor}
+// // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })}
+// // // // // // // // // // // //                 />
+// // // // // // // // // // // //               </div>
+// // // // // // // // // // // //               <button type="submit">Add Patient</button>
+// // // // // // // // // // // //             </form>
+// // // // // // // // // // // //           </div>
+// // // // // // // // // // // //         )}
 // // // // // // // // // // // //       </div>
 // // // // // // // // // // // //     </div>
 // // // // // // // // // // // //   );
 // // // // // // // // // // // // };
 
 // // // // // // // // // // // // export default Organization;
+
 
 
 
@@ -250,21 +492,17 @@
 // // // // // // // // // // //   const [patientIds, setPatientIds] = useState([]);
 // // // // // // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState("");
 // // // // // // // // // // //   const [file, setFile] = useState(null);
-// // // // // // // // // // //   const [error, setError] = useState("");
-// // // // // // // // // // //   const [successMessage, setSuccessMessage] = useState("");
 // // // // // // // // // // //   const [newPatient, setNewPatient] = useState({
 // // // // // // // // // // //     name: "",
 // // // // // // // // // // //     email: "",
-// // // // // // // // // // //     password: "",
-// // // // // // // // // // //     confirmPassword: "",
-// // // // // // // // // // //     role: "patient",
 // // // // // // // // // // //     patientId: "",
-// // // // // // // // // // //     age: "",
 // // // // // // // // // // //     gender: "",
 // // // // // // // // // // //     dateOfBirth: "",
 // // // // // // // // // // //     referredDoctor: "",
 // // // // // // // // // // //   });
-// // // // // // // // // // //   const [view, setView] = useState("existing"); // 'existing' or 'new'
+// // // // // // // // // // //   const [error, setError] = useState("");
+// // // // // // // // // // //   const [successMessage, setSuccessMessage] = useState("");
+// // // // // // // // // // //   const [isAddNewPatient, setIsAddNewPatient] = useState(false);
 
 // // // // // // // // // // //   useEffect(() => {
 // // // // // // // // // // //     const fetchPatients = async () => {
@@ -297,7 +535,7 @@
 // // // // // // // // // // //     formData.append("image", file);
 
 // // // // // // // // // // //     try {
-// // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/uploadExistingPatientImage`, formData, {
+// // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
 // // // // // // // // // // //         headers: {
 // // // // // // // // // // //           "Content-Type": "multipart/form-data",
 // // // // // // // // // // //         },
@@ -312,41 +550,45 @@
 // // // // // // // // // // //     }
 // // // // // // // // // // //   };
 
-// // // // // // // // // // //   const handleAddPatient = async (e) => {
+// // // // // // // // // // //   const handleAddNewPatient = async (e) => {
 // // // // // // // // // // //     e.preventDefault();
-// // // // // // // // // // //     const { name, email, password, confirmPassword, role, patientId, age, gender, dateOfBirth, referredDoctor } = newPatient;
+// // // // // // // // // // //     const { name, email, patientId, gender, dateOfBirth, referredDoctor } = newPatient;
 
-// // // // // // // // // // //     if (password !== confirmPassword) {
-// // // // // // // // // // //       setError("Passwords do not match.");
+// // // // // // // // // // //     if (!name || !email || !patientId || !gender || !dateOfBirth || !referredDoctor) {
+// // // // // // // // // // //       setError("All fields are required.");
 // // // // // // // // // // //       return;
 // // // // // // // // // // //     }
 
 // // // // // // // // // // //     try {
-// // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/addPatient`, {
-// // // // // // // // // // //         name, email, password, confirmPassword, role, patientId, age, gender, dateOfBirth, referredDoctor
+// // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`, {
+// // // // // // // // // // //         name,
+// // // // // // // // // // //         email,
+// // // // // // // // // // //         role: "patient",
+// // // // // // // // // // //         patientId,
+// // // // // // // // // // //         gender,
+// // // // // // // // // // //         dateOfBirth,
+// // // // // // // // // // //         referredDoctor,
+// // // // // // // // // // //         organizationName,
 // // // // // // // // // // //       });
 // // // // // // // // // // //       setSuccessMessage(response.data.message);
 // // // // // // // // // // //       setError("");
 // // // // // // // // // // //       setNewPatient({
 // // // // // // // // // // //         name: "",
 // // // // // // // // // // //         email: "",
-// // // // // // // // // // //         password: "",
-// // // // // // // // // // //         confirmPassword: "",
-// // // // // // // // // // //         role: "patient",
 // // // // // // // // // // //         patientId: "",
-// // // // // // // // // // //         age: "",
 // // // // // // // // // // //         gender: "",
 // // // // // // // // // // //         dateOfBirth: "",
 // // // // // // // // // // //         referredDoctor: "",
 // // // // // // // // // // //       });
 // // // // // // // // // // //     } catch (error) {
-// // // // // // // // // // //       console.error("Error adding patient:", error);
-// // // // // // // // // // //       setError("Failed to add patient.");
+// // // // // // // // // // //       console.error("Error adding new patient:", error);
+// // // // // // // // // // //       setError("Failed to add new patient.");
 // // // // // // // // // // //     }
 // // // // // // // // // // //   };
 
 // // // // // // // // // // //   return (
 // // // // // // // // // // //     <div className="organization-page">
+// // // // // // // // // // //       {/* Sidebar */}
 // // // // // // // // // // //       <div className="sidebar">
 // // // // // // // // // // //         <h4>Organization: {organizationName}</h4>
 // // // // // // // // // // //         <button onClick={handleLogout} className="logout-btn">
@@ -354,127 +596,120 @@
 // // // // // // // // // // //         </button>
 // // // // // // // // // // //       </div>
 
+// // // // // // // // // // //       {/* Main Content */}
 // // // // // // // // // // //       <div className="main-content">
-// // // // // // // // // // //         <div className="buttons-section">
-// // // // // // // // // // //           <button onClick={() => setView("existing")}>Existing Patients</button>
-// // // // // // // // // // //           <button onClick={() => setView("new")}>Add New Patient</button>
-// // // // // // // // // // //         </div>
+// // // // // // // // // // //         <div className="upload-section">
+// // // // // // // // // // //           <h2>{isAddNewPatient ? "Add New Patient" : "Existing Patients"}</h2>
 
-// // // // // // // // // // //         {view === "existing" && (
-// // // // // // // // // // //           <div className="upload-section">
-// // // // // // // // // // //             <h2>Upload Image for Existing Patient</h2>
-// // // // // // // // // // //             {error && <div className="alert alert-danger">{error}</div>}
-// // // // // // // // // // //             {successMessage && <div className="alert alert-success">{successMessage}</div>}
-// // // // // // // // // // //             <form onSubmit={handleUpload}>
-// // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label htmlFor="patientId">Select Patient ID</label>
-// // // // // // // // // // //                 <select
-// // // // // // // // // // //                   id="patientId"
-// // // // // // // // // // //                   value={selectedPatientId}
-// // // // // // // // // // //                   onChange={(e) => setSelectedPatientId(e.target.value)}
-// // // // // // // // // // //                 >
-// // // // // // // // // // //                   <option value="">Select a patient</option>
-// // // // // // // // // // //                   {patients.map((patient) => (
-// // // // // // // // // // //                     <option key={patient.patientId} value={patient.patientId}>
-// // // // // // // // // // //                       {patient.patientId}
-// // // // // // // // // // //                     </option>
-// // // // // // // // // // //                   ))}
-// // // // // // // // // // //                 </select>
-// // // // // // // // // // //               </div>
-// // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label htmlFor="file">Upload Image</label>
-// // // // // // // // // // //                 <input
-// // // // // // // // // // //                   type="file"
-// // // // // // // // // // //                   id="file"
-// // // // // // // // // // //                   accept="image/*"
-// // // // // // // // // // //                   onChange={(e) => setFile(e.target.files[0])}
-// // // // // // // // // // //                 />
-// // // // // // // // // // //               </div>
-// // // // // // // // // // //               <button type="submit">Upload</button>
-// // // // // // // // // // //             </form>
-// // // // // // // // // // //           </div>
-// // // // // // // // // // //         )}
+// // // // // // // // // // //           {/* Toggle between "Add New Patient" and "Existing Patients" */}
+// // // // // // // // // // //           <button onClick={() => setIsAddNewPatient(!isAddNewPatient)}>
+// // // // // // // // // // //             {isAddNewPatient ? "View Existing Patients" : "Add New Patient"}
+// // // // // // // // // // //           </button>
 
-// // // // // // // // // // //         {view === "new" && (
-// // // // // // // // // // //           <div className="new-patient-section">
-// // // // // // // // // // //             <h2>Add New Patient</h2>
-// // // // // // // // // // //             {error && <div className="alert alert-danger">{error}</div>}
-// // // // // // // // // // //             {successMessage && <div className="alert alert-success">{successMessage}</div>}
-// // // // // // // // // // //             <form onSubmit={handleAddPatient}>
+// // // // // // // // // // //           {isAddNewPatient ? (
+// // // // // // // // // // //             <form onSubmit={handleAddNewPatient} className="add-new-patient-form">
 // // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Name</label>
+// // // // // // // // // // //                 <label htmlFor="name">Patient Name</label>
 // // // // // // // // // // //                 <input
 // // // // // // // // // // //                   type="text"
+// // // // // // // // // // //                   id="name"
 // // // // // // // // // // //                   value={newPatient.name}
 // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
 // // // // // // // // // // //                 />
 // // // // // // // // // // //               </div>
+
 // // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Email</label>
+// // // // // // // // // // //                 <label htmlFor="email">Email</label>
 // // // // // // // // // // //                 <input
 // // // // // // // // // // //                   type="email"
+// // // // // // // // // // //                   id="email"
 // // // // // // // // // // //                   value={newPatient.email}
 // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, email: e.target.value })}
 // // // // // // // // // // //                 />
 // // // // // // // // // // //               </div>
+
 // // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Password</label>
-// // // // // // // // // // //                 <input
-// // // // // // // // // // //                   type="password"
-// // // // // // // // // // //                   value={newPatient.password}
-// // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, password: e.target.value })}
-// // // // // // // // // // //                 />
-// // // // // // // // // // //               </div>
-// // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Confirm Password</label>
-// // // // // // // // // // //                 <input
-// // // // // // // // // // //                   type="password"
-// // // // // // // // // // //                   value={newPatient.confirmPassword}
-// // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, confirmPassword: e.target.value })}
-// // // // // // // // // // //                 />
-// // // // // // // // // // //               </div>
-// // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Age</label>
-// // // // // // // // // // //                 <input
-// // // // // // // // // // //                   type="number"
-// // // // // // // // // // //                   value={newPatient.age}
-// // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, age: e.target.value })}
-// // // // // // // // // // //                 />
-// // // // // // // // // // //               </div>
-// // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Gender</label>
+// // // // // // // // // // //                 <label htmlFor="patientId">Patient ID</label>
 // // // // // // // // // // //                 <input
 // // // // // // // // // // //                   type="text"
-// // // // // // // // // // //                   value={newPatient.gender}
-// // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })}
+// // // // // // // // // // //                   id="patientId"
+// // // // // // // // // // //                   value={newPatient.patientId}
+// // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })}
 // // // // // // // // // // //                 />
 // // // // // // // // // // //               </div>
+
 // // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Date of Birth</label>
+// // // // // // // // // // //                 <label htmlFor="gender">Gender</label>
+// // // // // // // // // // //                 <select
+// // // // // // // // // // //                   id="gender"
+// // // // // // // // // // //                   value={newPatient.gender}
+// // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })}
+// // // // // // // // // // //                 >
+// // // // // // // // // // //                   <option value="">Select Gender</option>
+// // // // // // // // // // //                   <option value="Male">Male</option>
+// // // // // // // // // // //                   <option value="Female">Female</option>
+// // // // // // // // // // //                   <option value="Other">Other</option>
+// // // // // // // // // // //                 </select>
+// // // // // // // // // // //               </div>
+
+// // // // // // // // // // //               <div>
+// // // // // // // // // // //                 <label htmlFor="dateOfBirth">Date of Birth</label>
 // // // // // // // // // // //                 <input
 // // // // // // // // // // //                   type="date"
+// // // // // // // // // // //                   id="dateOfBirth"
 // // // // // // // // // // //                   value={newPatient.dateOfBirth}
 // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, dateOfBirth: e.target.value })}
 // // // // // // // // // // //                 />
 // // // // // // // // // // //               </div>
+
 // // // // // // // // // // //               <div>
-// // // // // // // // // // //                 <label>Referred Doctor</label>
+// // // // // // // // // // //                 <label htmlFor="referredDoctor">Referred Doctor</label>
 // // // // // // // // // // //                 <input
 // // // // // // // // // // //                   type="text"
+// // // // // // // // // // //                   id="referredDoctor"
 // // // // // // // // // // //                   value={newPatient.referredDoctor}
 // // // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })}
 // // // // // // // // // // //                 />
 // // // // // // // // // // //               </div>
+
 // // // // // // // // // // //               <button type="submit">Add Patient</button>
 // // // // // // // // // // //             </form>
-// // // // // // // // // // //           </div>
-// // // // // // // // // // //         )}
+// // // // // // // // // // //           ) : (
+// // // // // // // // // // //             <>
+// // // // // // // // // // //               <div className="patient-list">
+// // // // // // // // // // //                 {patients.map((patient) => (
+// // // // // // // // // // //                   <div key={patient.patientId}>
+// // // // // // // // // // //                     <h3>{patient.name}</h3>
+// // // // // // // // // // //                     <button onClick={() => setSelectedPatientId(patient.patientId)}>Upload Image</button>
+// // // // // // // // // // //                   </div>
+// // // // // // // // // // //                 ))}
+// // // // // // // // // // //               </div>
+
+// // // // // // // // // // //               <form onSubmit={handleUpload} className="upload-form">
+// // // // // // // // // // //                 <div>
+// // // // // // // // // // //                   <label htmlFor="file">Upload Image</label>
+// // // // // // // // // // //                   <input
+// // // // // // // // // // //                     type="file"
+// // // // // // // // // // //                     id="file"
+// // // // // // // // // // //                     accept="image/*"
+// // // // // // // // // // //                     onChange={(e) => setFile(e.target.files[0])}
+// // // // // // // // // // //                   />
+// // // // // // // // // // //                 </div>
+// // // // // // // // // // //                 <button type="submit">Upload</button>
+// // // // // // // // // // //               </form>
+// // // // // // // // // // //             </>
+// // // // // // // // // // //           )}
+
+// // // // // // // // // // //           {error && <div className="alert alert-danger">{error}</div>}
+// // // // // // // // // // //           {successMessage && <div className="alert alert-success">{successMessage}</div>}
+// // // // // // // // // // //         </div>
 // // // // // // // // // // //       </div>
 // // // // // // // // // // //     </div>
 // // // // // // // // // // //   );
 // // // // // // // // // // // };
 
 // // // // // // // // // // // export default Organization;
+
 
 
 
@@ -598,16 +833,27 @@
 
 // // // // // // // // // //       {/* Main Content */}
 // // // // // // // // // //       <div className="main-content">
-// // // // // // // // // //         <div className="upload-section">
-// // // // // // // // // //           <h2>{isAddNewPatient ? "Add New Patient" : "Existing Patients"}</h2>
-
-// // // // // // // // // //           {/* Toggle between "Add New Patient" and "Existing Patients" */}
-// // // // // // // // // //           <button onClick={() => setIsAddNewPatient(!isAddNewPatient)}>
-// // // // // // // // // //             {isAddNewPatient ? "View Existing Patients" : "Add New Patient"}
+// // // // // // // // // //         {/* Button Section */}
+// // // // // // // // // //         <div className="button-section">
+// // // // // // // // // //           <button
+// // // // // // // // // //             className={`action-btn ${!isAddNewPatient ? "active" : ""}`}
+// // // // // // // // // //             onClick={() => setIsAddNewPatient(false)}
+// // // // // // // // // //           >
+// // // // // // // // // //             Existing Patients
 // // // // // // // // // //           </button>
+// // // // // // // // // //           <button
+// // // // // // // // // //             className={`action-btn ${isAddNewPatient ? "active" : ""}`}
+// // // // // // // // // //             onClick={() => setIsAddNewPatient(true)}
+// // // // // // // // // //           >
+// // // // // // // // // //             Add New Patient
+// // // // // // // // // //           </button>
+// // // // // // // // // //         </div>
 
-// // // // // // // // // //           {isAddNewPatient ? (
-// // // // // // // // // //             <form onSubmit={handleAddNewPatient} className="add-new-patient-form">
+// // // // // // // // // //         {/* Add New Patient Form */}
+// // // // // // // // // //         {isAddNewPatient ? (
+// // // // // // // // // //           <div className="add-new-patient-form">
+// // // // // // // // // //             <h2>Add New Patient</h2>
+// // // // // // // // // //             <form onSubmit={handleAddNewPatient}>
 // // // // // // // // // //               <div>
 // // // // // // // // // //                 <label htmlFor="name">Patient Name</label>
 // // // // // // // // // //                 <input
@@ -674,20 +920,58 @@
 
 // // // // // // // // // //               <button type="submit">Add Patient</button>
 // // // // // // // // // //             </form>
-// // // // // // // // // //           ) : (
-// // // // // // // // // //             <>
-// // // // // // // // // //               <div className="patient-list">
+// // // // // // // // // //           </div>
+// // // // // // // // // //         ) : (
+// // // // // // // // // //           // Existing Patients Section
+// // // // // // // // // //           <div className="existing-patients">
+// // // // // // // // // //             <h2>Existing Patients</h2>
+// // // // // // // // // //             <table className="patients-table">
+// // // // // // // // // //               <thead>
+// // // // // // // // // //                 <tr>
+// // // // // // // // // //                   <th>Patient ID</th>
+// // // // // // // // // //                   <th>Name</th>
+// // // // // // // // // //                   <th>Email</th>
+// // // // // // // // // //                   <th>Gender</th>
+// // // // // // // // // //                   <th>Date of Birth</th>
+// // // // // // // // // //                   <th>Referred Doctor</th>
+// // // // // // // // // //                   <th>Image</th>
+// // // // // // // // // //                   <th>Update Image</th>
+// // // // // // // // // //                 </tr>
+// // // // // // // // // //               </thead>
+// // // // // // // // // //               <tbody>
 // // // // // // // // // //                 {patients.map((patient) => (
-// // // // // // // // // //                   <div key={patient.patientId}>
-// // // // // // // // // //                     <h3>{patient.name}</h3>
-// // // // // // // // // //                     <button onClick={() => setSelectedPatientId(patient.patientId)}>Upload Image</button>
-// // // // // // // // // //                   </div>
+// // // // // // // // // //                   <tr key={patient.patientId}>
+// // // // // // // // // //                     <td>{patient.patientId}</td>
+// // // // // // // // // //                     <td>{patient.name}</td>
+// // // // // // // // // //                     <td>{patient.email}</td>
+// // // // // // // // // //                     <td>{patient.gender}</td>
+// // // // // // // // // //                     <td>{patient.dateOfBirth}</td>
+// // // // // // // // // //                     <td>{patient.referredDoctor}</td>
+// // // // // // // // // //                     <td>
+// // // // // // // // // //                       {patient.imageData && patient.imageData.length > 0 ? (
+// // // // // // // // // //                         <img src={patient.imageData[0].imagePath} alt="Patient" className="patient-image" />
+// // // // // // // // // //                       ) : (
+// // // // // // // // // //                         <span>No Image</span>
+// // // // // // // // // //                       )}
+// // // // // // // // // //                     </td>
+// // // // // // // // // //                     <td>
+// // // // // // // // // //                       <button
+// // // // // // // // // //                         onClick={() => setSelectedPatientId(patient.patientId)}
+// // // // // // // // // //                         className="upload-image-btn"
+// // // // // // // // // //                       >
+// // // // // // // // // //                         Update Image
+// // // // // // // // // //                       </button>
+// // // // // // // // // //                     </td>
+// // // // // // // // // //                   </tr>
 // // // // // // // // // //                 ))}
-// // // // // // // // // //               </div>
+// // // // // // // // // //               </tbody>
+// // // // // // // // // //             </table>
 
+// // // // // // // // // //             {selectedPatientId && (
 // // // // // // // // // //               <form onSubmit={handleUpload} className="upload-form">
+// // // // // // // // // //                 <h3>Update Image for Patient ID: {selectedPatientId}</h3>
 // // // // // // // // // //                 <div>
-// // // // // // // // // //                   <label htmlFor="file">Upload Image</label>
+// // // // // // // // // //                   <label htmlFor="file">Upload New Image</label>
 // // // // // // // // // //                   <input
 // // // // // // // // // //                     type="file"
 // // // // // // // // // //                     id="file"
@@ -697,19 +981,18 @@
 // // // // // // // // // //                 </div>
 // // // // // // // // // //                 <button type="submit">Upload</button>
 // // // // // // // // // //               </form>
-// // // // // // // // // //             </>
-// // // // // // // // // //           )}
+// // // // // // // // // //             )}
+// // // // // // // // // //           </div>
+// // // // // // // // // //         )}
 
-// // // // // // // // // //           {error && <div className="alert alert-danger">{error}</div>}
-// // // // // // // // // //           {successMessage && <div className="alert alert-success">{successMessage}</div>}
-// // // // // // // // // //         </div>
+// // // // // // // // // //         {error && <div className="alert alert-danger">{error}</div>}
+// // // // // // // // // //         {successMessage && <div className="alert alert-success">{successMessage}</div>}
 // // // // // // // // // //       </div>
 // // // // // // // // // //     </div>
 // // // // // // // // // //   );
 // // // // // // // // // // };
 
 // // // // // // // // // // export default Organization;
-
 
 
 
@@ -724,7 +1007,6 @@
 // // // // // // // // //   const navigate = useNavigate();
 
 // // // // // // // // //   const [patients, setPatients] = useState([]);
-// // // // // // // // //   const [patientIds, setPatientIds] = useState([]);
 // // // // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState("");
 // // // // // // // // //   const [file, setFile] = useState(null);
 // // // // // // // // //   const [newPatient, setNewPatient] = useState({
@@ -738,6 +1020,7 @@
 // // // // // // // // //   const [error, setError] = useState("");
 // // // // // // // // //   const [successMessage, setSuccessMessage] = useState("");
 // // // // // // // // //   const [isAddNewPatient, setIsAddNewPatient] = useState(false);
+// // // // // // // // //   const [selectedImage, setSelectedImage] = useState(null);  // To store the selected image
 
 // // // // // // // // //   useEffect(() => {
 // // // // // // // // //     const fetchPatients = async () => {
@@ -821,6 +1104,16 @@
 // // // // // // // // //     }
 // // // // // // // // //   };
 
+// // // // // // // // //   // Function to handle image click and open it in a modal
+// // // // // // // // //   const handleImageClick = (imagePath) => {
+// // // // // // // // //     setSelectedImage(imagePath);  // Set the image path to show in the modal
+// // // // // // // // //   };
+
+// // // // // // // // //   // Function to close the modal
+// // // // // // // // //   const closeModal = () => {
+// // // // // // // // //     setSelectedImage(null);  // Clear the selected image to close the modal
+// // // // // // // // //   };
+
 // // // // // // // // //   return (
 // // // // // // // // //     <div className="organization-page">
 // // // // // // // // //       {/* Sidebar */}
@@ -854,6 +1147,7 @@
 // // // // // // // // //           <div className="add-new-patient-form">
 // // // // // // // // //             <h2>Add New Patient</h2>
 // // // // // // // // //             <form onSubmit={handleAddNewPatient}>
+// // // // // // // // //               {/* Form fields for new patient */}
 // // // // // // // // //               <div>
 // // // // // // // // //                 <label htmlFor="name">Patient Name</label>
 // // // // // // // // //                 <input
@@ -863,61 +1157,7 @@
 // // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
 // // // // // // // // //                 />
 // // // // // // // // //               </div>
-
-// // // // // // // // //               <div>
-// // // // // // // // //                 <label htmlFor="email">Email</label>
-// // // // // // // // //                 <input
-// // // // // // // // //                   type="email"
-// // // // // // // // //                   id="email"
-// // // // // // // // //                   value={newPatient.email}
-// // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, email: e.target.value })}
-// // // // // // // // //                 />
-// // // // // // // // //               </div>
-
-// // // // // // // // //               <div>
-// // // // // // // // //                 <label htmlFor="patientId">Patient ID</label>
-// // // // // // // // //                 <input
-// // // // // // // // //                   type="text"
-// // // // // // // // //                   id="patientId"
-// // // // // // // // //                   value={newPatient.patientId}
-// // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })}
-// // // // // // // // //                 />
-// // // // // // // // //               </div>
-
-// // // // // // // // //               <div>
-// // // // // // // // //                 <label htmlFor="gender">Gender</label>
-// // // // // // // // //                 <select
-// // // // // // // // //                   id="gender"
-// // // // // // // // //                   value={newPatient.gender}
-// // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })}
-// // // // // // // // //                 >
-// // // // // // // // //                   <option value="">Select Gender</option>
-// // // // // // // // //                   <option value="Male">Male</option>
-// // // // // // // // //                   <option value="Female">Female</option>
-// // // // // // // // //                   <option value="Other">Other</option>
-// // // // // // // // //                 </select>
-// // // // // // // // //               </div>
-
-// // // // // // // // //               <div>
-// // // // // // // // //                 <label htmlFor="dateOfBirth">Date of Birth</label>
-// // // // // // // // //                 <input
-// // // // // // // // //                   type="date"
-// // // // // // // // //                   id="dateOfBirth"
-// // // // // // // // //                   value={newPatient.dateOfBirth}
-// // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, dateOfBirth: e.target.value })}
-// // // // // // // // //                 />
-// // // // // // // // //               </div>
-
-// // // // // // // // //               <div>
-// // // // // // // // //                 <label htmlFor="referredDoctor">Referred Doctor</label>
-// // // // // // // // //                 <input
-// // // // // // // // //                   type="text"
-// // // // // // // // //                   id="referredDoctor"
-// // // // // // // // //                   value={newPatient.referredDoctor}
-// // // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })}
-// // // // // // // // //                 />
-// // // // // // // // //               </div>
-
+// // // // // // // // //               {/* Other fields */}
 // // // // // // // // //               <button type="submit">Add Patient</button>
 // // // // // // // // //             </form>
 // // // // // // // // //           </div>
@@ -949,7 +1189,12 @@
 // // // // // // // // //                     <td>{patient.referredDoctor}</td>
 // // // // // // // // //                     <td>
 // // // // // // // // //                       {patient.imageData && patient.imageData.length > 0 ? (
-// // // // // // // // //                         <img src={patient.imageData[0].imagePath} alt="Patient" className="patient-image" />
+// // // // // // // // //                         <img
+// // // // // // // // //                           src={patient.imageData[0].imagePath}
+// // // // // // // // //                           alt="Patient"
+// // // // // // // // //                           className="patient-image"
+// // // // // // // // //                           onClick={() => handleImageClick(patient.imageData[0].imagePath)}  // Open image on click
+// // // // // // // // //                         />
 // // // // // // // // //                       ) : (
 // // // // // // // // //                         <span>No Image</span>
 // // // // // // // // //                       )}
@@ -988,6 +1233,16 @@
 // // // // // // // // //         {error && <div className="alert alert-danger">{error}</div>}
 // // // // // // // // //         {successMessage && <div className="alert alert-success">{successMessage}</div>}
 // // // // // // // // //       </div>
+
+// // // // // // // // //       {/* Modal to display image */}
+// // // // // // // // //       {selectedImage && (
+// // // // // // // // //         <div className="modal">
+// // // // // // // // //           <div className="modal-content">
+// // // // // // // // //             <span className="close" onClick={closeModal}>&times;</span>
+// // // // // // // // //             <img src={selectedImage} alt="Selected" className="modal-image" />
+// // // // // // // // //           </div>
+// // // // // // // // //         </div>
+// // // // // // // // //       )}
 // // // // // // // // //     </div>
 // // // // // // // // //   );
 // // // // // // // // // };
@@ -1007,6 +1262,7 @@
 // // // // // // // //   const navigate = useNavigate();
 
 // // // // // // // //   const [patients, setPatients] = useState([]);
+// // // // // // // //   const [patientIds, setPatientIds] = useState([]);
 // // // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState("");
 // // // // // // // //   const [file, setFile] = useState(null);
 // // // // // // // //   const [newPatient, setNewPatient] = useState({
@@ -1020,7 +1276,7 @@
 // // // // // // // //   const [error, setError] = useState("");
 // // // // // // // //   const [successMessage, setSuccessMessage] = useState("");
 // // // // // // // //   const [isAddNewPatient, setIsAddNewPatient] = useState(false);
-// // // // // // // //   const [selectedImage, setSelectedImage] = useState(null);  // To store the selected image
+// // // // // // // //   const [selectedImage, setSelectedImage] = useState(null); // State for the selected image to be displayed in the modal
 
 // // // // // // // //   useEffect(() => {
 // // // // // // // //     const fetchPatients = async () => {
@@ -1104,14 +1360,14 @@
 // // // // // // // //     }
 // // // // // // // //   };
 
-// // // // // // // //   // Function to handle image click and open it in a modal
-// // // // // // // //   const handleImageClick = (imagePath) => {
-// // // // // // // //     setSelectedImage(imagePath);  // Set the image path to show in the modal
+// // // // // // // //   // Open modal with the selected image
+// // // // // // // //   const openModal = (imagePath) => {
+// // // // // // // //     setSelectedImage(imagePath);
 // // // // // // // //   };
 
-// // // // // // // //   // Function to close the modal
+// // // // // // // //   // Close the modal
 // // // // // // // //   const closeModal = () => {
-// // // // // // // //     setSelectedImage(null);  // Clear the selected image to close the modal
+// // // // // // // //     setSelectedImage(null);
 // // // // // // // //   };
 
 // // // // // // // //   return (
@@ -1147,17 +1403,7 @@
 // // // // // // // //           <div className="add-new-patient-form">
 // // // // // // // //             <h2>Add New Patient</h2>
 // // // // // // // //             <form onSubmit={handleAddNewPatient}>
-// // // // // // // //               {/* Form fields for new patient */}
-// // // // // // // //               <div>
-// // // // // // // //                 <label htmlFor="name">Patient Name</label>
-// // // // // // // //                 <input
-// // // // // // // //                   type="text"
-// // // // // // // //                   id="name"
-// // // // // // // //                   value={newPatient.name}
-// // // // // // // //                   onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
-// // // // // // // //                 />
-// // // // // // // //               </div>
-// // // // // // // //               {/* Other fields */}
+// // // // // // // //               {/* form fields */}
 // // // // // // // //               <button type="submit">Add Patient</button>
 // // // // // // // //             </form>
 // // // // // // // //           </div>
@@ -1187,18 +1433,37 @@
 // // // // // // // //                     <td>{patient.gender}</td>
 // // // // // // // //                     <td>{patient.dateOfBirth}</td>
 // // // // // // // //                     <td>{patient.referredDoctor}</td>
-// // // // // // // //                     <td>
+// // // // // // // //                     {/* <td>
 // // // // // // // //                       {patient.imageData && patient.imageData.length > 0 ? (
 // // // // // // // //                         <img
 // // // // // // // //                           src={patient.imageData[0].imagePath}
 // // // // // // // //                           alt="Patient"
 // // // // // // // //                           className="patient-image"
-// // // // // // // //                           onClick={() => handleImageClick(patient.imageData[0].imagePath)}  // Open image on click
+// // // // // // // //                           onClick={() => openModal(patient.imageData[0].imagePath)} // Open image in modal on click
 // // // // // // // //                         />
 // // // // // // // //                       ) : (
 // // // // // // // //                         <span>No Image</span>
 // // // // // // // //                       )}
-// // // // // // // //                     </td>
+// // // // // // // //                     </td> */}
+// // // // // // // //                     <td>
+// // // // // // // //                     {patient.imageData && patient.imageData.length > 0 ? (
+// // // // // // // //                       <ul>
+// // // // // // // //                         {patient.imageData.map((image, i) => (
+// // // // // // // //                           <li key={i}>
+// // // // // // // //                             <strong>Image Name:</strong> {image.imageName} <br />
+// // // // // // // //                             <strong>Upload Date:</strong> {new Date(image.uploadDate).toLocaleString()} <br />
+// // // // // // // //                             <strong>Organization Name:</strong> {image.organizationName} <br />
+// // // // // // // //                             <strong>Image Path:</strong>
+// // // // // // // //                             <a href={`http://localhost:5001/${image.imagePath}`} target="_blank" rel="noopener noreferrer">
+// // // // // // // //                               View Image
+// // // // // // // //                             </a>
+// // // // // // // //                           </li>
+// // // // // // // //                         ))}
+// // // // // // // //                       </ul>
+// // // // // // // //                     ) : (
+// // // // // // // //                       <span>No images uploaded</span>
+// // // // // // // //                     )}
+// // // // // // // //                   </td>
 // // // // // // // //                     <td>
 // // // // // // // //                       <button
 // // // // // // // //                         onClick={() => setSelectedPatientId(patient.patientId)}
@@ -1234,13 +1499,11 @@
 // // // // // // // //         {successMessage && <div className="alert alert-success">{successMessage}</div>}
 // // // // // // // //       </div>
 
-// // // // // // // //       {/* Modal to display image */}
+// // // // // // // //       {/* Modal for viewing image */}
 // // // // // // // //       {selectedImage && (
-// // // // // // // //         <div className="modal">
-// // // // // // // //           <div className="modal-content">
-// // // // // // // //             <span className="close" onClick={closeModal}>&times;</span>
-// // // // // // // //             <img src={selectedImage} alt="Selected" className="modal-image" />
-// // // // // // // //           </div>
+// // // // // // // //         <div className="modal" onClick={closeModal}>
+// // // // // // // //           <span className="close" onClick={closeModal}>&times;</span>
+// // // // // // // //           <img className="modal-content" src={selectedImage} alt="Patient" />
 // // // // // // // //         </div>
 // // // // // // // //       )}
 // // // // // // // //     </div>
@@ -1262,22 +1525,10 @@
 // // // // // // //   const navigate = useNavigate();
 
 // // // // // // //   const [patients, setPatients] = useState([]);
-// // // // // // //   const [patientIds, setPatientIds] = useState([]);
-// // // // // // //   const [selectedPatientId, setSelectedPatientId] = useState("");
-// // // // // // //   const [file, setFile] = useState(null);
-// // // // // // //   const [newPatient, setNewPatient] = useState({
-// // // // // // //     name: "",
-// // // // // // //     email: "",
-// // // // // // //     patientId: "",
-// // // // // // //     gender: "",
-// // // // // // //     dateOfBirth: "",
-// // // // // // //     referredDoctor: "",
-// // // // // // //   });
-// // // // // // //   const [error, setError] = useState("");
-// // // // // // //   const [successMessage, setSuccessMessage] = useState("");
-// // // // // // //   const [isAddNewPatient, setIsAddNewPatient] = useState(false);
-// // // // // // //   const [selectedImage, setSelectedImage] = useState(null); // State for the selected image to be displayed in the modal
+// // // // // // //   const [selectedImage, setSelectedImage] = useState(null); // State for the modal image
+// // // // // // //   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
+// // // // // // //   // Fetch patients from the backend
 // // // // // // //   useEffect(() => {
 // // // // // // //     const fetchPatients = async () => {
 // // // // // // //       try {
@@ -1296,77 +1547,15 @@
 // // // // // // //     navigate("/Login");
 // // // // // // //   };
 
-// // // // // // //   const handleUpload = async (e) => {
-// // // // // // //     e.preventDefault();
-// // // // // // //     if (!selectedPatientId || !file) {
-// // // // // // //       setError("Please select a patient ID and upload an image.");
-// // // // // // //       return;
-// // // // // // //     }
-
-// // // // // // //     const formData = new FormData();
-// // // // // // //     formData.append("patientId", selectedPatientId);
-// // // // // // //     formData.append("organizationName", organizationName);
-// // // // // // //     formData.append("image", file);
-
-// // // // // // //     try {
-// // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
-// // // // // // //         headers: {
-// // // // // // //           "Content-Type": "multipart/form-data",
-// // // // // // //         },
-// // // // // // //       });
-// // // // // // //       setSuccessMessage(response.data.message);
-// // // // // // //       setError("");
-// // // // // // //       setFile(null);
-// // // // // // //       setSelectedPatientId("");
-// // // // // // //     } catch (error) {
-// // // // // // //       console.error("Error uploading file:", error);
-// // // // // // //       setError("Failed to upload image.");
-// // // // // // //     }
-// // // // // // //   };
-
-// // // // // // //   const handleAddNewPatient = async (e) => {
-// // // // // // //     e.preventDefault();
-// // // // // // //     const { name, email, patientId, gender, dateOfBirth, referredDoctor } = newPatient;
-
-// // // // // // //     if (!name || !email || !patientId || !gender || !dateOfBirth || !referredDoctor) {
-// // // // // // //       setError("All fields are required.");
-// // // // // // //       return;
-// // // // // // //     }
-
-// // // // // // //     try {
-// // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`, {
-// // // // // // //         name,
-// // // // // // //         email,
-// // // // // // //         role: "patient",
-// // // // // // //         patientId,
-// // // // // // //         gender,
-// // // // // // //         dateOfBirth,
-// // // // // // //         referredDoctor,
-// // // // // // //         organizationName,
-// // // // // // //       });
-// // // // // // //       setSuccessMessage(response.data.message);
-// // // // // // //       setError("");
-// // // // // // //       setNewPatient({
-// // // // // // //         name: "",
-// // // // // // //         email: "",
-// // // // // // //         patientId: "",
-// // // // // // //         gender: "",
-// // // // // // //         dateOfBirth: "",
-// // // // // // //         referredDoctor: "",
-// // // // // // //       });
-// // // // // // //     } catch (error) {
-// // // // // // //       console.error("Error adding new patient:", error);
-// // // // // // //       setError("Failed to add new patient.");
-// // // // // // //     }
-// // // // // // //   };
-
-// // // // // // //   // Open modal with the selected image
+// // // // // // //   // Open Modal with the selected image
 // // // // // // //   const openModal = (imagePath) => {
 // // // // // // //     setSelectedImage(imagePath);
+// // // // // // //     setIsModalOpen(true);
 // // // // // // //   };
 
 // // // // // // //   // Close the modal
 // // // // // // //   const closeModal = () => {
+// // // // // // //     setIsModalOpen(false);
 // // // // // // //     setSelectedImage(null);
 // // // // // // //   };
 
@@ -1382,127 +1571,61 @@
 
 // // // // // // //       {/* Main Content */}
 // // // // // // //       <div className="main-content">
-// // // // // // //         {/* Button Section */}
-// // // // // // //         <div className="button-section">
-// // // // // // //           <button
-// // // // // // //             className={`action-btn ${!isAddNewPatient ? "active" : ""}`}
-// // // // // // //             onClick={() => setIsAddNewPatient(false)}
-// // // // // // //           >
-// // // // // // //             Existing Patients
-// // // // // // //           </button>
-// // // // // // //           <button
-// // // // // // //             className={`action-btn ${isAddNewPatient ? "active" : ""}`}
-// // // // // // //             onClick={() => setIsAddNewPatient(true)}
-// // // // // // //           >
-// // // // // // //             Add New Patient
-// // // // // // //           </button>
-// // // // // // //         </div>
-
-// // // // // // //         {/* Add New Patient Form */}
-// // // // // // //         {isAddNewPatient ? (
-// // // // // // //           <div className="add-new-patient-form">
-// // // // // // //             <h2>Add New Patient</h2>
-// // // // // // //             <form onSubmit={handleAddNewPatient}>
-// // // // // // //               {/* form fields */}
-// // // // // // //               <button type="submit">Add Patient</button>
-// // // // // // //             </form>
-// // // // // // //           </div>
-// // // // // // //         ) : (
-// // // // // // //           // Existing Patients Section
-// // // // // // //           <div className="existing-patients">
-// // // // // // //             <h2>Existing Patients</h2>
-// // // // // // //             <table className="patients-table">
-// // // // // // //               <thead>
-// // // // // // //                 <tr>
-// // // // // // //                   <th>Patient ID</th>
-// // // // // // //                   <th>Name</th>
-// // // // // // //                   <th>Email</th>
-// // // // // // //                   <th>Gender</th>
-// // // // // // //                   <th>Date of Birth</th>
-// // // // // // //                   <th>Referred Doctor</th>
-// // // // // // //                   <th>Image</th>
-// // // // // // //                   <th>Update Image</th>
-// // // // // // //                 </tr>
-// // // // // // //               </thead>
-// // // // // // //               <tbody>
-// // // // // // //                 {patients.map((patient) => (
-// // // // // // //                   <tr key={patient.patientId}>
-// // // // // // //                     <td>{patient.patientId}</td>
-// // // // // // //                     <td>{patient.name}</td>
-// // // // // // //                     <td>{patient.email}</td>
-// // // // // // //                     <td>{patient.gender}</td>
-// // // // // // //                     <td>{patient.dateOfBirth}</td>
-// // // // // // //                     <td>{patient.referredDoctor}</td>
-// // // // // // //                     {/* <td>
-// // // // // // //                       {patient.imageData && patient.imageData.length > 0 ? (
-// // // // // // //                         <img
-// // // // // // //                           src={patient.imageData[0].imagePath}
-// // // // // // //                           alt="Patient"
-// // // // // // //                           className="patient-image"
-// // // // // // //                           onClick={() => openModal(patient.imageData[0].imagePath)} // Open image in modal on click
-// // // // // // //                         />
-// // // // // // //                       ) : (
-// // // // // // //                         <span>No Image</span>
-// // // // // // //                       )}
-// // // // // // //                     </td> */}
-// // // // // // //                     <td>
+// // // // // // //         {/* Existing Patients Section */}
+// // // // // // //         <div className="existing-patients">
+// // // // // // //           <h2>Existing Patients</h2>
+// // // // // // //           <table className="patients-table">
+// // // // // // //             <thead>
+// // // // // // //               <tr>
+// // // // // // //                 <th>Patient ID</th>
+// // // // // // //                 <th>Name</th>
+// // // // // // //                 <th>Email</th>
+// // // // // // //                 <th>Gender</th>
+// // // // // // //                 <th>Date of Birth</th>
+// // // // // // //                 <th>Referred Doctor</th>
+// // // // // // //                 <th>Image</th>
+// // // // // // //               </tr>
+// // // // // // //             </thead>
+// // // // // // //             <tbody>
+// // // // // // //               {patients.map((patient) => (
+// // // // // // //                 <tr key={patient.patientId}>
+// // // // // // //                   <td>{patient.patientId}</td>
+// // // // // // //                   <td>{patient.name}</td>
+// // // // // // //                   <td>{patient.email}</td>
+// // // // // // //                   <td>{patient.gender}</td>
+// // // // // // //                   <td>{patient.dateOfBirth}</td>
+// // // // // // //                   <td>{patient.referredDoctor}</td>
+// // // // // // //                   <td>
 // // // // // // //                     {patient.imageData && patient.imageData.length > 0 ? (
-// // // // // // //                       <ul>
+// // // // // // //                       <div className="image-box">
 // // // // // // //                         {patient.imageData.map((image, i) => (
-// // // // // // //                           <li key={i}>
-// // // // // // //                             <strong>Image Name:</strong> {image.imageName} <br />
-// // // // // // //                             <strong>Upload Date:</strong> {new Date(image.uploadDate).toLocaleString()} <br />
-// // // // // // //                             <strong>Organization Name:</strong> {image.organizationName} <br />
-// // // // // // //                             <strong>Image Path:</strong>
-// // // // // // //                             <a href={`http://localhost:5001/${image.imagePath}`} target="_blank" rel="noopener noreferrer">
-// // // // // // //                               View Image
-// // // // // // //                             </a>
-// // // // // // //                           </li>
+// // // // // // //                           <div key={i}>
+// // // // // // //                             <img
+// // // // // // //                               src={`http://localhost:5001/${image.imagePath}`}
+// // // // // // //                               alt={`Patient Image ${i + 1}`}
+// // // // // // //                               className="patient-image"
+// // // // // // //                               onClick={() => openModal(`http://localhost:5001/${image.imagePath}`)} // Open image in modal on click
+// // // // // // //                             />
+// // // // // // //                           </div>
 // // // // // // //                         ))}
-// // // // // // //                       </ul>
+// // // // // // //                       </div>
 // // // // // // //                     ) : (
 // // // // // // //                       <span>No images uploaded</span>
 // // // // // // //                     )}
 // // // // // // //                   </td>
-// // // // // // //                     <td>
-// // // // // // //                       <button
-// // // // // // //                         onClick={() => setSelectedPatientId(patient.patientId)}
-// // // // // // //                         className="upload-image-btn"
-// // // // // // //                       >
-// // // // // // //                         Update Image
-// // // // // // //                       </button>
-// // // // // // //                     </td>
-// // // // // // //                   </tr>
-// // // // // // //                 ))}
-// // // // // // //               </tbody>
-// // // // // // //             </table>
-
-// // // // // // //             {selectedPatientId && (
-// // // // // // //               <form onSubmit={handleUpload} className="upload-form">
-// // // // // // //                 <h3>Update Image for Patient ID: {selectedPatientId}</h3>
-// // // // // // //                 <div>
-// // // // // // //                   <label htmlFor="file">Upload New Image</label>
-// // // // // // //                   <input
-// // // // // // //                     type="file"
-// // // // // // //                     id="file"
-// // // // // // //                     accept="image/*"
-// // // // // // //                     onChange={(e) => setFile(e.target.files[0])}
-// // // // // // //                   />
-// // // // // // //                 </div>
-// // // // // // //                 <button type="submit">Upload</button>
-// // // // // // //               </form>
-// // // // // // //             )}
-// // // // // // //           </div>
-// // // // // // //         )}
-
-// // // // // // //         {error && <div className="alert alert-danger">{error}</div>}
-// // // // // // //         {successMessage && <div className="alert alert-success">{successMessage}</div>}
+// // // // // // //                 </tr>
+// // // // // // //               ))}
+// // // // // // //             </tbody>
+// // // // // // //           </table>
+// // // // // // //         </div>
 // // // // // // //       </div>
 
-// // // // // // //       {/* Modal for viewing image */}
-// // // // // // //       {selectedImage && (
+// // // // // // //       {/* Modal for Viewing Image */}
+// // // // // // //       {isModalOpen && (
 // // // // // // //         <div className="modal" onClick={closeModal}>
-// // // // // // //           <span className="close" onClick={closeModal}>&times;</span>
+// // // // // // //           <span className="close" onClick={closeModal}>
+// // // // // // //             &times;
+// // // // // // //           </span>
 // // // // // // //           <img className="modal-content" src={selectedImage} alt="Patient" />
 // // // // // // //         </div>
 // // // // // // //       )}
@@ -1511,6 +1634,7 @@
 // // // // // // // };
 
 // // // // // // // export default Organization;
+
 
 
 
@@ -1525,10 +1649,11 @@
 // // // // // //   const navigate = useNavigate();
 
 // // // // // //   const [patients, setPatients] = useState([]);
+// // // // // //   const [file, setFile] = useState(null); // File selected for uploading
+// // // // // //   const [selectedPatientId, setSelectedPatientId] = useState(null); // Selected patient for update
 // // // // // //   const [selectedImage, setSelectedImage] = useState(null); // State for the modal image
 // // // // // //   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
-// // // // // //   // Fetch patients from the backend
 // // // // // //   useEffect(() => {
 // // // // // //     const fetchPatients = async () => {
 // // // // // //       try {
@@ -1545,6 +1670,36 @@
 // // // // // //   const handleLogout = () => {
 // // // // // //     localStorage.clear();
 // // // // // //     navigate("/Login");
+// // // // // //   };
+
+// // // // // //   // Handle Image Upload for Patient
+// // // // // //   const handleUpload = async (e) => {
+// // // // // //     e.preventDefault();
+// // // // // //     if (!selectedPatientId || !file) {
+// // // // // //       alert("Please select a patient and an image to upload.");
+// // // // // //       return;
+// // // // // //     }
+
+// // // // // //     const formData = new FormData();
+// // // // // //     formData.append("patientId", selectedPatientId);
+// // // // // //     formData.append("organizationName", organizationName);
+// // // // // //     formData.append("image", file);
+    
+
+// // // // // //     try {
+// // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
+// // // // // //         headers: {
+// // // // // //           "Content-Type": "multipart/form-data",
+// // // // // //         },
+// // // // // //       });
+// // // // // //       alert(response.data.message);
+// // // // // //       setFile(null);
+// // // // // //       setSelectedPatientId(null);
+// // // // // //       fetchPatients(); // Fetch updated patient list
+// // // // // //     } catch (error) {
+// // // // // //       console.error("Error uploading image:", error);
+// // // // // //       alert("Failed to upload image.");
+// // // // // //     }
 // // // // // //   };
 
 // // // // // //   // Open Modal with the selected image
@@ -1584,6 +1739,7 @@
 // // // // // //                 <th>Date of Birth</th>
 // // // // // //                 <th>Referred Doctor</th>
 // // // // // //                 <th>Image</th>
+// // // // // //                 <th>Update Image</th>
 // // // // // //               </tr>
 // // // // // //             </thead>
 // // // // // //             <tbody>
@@ -1613,11 +1769,36 @@
 // // // // // //                       <span>No images uploaded</span>
 // // // // // //                     )}
 // // // // // //                   </td>
+// // // // // //                   <td>
+// // // // // //                     <button
+// // // // // //                       onClick={() => setSelectedPatientId(patient.patientId)} 
+// // // // // //                       className="upload-image-btn"
+// // // // // //                     >
+// // // // // //                       Update Image
+// // // // // //                     </button>
+// // // // // //                   </td>
 // // // // // //                 </tr>
 // // // // // //               ))}
 // // // // // //             </tbody>
 // // // // // //           </table>
 // // // // // //         </div>
+
+// // // // // //         {/* Form for Updating Image */}
+// // // // // //         {selectedPatientId && (
+// // // // // //           <form onSubmit={handleUpload} className="upload-form">
+// // // // // //             <h3>Update Image for Patient ID: {selectedPatientId}</h3>
+// // // // // //             <div>
+// // // // // //               <label htmlFor="file">Upload New Image</label>
+// // // // // //               <input
+// // // // // //                 type="file"
+// // // // // //                 id="file"
+// // // // // //                 accept="image/*"
+// // // // // //                 onChange={(e) => setFile(e.target.files[0])}
+// // // // // //               />
+// // // // // //             </div>
+// // // // // //             <button type="submit">Upload Image</button>
+// // // // // //           </form>
+// // // // // //         )}
 // // // // // //       </div>
 
 // // // // // //       {/* Modal for Viewing Image */}
@@ -1637,8 +1818,6 @@
 
 
 
-
-
 // // // // // import React, { useState, useEffect } from "react";
 // // // // // import axios from "axios";
 // // // // // import { useNavigate } from "react-router-dom";
@@ -1654,17 +1833,18 @@
 // // // // //   const [selectedImage, setSelectedImage] = useState(null); // State for the modal image
 // // // // //   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
-// // // // //   useEffect(() => {
-// // // // //     const fetchPatients = async () => {
-// // // // //       try {
-// // // // //         const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`);
-// // // // //         setPatients(response.data);
-// // // // //       } catch (error) {
-// // // // //         console.error("Error fetching patients:", error);
-// // // // //       }
-// // // // //     };
+// // // // //   // Fetch patients from the server
+// // // // //   const fetchPatients = async () => {
+// // // // //     try {
+// // // // //       const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`);
+// // // // //       setPatients(response.data);
+// // // // //     } catch (error) {
+// // // // //       console.error("Error fetching patients:", error);
+// // // // //     }
+// // // // //   };
 
-// // // // //     fetchPatients();
+// // // // //   useEffect(() => {
+// // // // //     fetchPatients(); // Fetch patients when the component mounts
 // // // // //   }, []);
 
 // // // // //   const handleLogout = () => {
@@ -1684,7 +1864,6 @@
 // // // // //     formData.append("patientId", selectedPatientId);
 // // // // //     formData.append("organizationName", organizationName);
 // // // // //     formData.append("image", file);
-    
 
 // // // // //     try {
 // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
@@ -1695,7 +1874,7 @@
 // // // // //       alert(response.data.message);
 // // // // //       setFile(null);
 // // // // //       setSelectedPatientId(null);
-// // // // //       fetchPatients(); // Fetch updated patient list
+// // // // //       fetchPatients(); // Fetch updated patient list after image upload
 // // // // //     } catch (error) {
 // // // // //       console.error("Error uploading image:", error);
 // // // // //       alert("Failed to upload image.");
@@ -1832,6 +2011,15 @@
 // // // //   const [selectedPatientId, setSelectedPatientId] = useState(null); // Selected patient for update
 // // // //   const [selectedImage, setSelectedImage] = useState(null); // State for the modal image
 // // // //   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+// // // //   const [isAddNewPatient, setIsAddNewPatient] = useState(false); // Show Add New Patient Form
+// // // //   const [newPatient, setNewPatient] = useState({
+// // // //     name: "",
+// // // //     email: "",
+// // // //     patientId: "",
+// // // //     gender: "",
+// // // //     dateOfBirth: "",
+// // // //     referredDoctor: "",
+// // // //   });
 
 // // // //   // Fetch patients from the server
 // // // //   const fetchPatients = async () => {
@@ -1881,6 +2069,44 @@
 // // // //     }
 // // // //   };
 
+// // // //   // Handle Adding a New Patient
+// // // //   const handleAddNewPatient = async (e) => {
+// // // //     e.preventDefault();
+// // // //     const { name, email, patientId, gender, dateOfBirth, referredDoctor } = newPatient;
+
+// // // //     if (!name || !email || !patientId || !gender || !dateOfBirth || !referredDoctor) {
+// // // //       alert("All fields are required.");
+// // // //       return;
+// // // //     }
+
+// // // //     try {
+// // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`, {
+// // // //         name,
+// // // //         email,
+// // // //         role: "patient",
+// // // //         patientId,
+// // // //         gender,
+// // // //         dateOfBirth,
+// // // //         referredDoctor,
+// // // //         organizationName,
+// // // //       });
+// // // //       alert(response.data.message);
+// // // //       setNewPatient({
+// // // //         name: "",
+// // // //         email: "",
+// // // //         patientId: "",
+// // // //         gender: "",
+// // // //         dateOfBirth: "",
+// // // //         referredDoctor: "",
+// // // //       });
+// // // //       setIsAddNewPatient(false); // Close "Add New Patient" form after submission
+// // // //       fetchPatients(); // Fetch updated patient list after adding new patient
+// // // //     } catch (error) {
+// // // //       console.error("Error adding new patient:", error);
+// // // //       alert("Failed to add new patient.");
+// // // //     }
+// // // //   };
+
 // // // //   // Open Modal with the selected image
 // // // //   const openModal = (imagePath) => {
 // // // //     setSelectedImage(imagePath);
@@ -1905,62 +2131,127 @@
 
 // // // //       {/* Main Content */}
 // // // //       <div className="main-content">
-// // // //         {/* Existing Patients Section */}
-// // // //         <div className="existing-patients">
-// // // //           <h2>Existing Patients</h2>
-// // // //           <table className="patients-table">
-// // // //             <thead>
-// // // //               <tr>
-// // // //                 <th>Patient ID</th>
-// // // //                 <th>Name</th>
-// // // //                 <th>Email</th>
-// // // //                 <th>Gender</th>
-// // // //                 <th>Date of Birth</th>
-// // // //                 <th>Referred Doctor</th>
-// // // //                 <th>Image</th>
-// // // //                 <th>Update Image</th>
-// // // //               </tr>
-// // // //             </thead>
-// // // //             <tbody>
-// // // //               {patients.map((patient) => (
-// // // //                 <tr key={patient.patientId}>
-// // // //                   <td>{patient.patientId}</td>
-// // // //                   <td>{patient.name}</td>
-// // // //                   <td>{patient.email}</td>
-// // // //                   <td>{patient.gender}</td>
-// // // //                   <td>{patient.dateOfBirth}</td>
-// // // //                   <td>{patient.referredDoctor}</td>
-// // // //                   <td>
-// // // //                     {patient.imageData && patient.imageData.length > 0 ? (
-// // // //                       <div className="image-box">
-// // // //                         {patient.imageData.map((image, i) => (
-// // // //                           <div key={i}>
-// // // //                             <img
-// // // //                               src={`http://localhost:5001/${image.imagePath}`}
-// // // //                               alt={`Patient Image ${i + 1}`}
-// // // //                               className="patient-image"
-// // // //                               onClick={() => openModal(`http://localhost:5001/${image.imagePath}`)} // Open image in modal on click
-// // // //                             />
-// // // //                           </div>
-// // // //                         ))}
-// // // //                       </div>
-// // // //                     ) : (
-// // // //                       <span>No images uploaded</span>
-// // // //                     )}
-// // // //                   </td>
-// // // //                   <td>
-// // // //                     <button
-// // // //                       onClick={() => setSelectedPatientId(patient.patientId)} 
-// // // //                       className="upload-image-btn"
-// // // //                     >
-// // // //                       Update Image
-// // // //                     </button>
-// // // //                   </td>
-// // // //                 </tr>
-// // // //               ))}
-// // // //             </tbody>
-// // // //           </table>
+// // // //         {/* Button Section for Toggle Between Add New Patient and Existing Patients */}
+// // // //         <div className="button-section">
+// // // //           <button
+// // // //             className={`action-btn ${!isAddNewPatient ? "active" : ""}`}
+// // // //             onClick={() => setIsAddNewPatient(false)}
+// // // //           >
+// // // //             Existing Patients
+// // // //           </button>
+// // // //           <button
+// // // //             className={`action-btn ${isAddNewPatient ? "active" : ""}`}
+// // // //             onClick={() => setIsAddNewPatient(true)}
+// // // //           >
+// // // //             Add New Patient
+// // // //           </button>
 // // // //         </div>
+
+// // // //         {/* Add New Patient Form */}
+// // // //         {isAddNewPatient ? (
+// // // //           <div className="add-new-patient-form">
+// // // //             <h2>Add New Patient</h2>
+// // // //             <form onSubmit={handleAddNewPatient}>
+// // // //               <input
+// // // //                 type="text"
+// // // //                 placeholder="Name"
+// // // //                 value={newPatient.name}
+// // // //                 onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
+// // // //               />
+// // // //               <input
+// // // //                 type="email"
+// // // //                 placeholder="Email"
+// // // //                 value={newPatient.email}
+// // // //                 onChange={(e) => setNewPatient({ ...newPatient, email: e.target.value })}
+// // // //               />
+// // // //               <input
+// // // //                 type="text"
+// // // //                 placeholder="Patient ID"
+// // // //                 value={newPatient.patientId}
+// // // //                 onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })}
+// // // //               />
+// // // //               <select
+// // // //                 value={newPatient.gender}
+// // // //                 onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })}
+// // // //               >
+// // // //                 <option value="">Gender</option>
+// // // //                 <option value="Male">Male</option>
+// // // //                 <option value="Female">Female</option>
+// // // //                 <option value="Other">Other</option>
+// // // //               </select>
+// // // //               <input
+// // // //                 type="date"
+// // // //                 placeholder="Date of Birth"
+// // // //                 value={newPatient.dateOfBirth}
+// // // //                 onChange={(e) => setNewPatient({ ...newPatient, dateOfBirth: e.target.value })}
+// // // //               />
+// // // //               <input
+// // // //                 type="text"
+// // // //                 placeholder="Referred Doctor"
+// // // //                 value={newPatient.referredDoctor}
+// // // //                 onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })}
+// // // //               />
+// // // //               <button type="submit">Add Patient</button>
+// // // //             </form>
+// // // //           </div>
+// // // //         ) : (
+// // // //           // Existing Patients Section
+// // // //           <div className="existing-patients">
+// // // //             <h2>Existing Patients</h2>
+// // // //             <table className="patients-table">
+// // // //               <thead>
+// // // //                 <tr>
+// // // //                   <th>Patient ID</th>
+// // // //                   <th>Name</th>
+// // // //                   <th>Email</th>
+// // // //                   <th>Gender</th>
+// // // //                   <th>Date of Birth</th>
+// // // //                   <th>Referred Doctor</th>
+// // // //                   <th>Image</th>
+// // // //                   <th>Update Image</th>
+// // // //                 </tr>
+// // // //               </thead>
+// // // //               <tbody>
+// // // //                 {patients.map((patient) => (
+// // // //                   <tr key={patient.patientId}>
+// // // //                     <td>{patient.patientId}</td>
+// // // //                     <td>{patient.name}</td>
+// // // //                     <td>{patient.email}</td>
+// // // //                     <td>{patient.gender}</td>
+// // // //                     <td>{patient.dateOfBirth}</td>
+// // // //                     <td>{patient.referredDoctor}</td>
+// // // //                     <td>
+// // // //                       {patient.imageData && patient.imageData.length > 0 ? (
+// // // //                         <div className="image-box">
+// // // //                           {patient.imageData.map((image, i) => (
+// // // //                             <div key={i}>
+// // // //                               <img
+// // // //                                 src={`http://localhost:5001/${image.imagePath}`}
+// // // //                                 alt={`Patient Image ${i + 1}`}
+// // // //                                 className="patient-image"
+// // // //                                 onClick={() => openModal(`http://localhost:5001/${image.imagePath}`)} // Open image in modal on click
+// // // //                               />
+// // // //                             </div>
+// // // //                           ))}
+// // // //                         </div>
+// // // //                       ) : (
+// // // //                         <span>No images uploaded</span>
+// // // //                       )}
+// // // //                     </td>
+// // // //                     <td>
+// // // //                       <button
+// // // //                         onClick={() => setSelectedPatientId(patient.patientId)} 
+// // // //                         className="upload-image-btn"
+// // // //                       >
+// // // //                         Update Image
+// // // //                       </button>
+// // // //                     </td>
+// // // //                   </tr>
+// // // //                 ))}
+// // // //               </tbody>
+// // // //             </table>
+// // // //           </div>
+// // // //         )}
 
 // // // //         {/* Form for Updating Image */}
 // // // //         {selectedPatientId && (
@@ -1997,6 +2288,8 @@
 
 
 
+
+
 // // // import React, { useState, useEffect } from "react";
 // // // import axios from "axios";
 // // // import { useNavigate } from "react-router-dom";
@@ -2024,7 +2317,9 @@
 // // //   // Fetch patients from the server
 // // //   const fetchPatients = async () => {
 // // //     try {
-// // //       const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`);
+// // //       const response = await axios.get(
+// // //         `${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`
+// // //       );
 // // //       setPatients(response.data);
 // // //     } catch (error) {
 // // //       console.error("Error fetching patients:", error);
@@ -2054,11 +2349,15 @@
 // // //     formData.append("image", file);
 
 // // //     try {
-// // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
-// // //         headers: {
-// // //           "Content-Type": "multipart/form-data",
-// // //         },
-// // //       });
+// // //       const response = await axios.post(
+// // //         `${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`,
+// // //         formData,
+// // //         {
+// // //           headers: {
+// // //             "Content-Type": "multipart/form-data",
+// // //           },
+// // //         }
+// // //       );
 // // //       alert(response.data.message);
 // // //       setFile(null);
 // // //       setSelectedPatientId(null);
@@ -2080,16 +2379,19 @@
 // // //     }
 
 // // //     try {
-// // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`, {
-// // //         name,
-// // //         email,
-// // //         role: "patient",
-// // //         patientId,
-// // //         gender,
-// // //         dateOfBirth,
-// // //         referredDoctor,
-// // //         organizationName,
-// // //       });
+// // //       const response = await axios.post(
+// // //         `${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`,
+// // //         {
+// // //           name,
+// // //           email,
+// // //           role: "patient",
+// // //           patientId,
+// // //           gender,
+// // //           dateOfBirth,
+// // //           referredDoctor,
+// // //           organizationName,
+// // //         }
+// // //       );
 // // //       alert(response.data.message);
 // // //       setNewPatient({
 // // //         name: "",
@@ -2123,7 +2425,7 @@
 // // //     <div className="organization-page">
 // // //       {/* Sidebar */}
 // // //       <div className="sidebar">
-// // //         <h4>Organization: {organizationName}</h4>
+// // //         <h4 className="organization-name">Organization: {organizationName}</h4>
 // // //         <button onClick={handleLogout} className="logout-btn">
 // // //           Logout
 // // //         </button>
@@ -2131,7 +2433,7 @@
 
 // // //       {/* Main Content */}
 // // //       <div className="main-content">
-// // //         {/* Button Section for Toggle Between Add New Patient and Existing Patients */}
+// // //         {/* Toggle Buttons for Existing Patients vs. Add New Patient */}
 // // //         <div className="button-section">
 // // //           <button
 // // //             className={`action-btn ${!isAddNewPatient ? "active" : ""}`}
@@ -2149,7 +2451,7 @@
 
 // // //         {/* Add New Patient Form */}
 // // //         {isAddNewPatient ? (
-// // //           <div className="add-new-patient-form">
+// // //           <div className="add-new-patient-form fade-in">
 // // //             <h2>Add New Patient</h2>
 // // //             <form onSubmit={handleAddNewPatient}>
 // // //               <input
@@ -2191,12 +2493,14 @@
 // // //                 value={newPatient.referredDoctor}
 // // //                 onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })}
 // // //               />
-// // //               <button type="submit">Add Patient</button>
+// // //               <button type="submit" className="submit-btn">
+// // //                 Add Patient
+// // //               </button>
 // // //             </form>
 // // //           </div>
 // // //         ) : (
 // // //           // Existing Patients Section
-// // //           <div className="existing-patients">
+// // //           <div className="existing-patients fade-in">
 // // //             <h2>Existing Patients</h2>
 // // //             <table className="patients-table">
 // // //               <thead>
@@ -2224,12 +2528,14 @@
 // // //                       {patient.imageData && patient.imageData.length > 0 ? (
 // // //                         <div className="image-box">
 // // //                           {patient.imageData.map((image, i) => (
-// // //                             <div key={i}>
+// // //                             <div key={i} className="thumbnail-box">
 // // //                               <img
 // // //                                 src={`http://localhost:5001/${image.imagePath}`}
 // // //                                 alt={`Patient Image ${i + 1}`}
 // // //                                 className="patient-image"
-// // //                                 onClick={() => openModal(`http://localhost:5001/${image.imagePath}`)} // Open image in modal on click
+// // //                                 onClick={() =>
+// // //                                   openModal(`http://localhost:5001/${image.imagePath}`)
+// // //                                 }
 // // //                               />
 // // //                             </div>
 // // //                           ))}
@@ -2240,7 +2546,7 @@
 // // //                     </td>
 // // //                     <td>
 // // //                       <button
-// // //                         onClick={() => setSelectedPatientId(patient.patientId)} 
+// // //                         onClick={() => setSelectedPatientId(patient.patientId)}
 // // //                         className="upload-image-btn"
 // // //                       >
 // // //                         Update Image
@@ -2255,10 +2561,12 @@
 
 // // //         {/* Form for Updating Image */}
 // // //         {selectedPatientId && (
-// // //           <form onSubmit={handleUpload} className="upload-form">
+// // //           <form onSubmit={handleUpload} className="upload-form fade-in-up">
 // // //             <h3>Update Image for Patient ID: {selectedPatientId}</h3>
-// // //             <div>
-// // //               <label htmlFor="file">Upload New Image</label>
+// // //             <div className="file-upload-row">
+// // //               <label htmlFor="file" className="file-label">
+// // //                 Choose a File:
+// // //               </label>
 // // //               <input
 // // //                 type="file"
 // // //                 id="file"
@@ -2266,7 +2574,9 @@
 // // //                 onChange={(e) => setFile(e.target.files[0])}
 // // //               />
 // // //             </div>
-// // //             <button type="submit">Upload Image</button>
+// // //             <button type="submit" className="submit-btn">
+// // //               Upload Image
+// // //             </button>
 // // //           </form>
 // // //         )}
 // // //       </div>
@@ -2274,10 +2584,12 @@
 // // //       {/* Modal for Viewing Image */}
 // // //       {isModalOpen && (
 // // //         <div className="modal" onClick={closeModal}>
-// // //           <span className="close" onClick={closeModal}>
-// // //             &times;
-// // //           </span>
-// // //           <img className="modal-content" src={selectedImage} alt="Patient" />
+// // //           <div className="modal-content">
+// // //             <span className="close" onClick={closeModal}>
+// // //               &times;
+// // //             </span>
+// // //             <img className="modal-image" src={selectedImage} alt="Patient" />
+// // //           </div>
 // // //         </div>
 // // //       )}
 // // //     </div>
@@ -2285,8 +2597,6 @@
 // // // };
 
 // // // export default Organization;
-
-
 
 
 
@@ -2300,21 +2610,19 @@
 // //   const navigate = useNavigate();
 
 // //   const [patients, setPatients] = useState([]);
-// //   const [file, setFile] = useState(null); // File selected for uploading
-// //   const [selectedPatientId, setSelectedPatientId] = useState(null); // Selected patient for update
-// //   const [selectedImage, setSelectedImage] = useState(null); // State for the modal image
-// //   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-// //   const [isAddNewPatient, setIsAddNewPatient] = useState(false); // Show Add New Patient Form
+// //   const [file, setFile] = useState(null);
+// //   const [selectedPatientId, setSelectedPatientId] = useState(null);
+// //   const [isModalOpen, setIsModalOpen] = useState(false);
 // //   const [newPatient, setNewPatient] = useState({
-// //     name: "",
-// //     email: "",
+// //     firstName: "",
+// //     lastName: "",
 // //     patientId: "",
+// //     dob: "",
 // //     gender: "",
-// //     dateOfBirth: "",
-// //     referredDoctor: "",
+// //     referredDoctor: ""
 // //   });
 
-// //   // Fetch patients from the server
+// //   // Fetch patients when component mounts
 // //   const fetchPatients = async () => {
 // //     try {
 // //       const response = await axios.get(
@@ -2327,7 +2635,7 @@
 // //   };
 
 // //   useEffect(() => {
-// //     fetchPatients(); // Fetch patients when the component mounts
+// //     fetchPatients();
 // //   }, []);
 
 // //   const handleLogout = () => {
@@ -2335,14 +2643,13 @@
 // //     navigate("/Login");
 // //   };
 
-// //   // Handle Image Upload for Patient
+// //   // Handle image upload for a patient
 // //   const handleUpload = async (e) => {
 // //     e.preventDefault();
 // //     if (!selectedPatientId || !file) {
 // //       alert("Please select a patient and an image to upload.");
 // //       return;
 // //     }
-
 // //     const formData = new FormData();
 // //     formData.append("patientId", selectedPatientId);
 // //     formData.append("organizationName", organizationName);
@@ -2352,221 +2659,147 @@
 // //       const response = await axios.post(
 // //         `${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`,
 // //         formData,
-// //         {
-// //           headers: {
-// //             "Content-Type": "multipart/form-data",
-// //           },
-// //         }
+// //         { headers: { "Content-Type": "multipart/form-data" } }
 // //       );
 // //       alert(response.data.message);
 // //       setFile(null);
 // //       setSelectedPatientId(null);
-// //       fetchPatients(); // Fetch updated patient list after image upload
+// //       fetchPatients();
 // //     } catch (error) {
 // //       console.error("Error uploading image:", error);
 // //       alert("Failed to upload image.");
 // //     }
 // //   };
 
-// //   // Handle Adding a New Patient
+// //   // Handle new patient form submission
 // //   const handleAddNewPatient = async (e) => {
 // //     e.preventDefault();
-// //     const { name, email, patientId, gender, dateOfBirth, referredDoctor } = newPatient;
-
-// //     if (!name || !email || !patientId || !gender || !dateOfBirth || !referredDoctor) {
+// //     const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
+// //     if (!firstName || !lastName || !patientId || !dob || !gender || !referredDoctor) {
 // //       alert("All fields are required.");
 // //       return;
 // //     }
-
 // //     try {
 // //       const response = await axios.post(
 // //         `${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`,
 // //         {
-// //           name,
-// //           email,
+// //           name: `${firstName} ${lastName}`,
+// //           email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`,
 // //           role: "patient",
 // //           patientId,
 // //           gender,
-// //           dateOfBirth,
+// //           dateOfBirth: dob,
 // //           referredDoctor,
 // //           organizationName,
 // //         }
 // //       );
 // //       alert(response.data.message);
 // //       setNewPatient({
-// //         name: "",
-// //         email: "",
+// //         firstName: "",
+// //         lastName: "",
 // //         patientId: "",
+// //         dob: "",
 // //         gender: "",
-// //         dateOfBirth: "",
-// //         referredDoctor: "",
+// //         referredDoctor: ""
 // //       });
-// //       setIsAddNewPatient(false); // Close "Add New Patient" form after submission
-// //       fetchPatients(); // Fetch updated patient list after adding new patient
+// //       setIsModalOpen(false);
+// //       fetchPatients();
 // //     } catch (error) {
 // //       console.error("Error adding new patient:", error);
 // //       alert("Failed to add new patient.");
 // //     }
 // //   };
 
-// //   // Open Modal with the selected image
-// //   const openModal = (imagePath) => {
-// //     setSelectedImage(imagePath);
+// //   // Open modal for adding a new patient
+// //   const openModal = () => {
 // //     setIsModalOpen(true);
 // //   };
 
-// //   // Close the modal
+// //   // Close modal
 // //   const closeModal = () => {
 // //     setIsModalOpen(false);
-// //     setSelectedImage(null);
 // //   };
 
 // //   return (
 // //     <div className="organization-page">
 // //       {/* Sidebar */}
-// //       <div className="sidebar">
-// //         <h4 className="organization-name">Organization: {organizationName}</h4>
-// //         <button onClick={handleLogout} className="logout-btn">
+// //       <aside className="sidebar">
+// //         <h3>Organization: {organizationName}</h3>
+// //         <button className="logout-btn" onClick={handleLogout}>
 // //           Logout
 // //         </button>
-// //       </div>
+// //       </aside>
 
-// //       {/* Main Content */}
+// //       {/* Main content */}
 // //       <div className="main-content">
-// //         {/* Toggle Buttons for Existing Patients vs. Add New Patient */}
-// //         <div className="button-section">
-// //           <button
-// //             className={`action-btn ${!isAddNewPatient ? "active" : ""}`}
-// //             onClick={() => setIsAddNewPatient(false)}
-// //           >
-// //             Existing Patients
-// //           </button>
-// //           <button
-// //             className={`action-btn ${isAddNewPatient ? "active" : ""}`}
-// //             onClick={() => setIsAddNewPatient(true)}
-// //           >
-// //             Add New Patient
+// //         <div className="header-section">
+// //           <h1>Patients</h1>
+// //           <button className="new-patient-btn" onClick={openModal}>
+// //             + New Patient
 // //           </button>
 // //         </div>
 
-// //         {/* Add New Patient Form */}
-// //         {isAddNewPatient ? (
-// //           <div className="add-new-patient-form fade-in">
-// //             <h2>Add New Patient</h2>
-// //             <form onSubmit={handleAddNewPatient}>
-// //               <input
-// //                 type="text"
-// //                 placeholder="Name"
-// //                 value={newPatient.name}
-// //                 onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
-// //               />
-// //               <input
-// //                 type="email"
-// //                 placeholder="Email"
-// //                 value={newPatient.email}
-// //                 onChange={(e) => setNewPatient({ ...newPatient, email: e.target.value })}
-// //               />
-// //               <input
-// //                 type="text"
-// //                 placeholder="Patient ID"
-// //                 value={newPatient.patientId}
-// //                 onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })}
-// //               />
-// //               <select
-// //                 value={newPatient.gender}
-// //                 onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })}
-// //               >
-// //                 <option value="">Gender</option>
-// //                 <option value="Male">Male</option>
-// //                 <option value="Female">Female</option>
-// //                 <option value="Other">Other</option>
-// //               </select>
-// //               <input
-// //                 type="date"
-// //                 placeholder="Date of Birth"
-// //                 value={newPatient.dateOfBirth}
-// //                 onChange={(e) => setNewPatient({ ...newPatient, dateOfBirth: e.target.value })}
-// //               />
-// //               <input
-// //                 type="text"
-// //                 placeholder="Referred Doctor"
-// //                 value={newPatient.referredDoctor}
-// //                 onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })}
-// //               />
-// //               <button type="submit" className="submit-btn">
-// //                 Add Patient
-// //               </button>
-// //             </form>
-// //           </div>
-// //         ) : (
-// //           // Existing Patients Section
-// //           <div className="existing-patients fade-in">
-// //             <h2>Existing Patients</h2>
-// //             <table className="patients-table">
-// //               <thead>
-// //                 <tr>
-// //                   <th>Patient ID</th>
-// //                   <th>Name</th>
-// //                   <th>Email</th>
-// //                   <th>Gender</th>
-// //                   <th>Date of Birth</th>
-// //                   <th>Referred Doctor</th>
-// //                   <th>Image</th>
-// //                   <th>Update Image</th>
+// //         {/* Patient Table */}
+// //         <div className="table-container">
+// //           <table className="patients-table">
+// //             <thead>
+// //               <tr>
+// //                 <th>Patient ID</th>
+// //                 <th>Name</th>
+// //                 <th>Email</th>
+// //                 <th>Gender</th>
+// //                 <th>Date of Birth</th>
+// //                 <th>Referred Doctor</th>
+// //                 <th>Image</th>
+// //                 <th>Update Image</th>
+// //               </tr>
+// //             </thead>
+// //             <tbody>
+// //               {patients.map((patient) => (
+// //                 <tr key={patient.patientId}>
+// //                   <td>{patient.patientId}</td>
+// //                   <td>{patient.name}</td>
+// //                   <td>{patient.email}</td>
+// //                   <td>{patient.gender}</td>
+// //                   <td>{patient.dateOfBirth}</td>
+// //                   <td>{patient.referredDoctor}</td>
+// //                   <td>
+// //                     {patient.imageData && patient.imageData.length > 0 ? (
+// //                       <div className="image-box">
+// //                         {patient.imageData.map((image, i) => (
+// //                           <img
+// //                             key={i}
+// //                             src={`http://localhost:5001/${image.imagePath}`}
+// //                             alt={`Patient ${i + 1}`}
+// //                             className="patient-image"
+// //                             onClick={() => window.open(`http://localhost:5001/${image.imagePath}`, "_blank")}
+// //                           />
+// //                         ))}
+// //                       </div>
+// //                     ) : (
+// //                       <span>No image</span>
+// //                     )}
+// //                   </td>
+// //                   <td>
+// //                     <button
+// //                       className="upload-btn"
+// //                       onClick={() => setSelectedPatientId(patient.patientId)}
+// //                     >
+// //                       Upload
+// //                     </button>
+// //                   </td>
 // //                 </tr>
-// //               </thead>
-// //               <tbody>
-// //                 {patients.map((patient) => (
-// //                   <tr key={patient.patientId}>
-// //                     <td>{patient.patientId}</td>
-// //                     <td>{patient.name}</td>
-// //                     <td>{patient.email}</td>
-// //                     <td>{patient.gender}</td>
-// //                     <td>{patient.dateOfBirth}</td>
-// //                     <td>{patient.referredDoctor}</td>
-// //                     <td>
-// //                       {patient.imageData && patient.imageData.length > 0 ? (
-// //                         <div className="image-box">
-// //                           {patient.imageData.map((image, i) => (
-// //                             <div key={i} className="thumbnail-box">
-// //                               <img
-// //                                 src={`http://localhost:5001/${image.imagePath}`}
-// //                                 alt={`Patient Image ${i + 1}`}
-// //                                 className="patient-image"
-// //                                 onClick={() =>
-// //                                   openModal(`http://localhost:5001/${image.imagePath}`)
-// //                                 }
-// //                               />
-// //                             </div>
-// //                           ))}
-// //                         </div>
-// //                       ) : (
-// //                         <span>No images uploaded</span>
-// //                       )}
-// //                     </td>
-// //                     <td>
-// //                       <button
-// //                         onClick={() => setSelectedPatientId(patient.patientId)}
-// //                         className="upload-image-btn"
-// //                       >
-// //                         Update Image
-// //                       </button>
-// //                     </td>
-// //                   </tr>
-// //                 ))}
-// //               </tbody>
-// //             </table>
-// //           </div>
-// //         )}
+// //               ))}
+// //             </tbody>
+// //           </table>
+// //         </div>
 
-// //         {/* Form for Updating Image */}
+// //         {/* Update Image Form */}
 // //         {selectedPatientId && (
-// //           <form onSubmit={handleUpload} className="upload-form fade-in-up">
+// //           <form onSubmit={handleUpload} className="upload-form">
 // //             <h3>Update Image for Patient ID: {selectedPatientId}</h3>
-// //             <div className="file-upload-row">
-// //               <label htmlFor="file" className="file-label">
-// //                 Choose a File:
-// //               </label>
+// //             <div className="file-input-group">
+// //               <label htmlFor="file">Select Image:</label>
 // //               <input
 // //                 type="file"
 // //                 id="file"
@@ -2574,21 +2807,91 @@
 // //                 onChange={(e) => setFile(e.target.files[0])}
 // //               />
 // //             </div>
-// //             <button type="submit" className="submit-btn">
+// //             <button type="submit" className="upload-submit-btn">
 // //               Upload Image
 // //             </button>
 // //           </form>
 // //         )}
 // //       </div>
 
-// //       {/* Modal for Viewing Image */}
+// //       {/* Modal Overlay for New Patient */}
 // //       {isModalOpen && (
-// //         <div className="modal" onClick={closeModal}>
-// //           <div className="modal-content">
-// //             <span className="close" onClick={closeModal}>
-// //               &times;
-// //             </span>
-// //             <img className="modal-image" src={selectedImage} alt="Patient" />
+// //         <div className="modal-overlay" onClick={closeModal}>
+// //           <div
+// //             className="modal-container"
+// //             onClick={(e) => e.stopPropagation()}
+// //           >
+// //             <h2>New Patient</h2>
+// //             <form onSubmit={handleAddNewPatient}>
+// //               <div className="modal-form-row">
+// //                 <input
+// //                   type="text"
+// //                   placeholder="First Name"
+// //                   value={newPatient.firstName}
+// //                   onChange={(e) =>
+// //                     setNewPatient({ ...newPatient, firstName: e.target.value })
+// //                   }
+// //                   required
+// //                 />
+// //                 <input
+// //                   type="text"
+// //                   placeholder="Last Name"
+// //                   value={newPatient.lastName}
+// //                   onChange={(e) =>
+// //                     setNewPatient({ ...newPatient, lastName: e.target.value })
+// //                   }
+// //                   required
+// //                 />
+// //               </div>
+// //               <div className="modal-form-row">
+// //                 <input
+// //                   type="text"
+// //                   placeholder="Patient ID"
+// //                   value={newPatient.patientId}
+// //                   onChange={(e) =>
+// //                     setNewPatient({ ...newPatient, patientId: e.target.value })
+// //                   }
+// //                   required
+// //                 />
+// //                 <input
+// //                   type="date"
+// //                   placeholder="Date of Birth"
+// //                   value={newPatient.dob}
+// //                   onChange={(e) =>
+// //                     setNewPatient({ ...newPatient, dob: e.target.value })
+// //                   }
+// //                   required
+// //                 />
+// //               </div>
+// //               <div className="modal-form-row">
+// //                 <input
+// //                   type="text"
+// //                   placeholder="Gender"
+// //                   value={newPatient.gender}
+// //                   onChange={(e) =>
+// //                     setNewPatient({ ...newPatient, gender: e.target.value })
+// //                   }
+// //                   required
+// //                 />
+// //                 <input
+// //                   type="text"
+// //                   placeholder="Referred Doctor"
+// //                   value={newPatient.referredDoctor}
+// //                   onChange={(e) =>
+// //                     setNewPatient({ ...newPatient, referredDoctor: e.target.value })
+// //                   }
+// //                   required
+// //                 />
+// //               </div>
+// //               <div className="modal-buttons">
+// //                 <button type="button" className="cancel-btn" onClick={closeModal}>
+// //                   Cancel
+// //                 </button>
+// //                 <button type="submit" className="submit-btn">
+// //                   Create Patient
+// //                 </button>
+// //               </div>
+// //             </form>
 // //           </div>
 // //         </div>
 // //       )}
@@ -2903,6 +3206,7 @@
 
 
 
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -2912,10 +3216,13 @@ const Organization = () => {
   const organizationName = localStorage.getItem("organizationName");
   const navigate = useNavigate();
 
+  // Data states
   const [patients, setPatients] = useState([]);
   const [file, setFile] = useState(null);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  
   const [newPatient, setNewPatient] = useState({
     firstName: "",
     lastName: "",
@@ -2925,7 +3232,7 @@ const Organization = () => {
     referredDoctor: ""
   });
 
-  // Fetch patients when component mounts
+  // Fetch patients from the API
   const fetchPatients = async () => {
     try {
       const response = await axios.get(
@@ -2945,6 +3252,19 @@ const Organization = () => {
     localStorage.clear();
     navigate("/Login");
   };
+
+  // Filter patients based on search term
+  const filteredPatients = patients.filter((patient) => {
+    const fullName = patient.name?.toLowerCase();
+    const id = patient.patientId?.toLowerCase();
+    const email = patient.email?.toLowerCase();
+    const term = searchTerm.toLowerCase();
+    return (
+      fullName?.includes(term) ||
+      id?.includes(term) ||
+      email?.includes(term)
+    );
+  });
 
   // Handle image upload for a patient
   const handleUpload = async (e) => {
@@ -2974,7 +3294,7 @@ const Organization = () => {
     }
   };
 
-  // Handle new patient form submission
+  // Handle new patient submission
   const handleAddNewPatient = async (e) => {
     e.preventDefault();
     const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
@@ -2996,7 +3316,7 @@ const Organization = () => {
           organizationName,
         }
       );
-      alert(response.data.message);
+      alert("Successful upload");
       setNewPatient({
         firstName: "",
         lastName: "",
@@ -3013,12 +3333,12 @@ const Organization = () => {
     }
   };
 
-  // Open modal for adding a new patient
+  // Open new patient modal
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Close modal
+  // Close new patient modal
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -3033,16 +3353,25 @@ const Organization = () => {
         </button>
       </aside>
 
-      {/* Main content */}
+      {/* Main Content */}
       <div className="main-content">
         <div className="header-section">
           <h1>Patients</h1>
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search patients..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
           <button className="new-patient-btn" onClick={openModal}>
             + New Patient
           </button>
         </div>
 
-        {/* Patient Table */}
+        {/* Patients Table */}
         <div className="table-container">
           <table className="patients-table">
             <thead>
@@ -3058,7 +3387,7 @@ const Organization = () => {
               </tr>
             </thead>
             <tbody>
-              {patients.map((patient) => (
+              {filteredPatients.map((patient) => (
                 <tr key={patient.patientId}>
                   <td>{patient.patientId}</td>
                   <td>{patient.name}</td>
@@ -3097,7 +3426,7 @@ const Organization = () => {
           </table>
         </div>
 
-        {/* Update Image Form */}
+        {/* Image Upload Form */}
         {selectedPatientId && (
           <form onSubmit={handleUpload} className="upload-form">
             <h3>Update Image for Patient ID: {selectedPatientId}</h3>
@@ -3117,13 +3446,10 @@ const Organization = () => {
         )}
       </div>
 
-      {/* Modal Overlay for New Patient */}
+      {/* New Patient Modal */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
-          <div
-            className="modal-container"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             <h2>New Patient</h2>
             <form onSubmit={handleAddNewPatient}>
               <div className="modal-form-row">
