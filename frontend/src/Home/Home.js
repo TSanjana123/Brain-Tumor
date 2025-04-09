@@ -372,39 +372,39 @@
 
 // // export default Home;
 
-// import react from 'react';
-
-// function Home() {
-//   return (
-//     <>
-    
-//     </>
-//   );
-// }
-
-// export default Home;
-
-
-
-import React, { useEffect } from 'react';
+import react from 'react';
 
 function Home() {
-  useEffect(() => {
-    // Set an interval to reload the page every 60 seconds
-    const intervalId = setInterval(() => {
-      window.location.reload();
-    }, 600); // 60000 milliseconds = 1 minute
-
-    // Cleanup the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, []); // Empty dependency array means this runs once when the component mounts
-
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-      {/* <p>This page will refresh every 1 minute.</p> */}
-    </div>
+    <>
+    
+    </>
   );
 }
 
 export default Home;
+
+
+
+// import React, { useEffect } from 'react';
+
+// function Home() {
+//   useEffect(() => {
+//     // Set an interval to reload the page every 60 seconds
+//     const intervalId = setInterval(() => {
+//       window.location.reload();
+//     }, 600); // 60000 milliseconds = 1 minute
+
+//     // Cleanup the interval when the component is unmounted
+//     return () => clearInterval(intervalId);
+//   }, []); // Empty dependency array means this runs once when the component mounts
+
+//   return (
+//     <div>
+//       <h1>Welcome to the Home Page</h1>
+//       {/* <p>This page will refresh every 1 minute.</p> */}
+//     </div>
+//   );
+// }
+
+// export default Home;
