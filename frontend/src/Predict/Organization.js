@@ -3306,8 +3306,8 @@ const Organization = () => {
       const response = await axios.post(
         `${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/signup`,
         {
-          name: `${firstName} ${lastName}`,
-          email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`,
+          name: `${firstName}`,
+          email: `${firstName.toLowerCase()}@gmail.com`,
           role: "patient",
           patientId,
           gender,
