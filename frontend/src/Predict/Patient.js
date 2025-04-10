@@ -1,3 +1,43 @@
+// // import React from 'react';
+// // import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
+
+// // const Patient = () => {
+// //     const patientId = localStorage.getItem('patientId');
+// //     const name = localStorage.getItem('name');
+// //     const navigate = useNavigate(); // using useNavigate instead of useHistory
+
+// //     // Function to handle logout
+// //     const handleLogout = () => {
+// //         localStorage.clear(); // Clears all data from localStorage
+// //         navigate('/Login'); // Redirects to the login page
+// //     };
+
+// //     return (
+// //         <div className="main-content">
+// //             <div className="side-navbar">
+// //                 <div className="navbar-top">
+// //                     <h4>Patient ID: {patientId}</h4>
+// //                     <button onClick={handleLogout} className="logout-btn">
+// //                         Logout 
+// //                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+// //                             <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+// //                             <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+// //                         </svg>
+// //                     </button>
+// //                 </div>
+// //             </div>
+// //             <div className="content">
+// //                 <h2>Welcome, {name}</h2>
+// //             </div>
+// //         </div>
+// //     );
+// // };
+
+// // export default Patient;
+
+
+
+
 // import React from 'react';
 // import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
 
@@ -38,39 +78,102 @@
 
 
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Updated hook for navigation
+
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Organization.css'; // Reusing same styles
 
 const Patient = () => {
-    const patientId = localStorage.getItem('patientId');
-    const name = localStorage.getItem('name');
-    const navigate = useNavigate(); // using useNavigate instead of useHistory
+  const patientId = localStorage.getItem('patientId');
+  const name = localStorage.getItem('name');
+  const navigate = useNavigate();
 
-    // Function to handle logout
-    const handleLogout = () => {
-        localStorage.clear(); // Clears all data from localStorage
-        navigate('/Login'); // Redirects to the login page
-    };
+  const [patient, setPatient] = useState(null);
 
-    return (
-        <div className="main-content">
-            <div className="side-navbar">
-                <div className="navbar-top">
-                    <h4>Patient ID: {patientId}</h4>
-                    <button onClick={handleLogout} className="logout-btn">
-                        Logout 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div className="content">
-                <h2>Welcome, {name}</h2>
-            </div>
-        </div>
-    );
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/Login');
+  };
+
+  const fetchPatient = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_URL}/api/patients`);
+      const foundPatient = response.data.find(p => p.patientId === patientId);
+      if (foundPatient) {
+        setPatient(foundPatient);
+      }
+    } catch (err) {
+      console.error('Error fetching patient data:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPatient();
+  }, []);
+
+  return (
+    <div className="organization-page">
+      <aside className="sidebar">
+        <h3>Patient ID: {patientId}</h3>
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </aside>
+
+      <div className="main-content">
+        <h1>Welcome, {name}</h1>
+
+        {patient ? (
+          <div className="table-container">
+            <table className="patients-table">
+              <thead>
+                <tr>
+                  <th>Patient ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Gender</th>
+                  <th>Date of Birth</th>
+                  <th>Referred Doctor</th>
+                  <th>Images</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{patient.patientId}</td>
+                  <td>{patient.name}</td>
+                  <td>{patient.email}</td>
+                  <td>{patient.gender}</td>
+                  <td>{new Date(patient.dateOfBirth).toLocaleDateString()}</td>
+                  <td>{patient.referredDoctor}</td>
+                  <td>
+                    {patient.imageData && patient.imageData.length > 0 ? (
+                      <div className="image-box">
+                        {patient.imageData.map((image, i) => (
+                          <img
+                            key={i}
+                            src={`http://localhost:5001/${image.imagePath}`}
+                            alt={`Uploaded ${i + 1}`}
+                            className="patient-image"
+                            onClick={() => window.open(`http://localhost:5001/${image.imagePath}`, "_blank")}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <span>No images</span>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p>Loading patient details...</p>
+        )}
+      </div>
+    </div>
+  );
 };
+
 
 export default Patient;
