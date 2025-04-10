@@ -1,68 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.home {
+  text-align: center;
+}
+
+.hero {
+  background: linear-gradient(135deg, #c9e0e5, #dac5e3);
+  color: #000000;
+  padding: 100px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
 .container {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .title {
-    font-size: 36px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .subtitle {
-    font-size: 24px;
-    font-weight: bold;
-    color: #666;
-    margin-top: 20px;
-  }
-  
-  .description {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .section {
-    margin-bottom: 20px;
-  }
-  
-  .section-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #444;
-    margin-bottom: 10px;
-  }
-  
-  .list {
-    list-style-type: disc;
-    margin-left: 20px;
-    color: #333;
-  }
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .grid-item {
-    background-color: #fff;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-  }
-  
-  .grid-item h4 {
-    margin-bottom: 5px;
-    font-size: 18px;
-    color: #333;
-  }
-  
+  padding: 50px 20px;
+  background-color: #fff;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.feature-box {
+  background-color: #e3f2fd;
+  border-radius: 15px;
+  padding: 20px 30px;
+  width: 280px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+}
+
+.feature-box h3 {
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
