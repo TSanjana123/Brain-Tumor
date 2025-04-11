@@ -350,6 +350,7 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [showToast, setShowToast] = useState(false);
 
   // Sample data for the bar graph
   const barData = {
@@ -415,67 +416,85 @@ const Login = () => {
       localStorage.setItem('name', name);
       localStorage.setItem('email', email);
 
-      if (role === 'patient') {
-        localStorage.setItem('patientId', patientId);
-        navigate('/Patient');
-      } else if (role === 'medicalStaff') {
-        localStorage.setItem('organizationName', organizationName);
-        navigate('/Organization');
-      }
+      setShowToast(true);
+      setTimeout(() => {
+        if (role === 'patient') {
+          localStorage.setItem('patientId', patientId);
+          navigate('/Patient');
+        } else if (role === 'medicalStaff') {
+          localStorage.setItem('organizationName', organizationName);
+          navigate('/Organization');
+        }
+      }, 1500);
     } catch (err) {
       setError('Invalid email or password');
     }
   };
 
   return (
-    <div className="d-flex vh-100">
-      <div className="w-50 d-flex flex-column justify-content-center align-items-center bg-light">
-      {/* <div className="container w-50 d-flex flex-column justify-content-center align-items-center bg-success text-white p-4 shadow rounded"> */}
+    <>
+      <div className="d-flex vh-100">
+        <div className="w-50 d-flex flex-column justify-content-center align-items-center bg-light">
+          {/* <div className="container w-50 d-flex flex-column justify-content-center align-items-center bg-success text-white p-4 shadow rounded"> */}
 
-      {/* <div className="w-50 d-flex flex-column justify-content-center align-items-center"> */}
-        <h2>Performance Metrics</h2>
-        <div className="graph-placeholder" style={{ width: '80%', height: '400px' }}>
-          <Bar data={barData} options={barOptions} />
+          {/* <div className="w-50 d-flex flex-column justify-content-center align-items-center"> */}
+          <h2>Performance Metrics</h2>
+          <div className="graph-placeholder" style={{ width: '80%', height: '400px' }}>
+            <Bar data={barData} options={barOptions} />
+          </div>
         </div>
-      </div> 
 
-      {/* Right Half: Login Form */}
-      {/* <div className="w-50 d-flex justify-content-center align-items-center bg-white"> */}
-      <div className="w-50 d-flex justify-content-center align-items-center">
-        <div className="card shadow-lg p-4 rounded" style={{ maxWidth: '400px', width: '100%' }}>
-          <h2 className="text-center mb-4">Login</h2>
-          {error && <div className="alert alert-danger">{error}</div>}
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                name="password"
-                className="form-control"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            {/* <button type="submit" className="btn btn-success cretere the t hghuio mn ytik  w-100"> */}
-            <button type="submit" className="btn-login_click">
-              Login
-            </button>
-          </form>
+        {/* Right Half: Login Form */}
+        {/* <div className="w-50 d-flex justify-content-center align-items-center bg-white"> */}
+        <div className="w-50 d-flex justify-content-center align-items-center">
+          <div className="card shadow-lg p-4 rounded" style={{ maxWidth: '400px', width: '100%' }}>
+            <h2 className="text-center mb-4">Login</h2>
+            {error && <div className="alert alert-danger">{error}</div>}
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              {/* <button type="submit" className="btn btn-success cretere the t hghuio mn ytik  w-100"> */}
+              <button type="submit" className="btn-login_click">
+                Login
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+      {showToast && (
+        <div className="toast show position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            {/* <strong className="me-auto">Login Successful</strong> */}
+            <strong className="me-auto">Welcome {localStorage.getItem('name')}!</strong>
+            <small></small>
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close" onClick={() => setShowToast(false)}></button>
+          </div>
+          <div className="toast-body">
+          Login Successful..........
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

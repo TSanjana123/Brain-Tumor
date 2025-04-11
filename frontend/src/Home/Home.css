@@ -1,0 +1,33 @@
+.footer {
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer p {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  
+  .social-icons, .developer-links {
+    margin-top: 10px;
+  }
+  
+  .social-icon {
+    color: white;
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .social-icon:hover {
+    color: #3eac47;
+  }
+  
+  /* Ensure Font Awesome icons are properly loaded */
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+  

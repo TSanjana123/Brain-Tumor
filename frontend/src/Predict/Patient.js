@@ -85,6 +85,7 @@ import axios from 'axios';
 import './Organization.css'; // Reusing same styles
 
 const Patient = () => {
+  const [showToast, setShowToast] = useState(false);
   const patientId = localStorage.getItem('patientId');
   const name = localStorage.getItem('name');
   const navigate = useNavigate();
@@ -92,8 +93,11 @@ const Patient = () => {
   const [patient, setPatient] = useState(null);
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate('/Login');
+    setShowToast(true);
+    setTimeout(() => {
+      localStorage.clear();
+      navigate('/Login');
+    }, 1000);
   };
 
   const fetchPatient = async () => {
@@ -113,65 +117,98 @@ const Patient = () => {
   }, []);
 
   return (
-    <div className="organization-page">
-      <aside className="sidebar">
-        <h3>Patient ID: {patientId}</h3>
-        <button className="logout-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      </aside>
+    <>
+      <div className="organization-page">
+        <aside className="sidebar">
+          <h3>Patient ID : {patientId}</h3>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
 
-      <div className="main-content">
-        <h1>Welcome, {name}</h1>
+        </aside>
 
-        {patient ? (
-          <div className="table-container">
-            <table className="patients-table">
-              <thead>
-                <tr>
-                  <th>Patient ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Gender</th>
-                  <th>Date of Birth</th>
-                  <th>Referred Doctor</th>
-                  <th>Images</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{patient.patientId}</td>
-                  <td>{patient.name}</td>
-                  <td>{patient.email}</td>
-                  <td>{patient.gender}</td>
-                  <td>{new Date(patient.dateOfBirth).toLocaleDateString()}</td>
-                  <td>{patient.referredDoctor}</td>
-                  <td>
-                    {patient.imageData && patient.imageData.length > 0 ? (
-                      <div className="image-box">
-                        {patient.imageData.map((image, i) => (
-                          <img
-                            key={i}
-                            src={`http://localhost:5001/${image.imagePath}`}
-                            alt={`Uploaded ${i + 1}`}
-                            className="patient-image"
-                            onClick={() => window.open(`http://localhost:5001/${image.imagePath}`, "_blank")}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <span>No images</span>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p>Loading patient details...</p>
-        )}
+        <div className="main-content">
+          {/* <h1>shashi</h1> */}
+          {/* <h1>Welcome, {name}</h1> */}
+          {/* <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              My details
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item">patient ID : {patient.patientId}</a></li>
+              <li><a class="dropdown-item" >Name : {patient.name}</a></li>
+              <li><a class="dropdown-item" >Email : {patient.email}</a></li>
+              <li><a class="dropdown-item" >Gender : {patient.gender}</a></li>
+              <li><a class="dropdown-item" >Date of Birth</a></li>
+            </ul>
+          </div> */}
+
+          {patient ? (
+            <div className="table-container">
+              <table className="patients-table">
+                <thead>
+                  <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Referred Doctor</th>
+                    <th>Images</th>
+                    <th>Ask</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{patient.patientId}</td>
+                    <td>{patient.name}</td>
+                    <td>{patient.email}</td>
+                    <td>{patient.gender}</td>
+                    <td>{new Date(patient.dateOfBirth).toLocaleDateString()}</td>
+                    <td>{patient.referredDoctor}</td>
+                    <td>
+                      {patient.imageData && patient.imageData.length > 0 ? (
+                        <div className="image-box">
+                          {patient.imageData.map((image, i) => (
+                            <img
+                              key={i}
+                              src={`http://localhost:5001/${image.imagePath}`}
+                              alt={`Uploaded ${i + 1}`}
+                              className="patient-image"
+                              onClick={() => window.open(`http://localhost:5001/${image.imagePath}`, "_blank")}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <span>No images</span>
+                      )}
+                    </td>
+                    <td>{patient.referredDoctor}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div class="spinner-border text-danger" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      {showToast && (
+        <div className="toast show position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            {/* <strong className="me-auto">Login Successful</strong> */}
+            {/* <strong className="me-auto">Welcome {localStorage.getItem('name')}!</strong> */}
+            <small></small>
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close" onClick={() => setShowToast(false)}></button>
+          </div>
+          <div className="toast-body">
+            Loging Out......
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
