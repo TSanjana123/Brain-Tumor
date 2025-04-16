@@ -1727,13 +1727,16 @@ app.use(cors({
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
+const dotenv = require('dotenv')
+dotenv.config({path:"backend/.env"});
 
-require('dotenv').config();
+// require('dotenv').config();
 console.log("Shashi")
 console.log("env : ", process.env.MONGODB_URI);
-
+mongoose.connect(process.env.MONGODB_URI);
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/brain_tumor?retryWrites=true&w=majority", {
+  useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
