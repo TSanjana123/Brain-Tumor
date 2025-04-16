@@ -97,7 +97,7 @@ const Patient = () => {
     setTimeout(() => {
       localStorage.clear();
       navigate('/Login');
-    }, 1000);
+    }, 500);
   };
 
   const fetchPatient = async () => {
