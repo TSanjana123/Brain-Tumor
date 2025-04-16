@@ -1735,7 +1735,7 @@ console.log("Shashi")
 console.log("env : ", process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
 // MongoDB Connection
-mongoose.connect("mongodb+srv://sanjanathumpally:rootinc@sanjanaaa.ajf49.mongodb.net/brain_tumor?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
