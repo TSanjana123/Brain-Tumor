@@ -82,7 +82,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Organization.css'; // Reusing same styles
+import './Patient.css'; // Reusing same styles
 
 const Patient = () => {
   const [showToast, setShowToast] = useState(false);
@@ -90,14 +90,14 @@ const Patient = () => {
   const name = localStorage.getItem('name');
   const navigate = useNavigate();
 
-  const [patient, setPatient] = useState(null);
+  const [patient, setPatient] = useState({});
 
   const handleLogout = () => {
     setShowToast(true);
     setTimeout(() => {
       localStorage.clear();
       navigate('/Login');
-    }, 1000);
+    }, 500);
   };
 
   const fetchPatient = async () => {
@@ -129,6 +129,88 @@ const Patient = () => {
 
         <div className="main-content">
           {/* <h1>shashi</h1> */}
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Patient ID</h5>
+              <p class="card-text">{patient.patientId}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">{patient.name}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Email</h5>
+              <p class="card-text">{patient.email}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Gender</h5>
+              <p class="card-text">{patient.gender}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Date of Birth</h5>
+              <p class="card-text">{new Date(patient.dateOfBirth).toLocaleDateString()}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Referred Doctor</h5>
+              <p class="card-text">{patient.referredDoctor}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+          
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">My Reports</h5>
+              <p class="card-text">{patient.imageData && patient.imageData.length > 0 ? (
+                <div className="image-box">
+                  {patient.imageData.map((image, i) => (
+                    <img
+                      key={i}
+                      src={`http://localhost:5001/${image.imagePath}`}
+                      alt={`Uploaded ${i + 1}`}
+                      className="patient-image"
+                      onClick={() => window.open(`http://localhost:5001/${image.imagePath}`, "_blank")}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <span>No images</span>
+              )}</p>
+              {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+            </div>
+          </div>
+
+          <div class="card" >
+            {/* <img src="..." class="card-img-top" alt="..." /> */}
+            <div class="card-body">
+              <h5 class="card-title">Chat</h5>
+              <p class="card-text">{patient.referredDoctor}</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+
+
           {/* <h1>Welcome, {name}</h1> */}
           {/* <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -143,7 +225,7 @@ const Patient = () => {
             </ul>
           </div> */}
 
-          {patient ? (
+          {/* {patient ? (
             <div className="table-container">
               <table className="patients-table">
                 <thead>
@@ -192,14 +274,13 @@ const Patient = () => {
             <div class="spinner-border text-danger" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-          )}
+          )} */}
         </div>
       </div>
       {showToast && (
         <div className="toast show position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
           <div className="toast-header">
-            {/* <strong className="me-auto">Login Successful</strong> */}
-            {/* <strong className="me-auto">Welcome {localStorage.getItem('name')}!</strong> */}
+
             <small></small>
             <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close" onClick={() => setShowToast(false)}></button>
           </div>

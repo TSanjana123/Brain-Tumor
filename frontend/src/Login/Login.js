@@ -425,7 +425,7 @@ const Login = () => {
           localStorage.setItem('organizationName', organizationName);
           navigate('/Organization');
         }
-      }, 1500);
+      }, 500);
     } catch (err) {
       setError('Invalid email or password');
     }
