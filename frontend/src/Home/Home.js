@@ -375,130 +375,134 @@
 
 
 
-// import React, { useEffect } from 'react';
+// // import React from "react";
+// // import "./Home.css"; // Import the CSS file
 
-// function Home() {
-//   useEffect(() => {
-//     // Set an interval to reload the page every 60 seconds
-//     const intervalId = setInterval(() => {
-//       window.location.reload();
-//     }, 600); // 60000 milliseconds = 1 minute
+// // function Home() {
+// //   return (
+// //     <>
+// //       <div className="footer">
+// //         <p>&copy; 2025 KMIT PASSED OUT | IT DEPAT</p>
+// //       </div>
+// //     </>
+// //   );
+// // }
 
-//     // Cleanup the interval when the component is unmounted
-//     return () => clearInterval(intervalId);
-//   }, []); // Empty dependency array means this runs once when the component mounts
+// // export default Home;
 
-//   return (
-//     <div>
-//       <h1>Welcome to the Home Page</h1>
-//       {/* <p>This page will refresh every 1 minute.</p> */}
-//     </div>
-//   );
-// }
+// // import React from "react";
+// // import "./Home.css"; // Import the CSS file
 
-// export default Home;
+// // function Home() {
+// //   return (
+// //     <>
+// //       <div className="footer">
+// //         <div className="social-icons">
+// //           {/* Social Media Links */}
+// //           <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+// //             <i className="fab fa-facebook-f"></i>
+// //           </a>
+// //           <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+// //             <i className="fab fa-twitter"></i>
+// //           </a>
+// //           <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+// //             <i className="fab fa-instagram"></i>
+// //           </a>
+// //         <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+// //           <i className="fab fa-linkedin-in"></i>
+// //         </a>
+// //         </div>
 
+//         {/* Developer Section */}
+//         {/* <div className="developer-links">
+//           <p>Developers</p>
+//           <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+//             <i className="fab fa-linkedin-in"></i>
+//           </a>
+//           <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+//             <i className="fab fa-linkedin-in"></i>
+//           </a>
+//           <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+//             <i className="fab fa-linkedin-in"></i>
+//           </a>
+//           <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+//             <i className="fab fa-linkedin-in"></i>
+//           </a>
+//         </div> */}
 
+//         {/* Copyright Text */}
 
+// //         <p>&copy; 2025 KMIT PASSED OUT | IT DEPAT</p>
+// //       </div>
+// //     </>
+// //   );
+// // }
 
+// // export default Home;
 
+import React, { useEffect, useState } from 'react';
+import './Home.css';
 
+const Home = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  const images = [
+    'https://onco.com/about-cancer/wp-content/uploads/2019/02/Brain_Tumor-1.jpg',
+    'https://gacetamedica.com/wp-content/uploads/2023/08/GettyImages-1250205787.jpg',
+    'https://miro.medium.com/v2/resize:fit:1200/1*PoNPMXbzOjp8A6A676UUuQ.jpeg'
+  ];
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 1000); // Change image every 1 second
+    return () => clearInterval(timer);
+  }, [images.length]);
 
-
-
-
-
-
-
-
-
-// import react from 'react';
-
-// function Home() {
-//   return (
-//     <>
-
-//     </>
-//   );
-// }
-
-// export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import "./Home.css"; // Import the CSS file
-
-// function Home() {
-//   return (
-//     <>
-//       <div className="footer">
-//         <p>&copy; 2025 KMIT PASSED OUT | IT DEPAT</p>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Home;
-
-import React from "react";
-import "./Home.css"; // Import the CSS file
-
-function Home() {
   return (
-    <>
-      <div className="footer">
-        <div className="social-icons">
-          {/* Social Media Links */}
-          <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <i className="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i className="fab fa-instagram"></i>
-          </a>
-        <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <i className="fab fa-linkedin-in"></i>
-        </a>
+    <div className="home-container">
+      {/* Top Bar */}
+      <div className="top-bar">
+        <div className="logo-section">
+          <img
+            src="https://raw.githubusercontent.com/Oct4Pie/brain-tumor-detection/main/logo/brain.png"
+            alt="Logo"
+            className="logo"
+          />
+          <h1 className="title">Brain Tumor Detection</h1>
         </div>
-
-        {/* Developer Section */}
-        {/* <div className="developer-links">
-          <p>Developers</p>
-          <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i className="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i className="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i className="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i className="fab fa-linkedin-in"></i>
-          </a>
+        {/* <div className="search-box">
+          🔍
+          <input type="text" placeholder="Search AI Tools" />
         </div> */}
-
-        {/* Copyright Text */}
-        <p>&copy; 2025 KMIT PASSED OUT | IT DEPAT</p>
       </div>
-    </>
+
+      {/* Navigation */}
+      {/* <div className="nav-bar">
+        {['Upload MRI', 'Tumor Types', 'About AI Model', 'Team', 'Contact'].map((item, idx) => (
+          <a key={idx} href="#">{item}</a>
+        ))}
+      </div> */}
+
+      {/* Banner Section */}
+      <div className="banner">
+        {images.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt={`Slide ${index}`}
+            className={`slide ${index === currentIndex ? 'active' : ''}`}
+          />
+        ))}
+        <div className="banner-text">
+          Empowering Diagnosis with AI
+        </div>
+        <div className="sub-banner-text">
+          Early detection of brain tumors through smart image analysis.
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default Home;
