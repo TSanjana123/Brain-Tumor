@@ -1726,7 +1726,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('/Users/shashitejreddysingareddy/Desktop/GIT/Brain-Tumor/backend/uploads'));
 const dotenv = require('dotenv')
 dotenv.config({path:"backend/.env"});
 
