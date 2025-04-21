@@ -8,7 +8,7 @@
     width: 100%;
   }
   
-  .footer p {
+  /* .footer p {
     margin: 10px 0;
     font-size: 14px;
   }
@@ -30,7 +30,7 @@
   
   /* Ensure Font Awesome icons are properly loaded */
   /* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
-   */ */
+   */ */ */
 
    .home-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -117,24 +117,54 @@
   
   .banner-text {
     position: absolute;
-    bottom: 60px;
+    bottom: 150px;
     left: 50px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 10px 30px;
-    font-size: 30px;
+    color: rgb(0, 0, 0);
+    background-color:  rgba(153, 185, 219, 0.482);
+    padding: 20px 10px;
+    font-size: 26px;
     font-weight: bold;
     border-radius: 10px;
   }
   
   .sub-banner-text {
     position: absolute;
-    bottom: 20px;
+    bottom: 100px;
     left: 50px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
+    color: rgb(11, 10, 10);
+    background-color: rgba(153, 185, 219, 0.482);
     padding: 8px 20px;
     font-size: 18px;
     border-radius: 8px;
   }
+  .footer {
+    background-color: #18334e;
+    color: white;
+    text-align: center;
+    padding: 0px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+   .footer p {
+    margin: 10px 0;
+    font-size: 14px;
+  }
   
+  .social-icons, .developer-links {
+    margin-top: 8px;
+  }
+  
+  .social-icon {
+    color: white;
+    font-size: 15px;
+    margin: 0 8px;
+    text-decoration: none;
+  }
+  
+  .social-icon:hover {
+    color: #50d35b;
+  }
+  
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+   
