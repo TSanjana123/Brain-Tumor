@@ -455,7 +455,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1000); // Change image every 1 second
+    }, 3000); // Change image every 1 second
     return () => clearInterval(timer);
   }, [images.length]);
 
