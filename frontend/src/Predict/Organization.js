@@ -4069,8 +4069,8 @@ const Organization = () => {
         e.preventDefault();
         const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
 
-        const fullName = `${firstName} ${lastName}`.trim();
-        // const fullName = `${firstName}`.trim();
+        // const fullName = `${firstName} ${lastName}`.trim();
+        const fullName = `${firstName}`.trim();
         // Simple email generation (requires password field in modal)
         // You'll need to add password fields to the modal or adjust backend logic
         const password = prompt("Enter a temporary password for the new patient:"); // VERY insecure - just for demo
