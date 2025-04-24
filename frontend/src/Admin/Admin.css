@@ -1,29 +1,133 @@
+/* Table Styling */
+/* Table Styling */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f4f4f4;
-  }
-  
-  ul {
-    padding-left: 20px;
-  }
-  
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #f0f8ff;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Alternating Row Colors */
+tbody tr:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+tbody tr:hover {
+  background-color: #f1faff;
+}
+
+/* List Styling inside table cells */
+ul {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+/* Link Styling */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Button Styling */
+button {
+  padding: 8px 14px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Form Centering Wrapper */
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+/* Form Styling */
+form {
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: #fefefe;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  justify-content: center;
+}
+
+form button {
+  margin-right: 10px;
+}
+
+form h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Optional Message Styling */
+.success-message {
+  color: #4caf50;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: #e53935;
+  margin-top: 10px;
+}
+
+/* Headings Styling */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
+}

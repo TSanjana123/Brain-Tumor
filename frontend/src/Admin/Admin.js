@@ -1275,24 +1275,25 @@ const Admin = () => {
 
       {/* Edit Form for Updating Image Path */}
       {editingImageData && (
-        <div>
-          <h2>Update Image Path</h2>
-          <form onSubmit={handleUpdateImagePath}>
-            <label>New Image Path:</label>
-            <input
-              type="text"
-              value={newImagePath}
-              onChange={handleImagePathChange}
-              placeholder="Enter new image path"
-            />
-            <br />
-            <button type="submit">Update Image Path</button>
-            <button type="button" onClick={() => setEditingImageData(null)}>
-              Cancel
-            </button>
-          </form>
-        </div>
-      )}
+          <div className="form-wrapper">
+            <h2>Update Image Path</h2>
+            <form onSubmit={handleUpdateImagePath}>
+              <label>New Image Path:</label>
+              <input
+                type="text"
+                value={newImagePath}
+                onChange={handleImagePathChange}
+                placeholder="Enter new image path"
+              />
+              <button type="submit">Update Image Path</button>
+              <button type="button" onClick={() => setEditingImageData(null)}>
+                Cancel
+              </button>
+            </form>
+          </div>
+        )}
+        
+      
     </>
   );
 };
