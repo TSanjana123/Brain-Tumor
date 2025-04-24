@@ -4077,7 +4077,8 @@ const Organization = () => {
             alert("Password is required.");
             return;
         }
-        const email = `${firstName.toLowerCase().replace(/\s+/g, '')}${lastName.toLowerCase().replace(/\s+/g, '')}@example.com`;
+        // const email = `${firstName.toLowerCase().replace(/\s+/g, '')}${lastName.toLowerCase().replace(/\s+/g, '')}@example.com`;
+        const email = `${firstName.toLowerCase().replace(/\s+/g, '')}@gmail.com`;
 
         if (!firstName || !lastName || !patientId || !dob || !gender || !referredDoctor) {
             alert("All fields are required.");
