@@ -198,6 +198,8 @@ const Patient = () => {
                 <span>No images</span>
               )}</p>
               {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
+              <h5 class="card-title">Prediction</h5>
+              
             </div>
           </div>
 

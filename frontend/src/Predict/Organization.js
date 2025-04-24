@@ -3384,6 +3384,7 @@ const Organization = () => {
                 <th>Referred Doctor</th>
                 <th>Image</th>
                 <th>Update Image</th>
+                <th>Prediction</th>
               </tr>
             </thead>
             <tbody>
@@ -3395,6 +3396,7 @@ const Organization = () => {
                   <td>{patient.gender}</td>
                   <td>{patient.dateOfBirth}</td>
                   <td>{patient.referredDoctor}</td>
+                  {/* <td>{patient.referredDoctor}</td> */}
                   <td>
                     {patient.imageData && patient.imageData.length > 0 ? (
                       <div className="image-box">
