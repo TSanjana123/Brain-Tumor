@@ -1,3 +1,5 @@
+# pip install torch torchvision pillow flask flask-cors
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
