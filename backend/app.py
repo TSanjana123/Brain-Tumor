@@ -1,83 +1,153 @@
-from flask import Flask, request, jsonify
 import torch
 import torch.nn as nn
+import torch.optim as optim
 from torchvision import models, transforms
 from PIL import Image
 import os
-import pymongo
-from bson.objectid import ObjectId
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-app = Flask(__name__)
+# --- Configuration ---
+# !!! IMPORTANT: Update this path to the actual location of your model file !!!
+MODEL_PATH = 'Models/densenet_201_brain_tumor.pth' 
+# !!! IMPORTANT: Update this path to the base directory where images are stored !!!
+# This should be the directory containing the 'uploads' folder (or similar)
+# referred to by imagePath in your patient data.
+IMAGE_BASE_PATH = '.' # Assume images are in a subdir relative to app.py
 
-# Connect to MongoDB
-client = pymongo.MongoClient("mongodb://localhost:27017/")  # Change if needed
-db = client['brain_tumor_db']  # Database name
-patients_collection = db['patients']  # Collection name
+# Check for CUDA availability
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
 
-# Model and class names
+# --- Model Definition & Loading ---
 class_names = [
-    'Astrocitoma T1', 'Astrocitoma T1C+', 'Carcinoma T1', 'Carcinoma T1C+', 'Carcinoma T2',
-    'Ependimoma T1', 'Ependimoma T1C+', 'Ependimoma T2', 'Ganglioglioma T1', 'Ganglioglioma T1C+',
-    'Ganglioglioma T2', 'Germinoma T1', 'Germinoma T1C+', 'Germinoma T2', 'Glioblastoma T1',
-    'Glioblastoma T1C+', 'Glioblastoma T2', 'Granuloma T1', 'Granuloma T1C+', 'Meduloblastoma T1',
-    'Meduloblastoma T2', 'Meningioma T1', 'Meningioma T1C+', 'Neurocitoma T1', 'Neurocitoma T1C+',
-    'Neurocitoma T2', 'Oligodendroglioma T1', 'Oligodendroglioma T1C+', 'Oligodendroglioma T2',
-    'Papiloma T1', 'Papiloma T1C+', 'Papiloma T2', 'Schwannoma T1', 'Schwannoma T1C+', 'Schwannoma T2',
-    'Tuberculoma T1', 'Tuberculoma T1C+', 'Tuberculoma T2', '_NORMAL T1', '_NORMAL T2'
+    'Astrocitoma T1', 'Astrocitoma T1C+', 'Carcinoma T1', 'Carcinoma T1C+', 
+    'Carcinoma T2', 'Ependimoma T1', 'Ependimoma T1C+', 'Ependimoma T2', 
+    'Ganglioglioma T1', 'Ganglioglioma T1C+', 'Ganglioglioma T2', 'Germinoma T1', 
+    'Germinoma T1C+', 'Germinoma T2', 'Glioblastoma T1', 'Glioblastoma T1C+', 
+    'Glioblastoma T2', 'Granuloma T1', 'Granuloma T1C+', 'Meduloblastoma T1', 
+    'Meduloblastoma T2', 'Meningioma T1', 'Meningioma T1C+', 'Neurocitoma T1', 
+    'Neurocitoma T1C+', 'Neurocitoma T2', 'Oligodendroglioma T1', 
+    'Oligodendroglioma T1C+', 'Oligodendroglioma T2', 'Papiloma T1', 
+    'Papiloma T1C+', 'Papiloma T2', 'Schwannoma T1', 'Schwannoma T1C+', 
+    'Schwannoma T2', 'Tuberculoma T1', 'Tuberculoma T1C+', 'Tuberculoma T2', 
+    '_NORMAL T1', '_NORMAL T2'
 ]
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# Load the model structure
+model = models.densenet201(pretrained=False) # Set pretrained=False if loading custom weights
+num_ftrs = model.classifier.in_features
+model.classifier = nn.Linear(num_ftrs, len(class_names))
 
-# Load the trained model
-model = models.densenet201(pretrained=False)
-model.classifier = nn.Linear(model.classifier.in_features, len(class_names))
-model.load_state_dict(torch.load('/path/to/your/densenet201_brain_tumor.pth'))
+# Load the trained weights
+try:
+    # Load state dict, mapping location based on device availability
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    print(f"Model loaded successfully from {MODEL_PATH}")
+except FileNotFoundError:
+    print(f"ERROR: Model file not found at {MODEL_PATH}. Please check the MODEL_PATH variable.")
+    exit() # Exit if model can't be loaded
+except Exception as e:
+    print(f"Error loading model state_dict: {e}")
+    exit()
+
 model = model.to(device)
-model.eval()
+model.eval() # Set model to evaluation mode
 
-# Image preprocessing function
+# --- Image Preprocessing ---
 def preprocess_image(image_path):
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-    image = Image.open(image_path)
-    image = image.convert("RGB")
-    image = transform(image).unsqueeze(0)  # Add batch dimension
-    return image.to(device)
+    try:
+        transform = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+        image = Image.open(image_path)
+        # Ensure image is RGB - crucial for models trained on ImageNet-style data
+        if image.mode != 'RGB':
+            image = image.convert("RGB") 
+        image = transform(image).unsqueeze(0)  # Add batch dimension
+        return image.to(device)
+    except FileNotFoundError:
+        print(f"Error: Image file not found at {image_path}")
+        return None
+    except Exception as e:
+        print(f"Error preprocessing image {image_path}: {e}")
+        return None
 
-# Prediction function
-def predict(image_path):
-    image = preprocess_image(image_path)
-    with torch.no_grad():
-        outputs = model(image)
-        _, predicted = torch.max(outputs, 1)
-    return predicted.item()
+# --- Prediction Function ---
+def predict(image_path, model):
+    image_tensor = preprocess_image(image_path)
+    if image_tensor is None:
+        return None # Indicate preprocessing failure
 
-# API route for prediction
-@app.route('/predict', methods=['POST'])
-def predict_route():
-    file = request.files['image']
-    patient_id = request.form['patientId']
-    # Save the image temporarily
-    image_path = f'./temp_images/{file.filename}'
-    file.save(image_path)
+    with torch.no_grad(): # Disable gradient calculations for inference
+        outputs = model(image_tensor)
+        _, predicted_index = torch.max(outputs, 1)
     
-    # Get prediction
-    predicted_class_idx = predict(image_path)
-    predicted_class = class_names[predicted_class_idx]
+    predicted_class_index = predicted_index.item()
     
-    # Save the prediction in MongoDB
-    patients_collection.update_one(
-        {"_id": ObjectId(patient_id)},
-        {"$set": {"prediction": predicted_class}}
-    )
+    if 0 <= predicted_class_index < len(class_names):
+        return class_names[predicted_class_index]
+    else:
+        print(f"Error: Predicted index {predicted_class_index} is out of bounds for class_names.")
+        return "Prediction Index Error"
 
-    # Clean up: delete the temporary image
-    os.remove(image_path)
-    
-    return jsonify({"predictedClass": predicted_class})
 
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+# --- Flask App ---
+app = Flask(__name__)
+# Allow requests from your React frontend (adjust origin if necessary)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}) 
+
+@app.route('/api/predict', methods=['POST'])
+def handle_prediction():
+    if not request.is_json:
+        return jsonify({"error": "Request must be JSON"}), 400
+
+    data = request.get_json()
+    relative_image_path = data.get('imagePath') # e.g., 'uploads/patientX/image.jpg'
+
+    if not relative_image_path:
+        return jsonify({"error": "Missing 'imagePath' in request body"}), 400
+
+    # Construct the full path to the image file
+    # Assumes IMAGE_BASE_PATH is the directory *containing* the 'uploads' folder
+    full_image_path = os.path.join(relative_image_path)
+    # full_image_path = os.path.join(IMAGE_BASE_PATH, relative_image_path)
+    full_image_path = os.path.normpath(full_image_path) # Normalize path separators
+
+    print(f"Attempting to predict for image: {full_image_path}") # For debugging
+
+    if not os.path.exists(full_image_path):
+         print(f"Image file not found at constructed path: {full_image_path}")
+         # Try an alternative if uploads is directly inside IMAGE_BASE_PATH
+        #  alt_path = os.path.join(IMAGE_BASE_PATH, 'uploads', os.path.basename(relative_image_path))
+         alt_path = os.path.join(IMAGE_BASE_PATH, 'backend/uploads', os.path.basename(relative_image_path))
+         alt_path = os.path.normpath(alt_path)
+         if os.path.exists(alt_path):
+             full_image_path = alt_path
+             print(f"Found image at alternative path: {full_image_path}")
+         else:
+             print(f"Also not found at alternative path: {alt_path}")
+             return jsonify({"error": f"Image file not found on server at path: {relative_image_path}"}), 404
+
+
+    try:
+        prediction_result = predict(full_image_path, model)
+        
+        if prediction_result:
+            print(f"Prediction successful: {prediction_result}")
+            return jsonify({"prediction": prediction_result})
+        else:
+            # Error occurred during preprocessing or prediction index issue
+             print(f"Prediction failed for image: {full_image_path}")
+             return jsonify({"error": "Prediction failed on server"}), 500
+
+    except Exception as e:
+        print(f"Exception during prediction for {full_image_path}: {e}")
+        return jsonify({"error": f"Server error during prediction: {e}"}), 500
+
+# --- Run the App ---
+if __name__ == '__main__':
+    # Make sure debug=False in production
+    app.run(host='0.0.0.0', port=5002, debug=True)
