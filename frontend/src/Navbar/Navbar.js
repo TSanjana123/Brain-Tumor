@@ -190,12 +190,12 @@ function Navbar() {
             <li className="nav-item">
               <Link to="/Login" className="nav-link">Login</Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/Patient" className="nav-link">Patient</Link>
             </li>
             <li className="nav-item">
               <Link to="/Organization" className="nav-link">Organization</Link>
-            </li>
+            </li> */}
             {/* <li className="nav-item">
               <Link to="/Test" className="nav-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-folder" viewBox="0 0 16 16">
