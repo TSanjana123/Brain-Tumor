@@ -440,6 +440,84 @@
 
 // // export default Home;
 
+// import React, { useEffect, useState } from 'react';
+// import './Home.css';
+
+// const Home = () => {
+//   const [currentIndex, setCurrentIndex] = useState(0);
+
+//   const images = [
+//     'https://onco.com/about-cancer/wp-content/uploads/2019/02/Brain_Tumor-1.jpg',
+//     'https://gacetamedica.com/wp-content/uploads/2023/08/GettyImages-1250205787.jpg',
+//     'https://miro.medium.com/v2/resize:fit:1200/1*PoNPMXbzOjp8A6A676UUuQ.jpeg'
+//   ];
+
+//   useEffect(() => {
+//     const timer = setInterval(() => {
+//       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+//     }, 3000); // Change image every 1 second
+//     return () => clearInterval(timer);
+//   }, [images.length]);
+
+//   return (
+//     <div className="home-container">
+//       {/* Top Bar */}
+//       <div className="top-bar">
+//         <div className="logo-section">
+//           <img
+//             src="https://raw.githubusercontent.com/Oct4Pie/brain-tumor-detection/main/logo/brain.png"
+//             alt="Logo"
+//             className="logo"
+//           />
+//           <h1 className="title">Brain Tumor Detection</h1>
+//         </div>
+        
+//       </div>
+
+      
+
+//       {/* Banner Section */}
+//       <div className="banner">
+//         {images.map((image, index) => (
+//           <img
+//             key={index}
+//             src={image}
+//             alt={`Slide ${index}`}
+//             className={`slide ${index === currentIndex ? 'active' : ''}`}
+//           />
+//         ))}
+//         <div className="banner-text">
+//           Empowering Diagnosis with AI
+//         </div>
+//         <div className="sub-banner-text">
+//           Early detection of brain tumors through smart image analysis.
+//         </div>
+//       </div>
+//       <div className="footer">
+//       <div className="social-icons">
+//         {/* Social Media Links */}
+//          <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+//              <i className="fab fa-facebook-f"></i>
+//            </a>
+//            <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+//              <i className="fab fa-twitter"></i>
+//            </a>
+//            <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+//              <i className="fab fa-instagram"></i>
+//           </a>
+//          <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+//            <i className="fab fa-linkedin-in"></i>
+//          </a>
+//          </div>
+//          <p>&copy; 2025 KMIT PASSED OUT | IT DEPAT</p>
+//       </div>  
+//     </div>
+    
+//   );
+// };
+
+// export default Home;
+
 import React, { useEffect, useState } from 'react';
 import './Home.css';
 
@@ -447,15 +525,17 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
-    'https://onco.com/about-cancer/wp-content/uploads/2019/02/Brain_Tumor-1.jpg',
-    'https://gacetamedica.com/wp-content/uploads/2023/08/GettyImages-1250205787.jpg',
-    'https://miro.medium.com/v2/resize:fit:1200/1*PoNPMXbzOjp8A6A676UUuQ.jpeg'
+    'https://media.istockphoto.com/id/1388387927/photo/neurologist-and-neurosurgeon-talk-use-computer-analyse-patient-mri-scan-diagnose-brain-brain.jpg?s=612x612&w=0&k=20&c=6TZpyzwEKYKmVb_f9JcSaeCuUjPER0EgcabakFtdVcQ=',
+    'https://media.istockphoto.com/id/1446638643/photo/adolescent-sad-unhappy-teenage-girl-frustrated-young-woman-problems-and-misfortunes-in-her.jpg?s=612x612&w=0&k=20&c=yv_Fc2d-i3uBvbpETrMmZe5W_n5u0c1CIGHuO_53qLQ=',
+    'https://media.istockphoto.com/id/2159487231/photo/asian-woman-holding-and-touching-on-head-feel-suffering-head-ache-pain-flu-high-fever.jpg?s=612x612&w=0&k=20&c=vFJVz24uB1DokKdNS1casz_i-X7mKFkQYmIAC12ZHfE=',
+    'https://media.istockphoto.com/id/1264819464/photo/brain-diseases-research.jpg?s=612x612&w=0&k=20&c=M8uS11CIwuKRiPu_gv2xbW-ah7uK_zpV5fIbxq_f9zg=',
+    'https://media.istockphoto.com/id/2166901957/photo/brain-stroke-3d-illustration.jpg?s=612x612&w=0&k=20&c=1IrUVqxHJ5G7Zi_JxFEj1c_93K7LJ5Snx1QgVviLj1g='
   ];
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 1 second
+    }, 3000);
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -471,56 +551,56 @@ const Home = () => {
           />
           <h1 className="title">Brain Tumor Detection</h1>
         </div>
-        {/* <div className="search-box">
-          🔍
-          <input type="text" placeholder="Search AI Tools" />
-        </div> */}
       </div>
 
-      {/* Navigation */}
-      {/* <div className="nav-bar">
-        {['Upload MRI', 'Tumor Types', 'About AI Model', 'Team', 'Contact'].map((item, idx) => (
-          <a key={idx} href="#">{item}</a>
-        ))}
-      </div> */}
-
-      {/* Banner Section */}
-      <div className="banner">
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Slide ${index}`}
-            className={`slide ${index === currentIndex ? 'active' : ''}`}
-          />
-        ))}
-        <div className="banner-text">
-          Empowering Diagnosis with AI
-        </div>
-        <div className="sub-banner-text">
-          Early detection of brain tumors through smart image analysis.
+      {/* Hero Section */}
+      <div className="hero-section">
+        <img
+          src={images[currentIndex]}
+          alt={`Slide ${currentIndex}`}
+          className="hero-image"
+        />
+        <div className="hero-overlay">
+          <h2>"Early Detection Saves Lives"</h2>
+          
         </div>
       </div>
+
+      {/* Info Cards */}
+      <div className="info-cards">
+        <div className="info-card">
+          <h3>Model Used</h3>
+          <p>We use <strong>DenseNet201</strong> — a state-of-the-art convolutional neural network for image classification and medical image analysis, known for its dense connectivity and efficiency in detecting brain tumors.</p>
+        </div>
+        <div className="info-card">
+          <h3>About Brain Tumors</h3>
+          <p>Brain tumors are abnormal growths of cells in the brain that can be life-threatening if not detected early. Our AI system assists in identifying different types of tumors through MRI images.</p>
+        </div>
+        <div className="info-card">
+          <h3>Why Early Detection?</h3>
+          <p>Early diagnosis dramatically improves treatment options and survival rates. Our AI model empowers doctors and patients by providing fast, accurate MRI image analysis.</p>
+        </div>
+      </div>
+
+      {/* Footer */}
       <div className="footer">
-      <div className="social-icons">
-        {/* Social Media Links */}
-         <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-             <i className="fab fa-facebook-f"></i>
-           </a>
-           <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-             <i className="fab fa-twitter"></i>
-           </a>
-           <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-             <i className="fab fa-instagram"></i>
+        <div className="social-icons">
+          <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <i className="fab fa-facebook-f"></i>
           </a>
-         <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-           <i className="fab fa-linkedin-in"></i>
-         </a>
-         </div>
-         <p>&copy; 2025 KMIT PASSED OUT | IT DEPAT</p>
-      </div>  
+          <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <i className="fab fa-twitter"></i>
+          </a>
+          <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i className="fab fa-instagram"></i>
+          </a>
+          <a href="https://linkedin.com" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i className="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+        <p>&copy; 2025 KMIT PASSED OUT | IT DEPT</p>
+      </div>
     </div>
-    
   );
 };
 

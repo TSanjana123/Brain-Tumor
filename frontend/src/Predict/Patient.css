@@ -1,5 +1,6 @@
 /* Sidebar Styling */
-.side-navbar {
+
+/* .side-navbar {
   width: 250px;
   background-color: #f8f9fa;
   padding: 20px;
@@ -19,19 +20,20 @@
 
 .logout-btn:hover {
   background-color: #ff0000;
-}
+} */
 
 /* Main Content Layout */
-.main-content {
+/* .main-content {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
   padding: 20px;
-}
+} */
 
 /* Dynamic Card Styling */
-.card {
+
+/* .card {
   display: inline-flex;
   flex-direction: column;
   padding: 50px;
@@ -47,7 +49,7 @@
 }
 
 .card-body {
-  /* text-align: center; */
+ 
   text-align: left;
 }
 
@@ -60,10 +62,10 @@
 .card-text {
   font-size: 16px;
   color: #555;
-}
+} */
 
 /* Responsive Image Box */
-.image-box {
+/* .image-box {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -83,6 +85,7 @@
 }
 
 /* Media Queries for Mobile */
+/* 
 @media screen and (max-width: 768px) {
   .main-content {
     flex-direction: column;
@@ -92,4 +95,166 @@
   .card {
     max-width: 100%;
   }
+}  */
+
+
+/* Main Content Layout - stacked like a form */
+/* Main container */
+
+.patient-page {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+  width: 250px;
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar h3 {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.logout-btn {
+  padding: 12px 20px;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px; /* New: pushes it just below the Patient ID */
+  
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px 50px;
+  overflow-y: auto;
+}
+
+.section-heading {
+  font-size: 26px;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.detail-item {
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  font-size: 18px;
+  color: #333;
+}
+
+.reports-section {
+  margin-bottom: 80px;
+}
+
+.image-grid {
+  display:flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+ 
+}
+
+.image-item {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  text-align: center;
+  width: 85%;
+  height: 300px
+}
+
+.patient-image1 {
+  width: 30%;
+  height: 240px;
+  object-fit:cover;
+  cursor: pointer;
+  
+}
+
+.prediction-text {
+  padding: 10px;
+  font-size: 16px;
+  background: #ecf0f1;
+  color: #2c3e50;
+  font-weight: 500;
+  margin-top: 12px;
+
+}
+
+.chat-widget {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 2px dashed #3498db;
+  border-radius: 50px;
+  padding: 10px 20px;
+  max-width: 280px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+}
+
+.chat-widget:hover {
+  background: #ecf6fd;
+  transform: translateY(-2px);
+}
+
+.chat-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 14px;
+  align-items: center;
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chat-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.chat-subtitle {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+
+/* Toast Styling */
+.toast {
+  background: #333;
+  color: #fff;
+  border: none;
 }

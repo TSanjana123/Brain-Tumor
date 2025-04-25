@@ -872,7 +872,7 @@ const Signup = () => {
     <div className="d-flex vh-100">
       {/* Left Half: Content Section with Pie Chart */}
       <div className="container w-50 d-flex flex-column justify-content-center align-items-center bg-dark text-white p-4 shadow rounded">
-        <h2>Data Distribution</h2>
+      <h2 className="data-distribution-title">Data Distribution</h2>
         <div className="graph-placeholder" style={{ width: '80%', height: '400px' }}>
           <Pie data={pieData} options={pieOptions} />
         </div>

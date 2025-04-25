@@ -25,7 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #6c757d;
+  color: #d6dade;
   font-size: 1.2rem;
 }
 
@@ -56,4 +56,8 @@
 .btn-sign_click:focus {
   outline: none; /* Remove default focus outline */
   box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5); /* Custom focus outline */
+}
+
+.data-distribution-title {
+  color: #ffffff;
 }
