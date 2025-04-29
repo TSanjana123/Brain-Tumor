@@ -1,0 +1,692 @@
+S No,Name of the Student,Name of the Company,Package
+1,Bade Shriya,Microsoft,54 (post successful conversion) lac/annum
+2,Tejaswi Kichhannapally,Google,52.2 lac/annum
+3,Bhargavi Acharya,Google,52.2 lac/annum
+4,Manognya B,Amazon,44 (post successful conversion) lac/annum
+5,Jayashree Bheema,Amazon,44 (post successful conversion) lac/annum
+6,Nidhi Tornekar,Amazon,44 (post successful conversion) lac/annum
+7,Jayanth Bontha,Amazon,44 (post successful conversion) lac/annum
+8,Uruj Ahmed Syed,Amazon,44 (post successful conversion) lac/annum
+9,Vinay Reddy Pulyala,Amazon,44 (post successful conversion) lac/annum
+10,Parivesh Srivastava,Servicenow,42.3 lac/annum
+11,Meghana Renukunta,Servicenow,42.3 lac/annum
+12,Kamal Kumar Konduri,Servicenow,42.3 lac/annum
+13,Shriya Bade,Servicenow,42.3 lac/annum
+14,Karthikeya Srishty,Servicenow,42.3 lac/annum
+15,Jayashree Bheema,Servicenow,42.3 lac/annum
+16,Sowmya Kalakonda,Servicenow,42.3 lac/annum
+17,Gurveer Singh Virk,Salesforce,39.5 lac/annum
+18,KARNATI SAI KRISHNA,Salesforce,39.5 lac/annum
+19,Vaishnavi Krovvidi,Salesforce,39.5 lac/annum
+20,Anvita Bhaskar,Salesforce,39.5 lac/annum
+21,Chinchole Gayatri,Salesforce,39.5 lac/annum
+22,P Vandhitha,Salesforce,39.5 lac/annum
+23,YADA SRI VALLI,Salesforce,39.5 lac/annum
+24,Venumuddala Ashritha,Salesforce,39.5 lac/annum
+25,Nameera Fatima,Goldman Sachs,30 lac/annum
+26,Rashiqua Taufiq Munshi,Goldman Sachs,30 lac/annum
+27,Mohammed Huzaif Ahmed,Catalog,25 lac/annum
+28,Shanmukha Rana Prathap M,Catalog,25 lac/annum
+29,Nikhil Guru Venkatesh,Techolution,25 lac/annum
+30,Srujan Landeri,F5 Networks,22.5 lac/annum
+31,Sai Swaroop Poluri,F5 Networks,22.5 lac/annum
+32,NALAM MUDITHA SRIHARSHA,F5 Networks,22.5 lac/annum
+33,Eshwar Gubba,F5 Networks,22.5 lac/annum
+34,Sanjay Agamamidi,F5 Networks,22.5 lac/annum
+35,Recharla Divya Reddy,F5 Networks,22.5 lac/annum
+36,Mahati Kontheti,Qualcomm,22 lac/annum
+37,Preet Sarda,Zeta,16 lac/annum
+38,Ram Reddy Vennam,Zeta,16 lac/annum
+39,Dhanunjaya Suppa,Darwinbox,15.3 lac/annum
+40,Manthan Vijaywargia,Darwinbox,15.3 lac/annum
+41,Sharanya Ananthula,Darwinbox,15.3 lac/annum
+42,Sai Vishal Vempati,WeBuildTech,14 lac/annum
+43,Rishabh Gurbani,Interactive Brokers,14 lac/annum
+44,Karnakar Bhairi,Interactive Brokers,14 lac/annum
+45,Nithin Ganna,Caspex,13.5 lac/annum
+46,Namitha Mothukuri,Caspex,13.5 lac/annum
+47,Gayatri Chinchole,Caspex,13.5 lac/annum
+48,Rajesh Vangari,Caspex,13.5 lac/annum
+49,Nandini Vemula,Caspex,13.5 lac/annum
+50,HIRESH PRAKASH,Caspex,13.5 lac/annum
+51,Sreeja Reddy Koukuntla,Caspex,13.5 lac/annum
+52,Rakshith Kumar Chellam,Caspex,13.5 lac/annum
+53,Mohammed Huzaif Ahmed,Experian,13.5 lac/annum
+54,AJAY KUMAR MAIDAMPALLIY,Experian,13.5 lac/annum
+55,Girish Murali,Experian,13.5 lac/annum
+56,Sindhu Sri Rani Uma Bapatla,Experian,13.5 lac/annum
+57,Thanish Kumar Mamilla,Experian,13.5 lac/annum
+58,SNIGDHA GOTTAM,Experian,13.5 lac/annum
+59,SAI ABHI RAM POTHINI,Experian,13.5 lac/annum
+60,Sravani Charugundla,Experian,13.5 lac/annum
+61,VAISHNAVI SAI SIRI KURAPATI,Experian,13.5 lac/annum
+62,TARUN KUMAR REDDY NEMALI,Experian,13.5 lac/annum
+63,Mohammed Raziullah Ansari,Experian,13.5 lac/annum
+64,NIRUP REDDY MARAMREDDY,Experian,13.5 lac/annum
+65,Ushasree Divi,Experian,13.5 lac/annum
+66,Nithya Vaibhavi Vuddanti,Experian,13.5 lac/annum
+67,Priyanka Madire,Experian,13.5 lac/annum
+68,Anirudhraj Bachu,Experian,13.5 lac/annum
+69,Parivesh Srivastava,Eventbrite,12.4 lac/annum
+70,Meghana Renukunta,Eventbrite,12.4 lac/annum
+71,Hafsah Usman,Eventbrite,12.4 lac/annum
+72,Alleppey Chidrupa Vyshnavi Nayak,Eventbrite,12.4 lac/annum
+73,VISHAL VARDHAN MEDIGA,Eventbrite,12.4 lac/annum
+74,Sri Tharun Mallikanti,Eventbrite,12.4 lac/annum
+75,Uruj Ahmed Syed,Eventbrite,12.4 lac/annum
+76,Uday Chandra gubba,Micron,12.2 lac/annum
+77,CHALLA SAHITHI CHALLA,Micron,12.2 lac/annum
+78,Sanjay Agamamidi,Micron,12.2 lac/annum
+79,Sai Rahul Pulijala,Micron,12.2 lac/annum
+80,Sravya Ravulakolla,Micron,12.2 lac/annum
+81,Bhavana Kummaragunta,Micron,12.2 lac/annum
+82,Praneeth Sai Gorenkala,Micron,12.2 lac/annum
+83,Shiva Abhishek Mittapelly,Micron,12.2 lac/annum
+84,SIRICHANDAN REDDY ANUMANDLA,Micron,12.2 lac/annum
+85,Vaishnavi Vemula,Micron,12.2 lac/annum
+86,Lasya Priya Yelishetti,Micron,12.2 lac/annum
+87,Sai Chandu Kande,Micron,12.2 lac/annum
+88,Neha Reddy Devarapally,Micron,12.2 lac/annum
+89,Suraj Maal,Altiushub,12-18LPA lac/annum
+90,Tanishq Reddy Meda,Silicon Labs,12 lac/annum
+91,Prashanth Banjallu,Silicon Labs,12 lac/annum
+92,Srivatsan M,Silicon Labs,12 lac/annum
+93,PRANATHI NANDYALA,Candescent,12 lac/annum
+94,Vuddawar Anirudh Joshi,Candescent,12 lac/annum
+95,Nagamytreya GULUBHAM,Candescent,12 lac/annum
+96,SAKETH REDDY KAMINENI,Candescent,12 lac/annum
+97,Abhijeet Veeraboina,Candescent,12 lac/annum
+98,RAVI KISHORE DEVARAKONDA,Candescent,12 lac/annum
+99,Venkata Giri Vardhan Adoni,Candescent,12 lac/annum
+100,Gunaabhi Ram Devasani,Candescent,12 lac/annum
+101,Manoj Rao Mirupala,Candescent,12 lac/annum
+102,Sowmya Kakkunuri,Candescent,12 lac/annum
+103,M Sharan Medamoni,Candescent,12 lac/annum
+104,Snikhitha Arram,Candescent,12 lac/annum
+105,Venkata Sai Anurag Santhosh Dutt Komaragiri,Candescent,12 lac/annum
+106,Akshay Vooradi,Candescent,12 lac/annum
+107,Ashritha Venumuddala,Candescent,12 lac/annum
+108,SATYA VAMSI KRISHNA DULAM,Candescent,12 lac/annum
+109,Yavan Kumar Mandadi,Ivanti,12 lac/annum
+110,Sai Saketh A,Ivanti,12 lac/annum
+111,Jayadeep Tirumala,Ivanti,12 lac/annum
+112,Kapardhi Kannekanti,Ivanti,12 lac/annum
+113,Karthikeya Srivatsa Kolahal,Ivanti,12 lac/annum
+114,PRANATHI NANDYALA,Ivanti,12 lac/annum
+115,Shiva Sai Kandimalla,Ivanti,12 lac/annum
+116,Deep Parekh,Ivanti,12 lac/annum
+117,HARSHITH ALLE,Eksaq,12 lac/annum
+118,Vivek Macha,Eksaq,12 lac/annum
+119,Eshwar Gubba,Eksaq,12 lac/annum
+120,ROHAN BOINPALLY,Eksaq,12 lac/annum
+121,Uday kiran Pallati,Centific,12 lac/annum
+122,VENKATA KARTHIKEYA ADITYA VISSA,Centific,12 lac/annum
+123,Sreeja K,Centific,12 lac/annum
+124,Isha Tatia Jain,Centific,12 lac/annum
+125,Vinay Reddy Pulyala,ANZ,12 lac/annum
+126,Nidhi Tornekar,ANZ,12 lac/annum
+127,B VAISHNAV VARMA,ANZ,12 lac/annum
+128,Sai Devansh Bhuvanagiri,ANZ,12 lac/annum
+129,Abhinav Vengala,ANZ,12 lac/annum
+130,VANI KONDA,ANZ,12 lac/annum
+131,Satwika Manchikanti,Opentext,11 lac/annum
+132,Meghana Bai Gaddaley,Opentext,11 lac/annum
+133,PRAVALIKA BOPPIDI,Opentext,11 lac/annum
+134,Sneha C,Opentext,11 lac/annum
+135,Namitha Mothukuri,Opentext,11 lac/annum
+136,Sahithi Gattu,Opentext,11 lac/annum
+137,Recharla Divya Reddy,Opentext,11 lac/annum
+138,Sravani Charugundla,Opentext,11 lac/annum
+139,Rishabh Gurbani,Opentext,11 lac/annum
+140,Karnakar Bhairi,Opentext,11 lac/annum
+141,Akshay Acchalkar,Opentext,11 lac/annum
+142,Aravind Reddy Nayini,Opentext,11 lac/annum
+143,Sreeja Koditala,Opentext,11 lac/annum
+144,KOPPARAPU VENKATA LOKESH KARTHIKEYA KOPPARAPU,Opentext,11 lac/annum
+145,Geethika Palavarapu,Opentext,11 lac/annum
+146,Prem Sai Konduru,Opentext,11 lac/annum
+147,Bajrang Kailasa,Opentext,11 lac/annum
+148,SAI BHARGAVA SURE,Opentext,11 lac/annum
+149,Sathvik Jupaka,Opentext,11 lac/annum
+150,Balakrishna Veldi,Opentext,11 lac/annum
+151,HEMANTH KUMAR KOTHAPALLI,Opentext,11 lac/annum
+152,SRINIVAS KORNI,Opentext,11 lac/annum
+153,VAISHNAV K V R K V NARIGIRI,Opentext,11 lac/annum
+154,SAI ABHI RAM POTHINI,Opentext,11 lac/annum
+155,Rachit Rahul Das,Catalog,11 lac/annum
+156,Vishnu Deshmukh,Techolution,11 lac/annum
+157,Mohammad Arshad Ali,Techolution,11 lac/annum
+158,Harshith Reddy Sai Muthumula,Techolution,11 lac/annum
+159,HARSHITH ALLE,Safertek,11 lac/annum
+160,Recharla Divya Reddy,Safertek,11 lac/annum
+161,Manaswi Chirra,Safertek,11 lac/annum
+162,Preet Sarda,Adobe,11 lac/annum
+163,Nandiwada L S Tejaswini,Adobe,11 lac/annum
+164,Vinay Reddy Pochampally,Adobe,11 lac/annum
+165,P Naga Soundarya,Adobe,11 lac/annum
+166,Landeri Srujan,Adobe,11 lac/annum
+167,Manaswi Chirra,Pearson,10.8 lac/annum
+168,Rohan Siddardha Bhukya,Aiden AI,5-10 LPA lac/annum
+169,Ashrith Reddy Madadi,Aiden AI,5-10 LPA lac/annum
+170,Goutham Katikam,Aiden AI,5-10 LPA lac/annum
+171,Sai Devansh Bhuvanagiri,Aiden AI,5-10 LPA lac/annum
+172,Mantri Hima Vamshi,Aiden AI,5-10 LPA lac/annum
+173,Mahesh Yadav Kursali,Aiden AI,5-10 LPA lac/annum
+174,SHASHI TEJ REDDY SINGA REDDY,Aiden AI,5-10 LPA lac/annum
+175,Sai Sreekar Kanaparthy,Aiden AI,5-10 LPA lac/annum
+176,Rohith Reddy Gurudu,Aiden AI,5-10 LPA lac/annum
+177,Dheeraj Kumar Reddy B,Aiden AI,5-10 LPA lac/annum
+178,Naga Soundarya Poddaturi,NCR Atleos,10-14 LPA lac/annum
+179,SaiManeeshwar Siddapuram,NCR Atleos,10-14 LPA lac/annum
+180,Oordvishaa Mummadi,NCR Atleos,10-14 LPA lac/annum
+181,Harini Budhi,NCR Atleos,10-14 LPA lac/annum
+182,Jahnavi Sangam,NCR Atleos,10-14 LPA lac/annum
+183,Meghana Bai Gaddaley,NCR Atleos,10-14 LPA lac/annum
+184,Abhinav Gidugu,NCR Atleos,10-14 LPA lac/annum
+185,Gurveer Singh Virk,NCR Atleos,10-14 LPA lac/annum
+186,Srinikethan Reddy Manda,NCR Atleos,10-14 LPA lac/annum
+187,SAKETH KUMAR THATISETTY,NCR Atleos,10-14 LPA lac/annum
+188,Neeraj Biradar Biradar,NCR Atleos,10-14 LPA lac/annum
+189,Srujan Aluwala,NCR Atleos,10-14 LPA lac/annum
+190,Harshith Katukam,NCR Atleos,10-14 LPA lac/annum
+191,Khiran Gannu,NCR Atleos,10-14 LPA lac/annum
+192,SUDEEP GUDIPALLI,NCR Atleos,10-14 LPA lac/annum
+193,Moses Chimarla,NCR Atleos,10-14 LPA lac/annum
+194,Madupu Sumith,NCR Atleos,10-14 LPA lac/annum
+195,Pandramishi Nayan,NCR Atleos,10-14 LPA lac/annum
+196,Srikar Pothapragada,NCR Atleos,10-14 LPA lac/annum
+197,Tharun Sai Addagalla,NCR Atleos,10-14 LPA lac/annum
+198,varun merugu,NCR Atleos,10-14 LPA lac/annum
+199,KARTHIK KYAMA,NCR Atleos,10-14 LPA lac/annum
+200,Vaishnavi Ravalcol,NCR Atleos,10-14 LPA lac/annum
+201,Hemanth Chandra Sekhar Manda,NCR Atleos,10-14 LPA lac/annum
+202,MURALIDHAR PASUPULA,NCR Atleos,10-14 LPA lac/annum
+203,Thanmayi Elluru,Realpage,10 lac/annum
+204,Manaswi Kanyadhara,Realpage,10 lac/annum
+205,Aakash Banda,Realpage,10 lac/annum
+206,SUSHMITHA CHIGULLAPALLY,Realpage,10 lac/annum
+207,Harsh Rathi,Realpage,10 lac/annum
+208,Chakradhar Chinnam,Realpage,10 lac/annum
+209,Sai Sujal Shamarthi,Realpage,10 lac/annum
+210,Rishitha Medishetty,Realpage,10 lac/annum
+211,TARUN KUMAR REDDY NEMALI,Realpage,10 lac/annum
+212,Raja Balaji Gandewar,Realpage,10 lac/annum
+213,Saicharan Parugula,Realpage,10 lac/annum
+214,samsritha jalukuri,Realpage,10 lac/annum
+215,Sanju Sri Reguri,Realpage,10 lac/annum
+216,yashasvi Pratapagiri,Realpage,10 lac/annum
+217,Megha Sri Sai Vardhan Nukala,Realpage,10 lac/annum
+218,Venkata Sai Anurag Santhosh Dutt Komaragiri,Realpage,10 lac/annum
+219,KAUSTUBH KOMURAVELLI,Realpage,10 lac/annum
+220,Eshwar Gubba,Realpage,10 lac/annum
+221,B VAISHNAV VARMA,Realpage,10 lac/annum
+222,Kapardhi Kannekanti,Realpage,10 lac/annum
+223,Mohammad Arshad Ali,Realpage,10 lac/annum
+224,Akshay Vooradi,Realpage,10 lac/annum
+225,Karthikeya Srishty,Realpage,10 lac/annum
+226,Karthikeya Srivatsa Kolahal,Realpage,10 lac/annum
+227,Kiran Ulhas Kulkarni,Realpage,10 lac/annum
+228,Veneesha Madala,Realpage,10 lac/annum
+229,Manasvini Kandikunta,Realpage,10 lac/annum
+230,Sanjana Geggalapally,Realpage,10 lac/annum
+231,Monish Badugu,Realpage,10 lac/annum
+232,SHASHI TEJ REDDY SINGA REDDY,Realpage,10 lac/annum
+233,Om Prakash reddy Jagannagari,Realpage,10 lac/annum
+234,Harini Budhi,NTE,10 lac/annum
+235,Jahnavi Sangam,NTE,10 lac/annum
+236,Rohith Alapati,NTE,10 lac/annum
+237,Chaithanya Nivas Mettu,Rinex Technologies,10 lac/annum
+238,CH. Priya Sai Anshu Anshu Cherukuri,Rinex Technologies,10 lac/annum
+239,SAI ABHILESH PADIGELAWAR,Rinex Technologies,10 lac/annum
+240,Vivek Banoth,Rinex Technologies,10 lac/annum
+241,Ashritha Ganji,Rinex Technologies,10 lac/annum
+242,Abhishek Komuravelli,Rinex Technologies,10 lac/annum
+243,Pramodh Reddy Konyala,Rinex Technologies,10 lac/annum
+244,Pradhyumna Naga Sai Chilakapati,Rinex Technologies,10 lac/annum
+245,Nikhitha Boienpally,Rinex Technologies,10 lac/annum
+246,Bhavya Harshini Suravaram,Rinex Technologies,10 lac/annum
+247,Ankur Roy,Rinex Technologies,10 lac/annum
+248,Giri Rahul Chunchu,Rinex Technologies,10 lac/annum
+249,SAISATHVIK KURREMULA,Rinex Technologies,10 lac/annum
+250,B.Srinidhi Reddy,Rinex Technologies,10 lac/annum
+251,Sai teja Kakkurla,Rinex Technologies,10 lac/annum
+252,Sai Akshay Sonakula,Rinex Technologies,10 lac/annum
+253,Charan Teja Cheruku,Rinex Technologies,10 lac/annum
+254,Gautami Komal Emani,Rinex Technologies,10 lac/annum
+255,Dhanush Madipeddi,Rinex Technologies,10 lac/annum
+256,CHANDANA M,Rinex Technologies,10 lac/annum
+257,Shreyas Basole,Rinex Technologies,10 lac/annum
+258,Shravani Kaparthi,Rinex Technologies,10 lac/annum
+259,Sai manikanta Mudimadugula,Rinex Technologies,10 lac/annum
+260,Anjali Dulam,Verisk,10 lac/annum
+261,Bhanu Prasad Shivanuri,Verisk,10 lac/annum
+262,Maddipati Rohith,Verisk,10 lac/annum
+263,Shankar Reddy Vangala,Verisk,10 lac/annum
+264,Sreeja Reddy Pinninti,Verisk,10 lac/annum
+265,Raga Likhita Gandikota,Cyberark,10 lac/annum
+266,MG Jagadeesh,LSEG,9.67 lac/annum
+267,Satvika Reddy Vasam,Amazon,9 lac/annum
+268,Sai Sujal Shamarthi,ZerocodeHR,9 lac/annum
+269,Sai Sujal Shamarthi,ZerocodeHR,9 lac/annum
+270,Shiva Rama Krishna Pullabhatla,ZerocodeHR,9 lac/annum
+271,Vasanth Thoutam,ZerocodeHR,9 lac/annum
+272,Pooja Kunduru,ZerocodeHR,9 lac/annum
+273,Shreya Katakam,ZerocodeHR,9 lac/annum
+274,JYOTHIRADITYA PAINDLA,ZerocodeHR,9 lac/annum
+275,Bhanu Teja Sai Damara,Magnaquest,9 lac/annum
+276,Vaishnavi Mandadi,Planful,8.72 lac/annum
+277,SHASHANK PATNAM,Planful,8.72 lac/annum
+278,VAISHNAVI SAI SIRI KURAPATI,Planful,8.72 lac/annum
+279,Manvitha M,TagnTrac,8 lac/annum
+280,Om Prakash reddy Jagannagari,TagnTrac,8 lac/annum
+281,Mahathi Kavikondala,Accolite,8 lac/annum
+282,Sneha Varala,Constella Intelligence,8 lac/annum
+283,Deekshith Nimma,Constella Intelligence,8 lac/annum
+284,Shivaji Gundabattina,TheKsquaregroup,8 lac/annum
+285,Srinikethan Reddy Manda,TheKsquaregroup,8 lac/annum
+286,Kiran Ulhas Kulkarni,EPAM,8 lac/annum
+287,Veneesha Madala,EPAM,8 lac/annum
+288,Shivani Sonwane,EPAM,8 lac/annum
+289,Pooja Prajapathi,EPAM,8 lac/annum
+290,Vardhini Koosuru,EPAM,8 lac/annum
+291,Akanksha Potdar,EPAM,8 lac/annum
+292,Manaswi Chirra,EPAM,8 lac/annum
+293,Manvitha M,EPAM,8 lac/annum
+294,SRINIDHI THATI,EPAM,8 lac/annum
+295,deepika desetty,EPAM,8 lac/annum
+296,HARSHITHA MULPURU,EPAM,8 lac/annum
+297,Phani Divya Sree Tadinada,EPAM,8 lac/annum
+298,Sreeja G,EPAM,8 lac/annum
+299,CHETANA KONEPALLI,EPAM,8 lac/annum
+300,Moksha Andhole,EPAM,8 lac/annum
+301,Sindhu Sri Rani Uma Bapatla,EPAM,8 lac/annum
+302,Jayashree Bheema,EPAM,8 lac/annum
+303,Shreya Katukuri,EPAM,8 lac/annum
+304,Fatima Tanveer,EPAM,8 lac/annum
+305,Sushma Gantagari,EPAM,8 lac/annum
+306,Sita Naga Pavani Yanamandra,EPAM,8 lac/annum
+307,Manasvi P,EPAM,8 lac/annum
+308,Rishika Bethi,EPAM,8 lac/annum
+309,Sruthi Komatineni,EPAM,8 lac/annum
+310,RISHITHA REDDY MAMIDI,EPAM,8 lac/annum
+311,Kavya Macha,EPAM,8 lac/annum
+312,Hanuma swetha santhoshi Unnava,EPAM,8 lac/annum
+313,Satvika Reddy Vasam,EPAM,8 lac/annum
+314,Nidhi Tornekar,EPAM,8 lac/annum
+315,SRIVARSHA NAKKA,EPAM,8 lac/annum
+316,Akhila Challa,EPAM,8 lac/annum
+317,Ananya Paduru,EPAM,8 lac/annum
+318,Varsha Venkata Mannem,EPAM,8 lac/annum
+319,ADITHYA CHARY PERIKETI,Lumen,8 lac/annum
+320,Gaman Sai Nallamothu,Lumen,8 lac/annum
+321,SIRI PALAKALA,Lumen,8 lac/annum
+322,Sumanth Nakirikanti,Lumen,8 lac/annum
+323,SAI RUSHIK REDDY BODA,Lumen,8 lac/annum
+324,Yashwanth Tirumala Sai Akhil Bhaskaruni,Lumen,8 lac/annum
+325,Drakshith Kodithyala,Lumen,8 lac/annum
+326,Pranav Reddy Mamidi,Lumen,8 lac/annum
+327,NIKHIL DUDUKA,Lumen,8 lac/annum
+328,Srikari Amrutham,Fresh Prints,8 lac/annum
+329,Sai Krishna Karnati,Fresh Prints,8 lac/annum
+330,P Naga Soundarya,Fresh Prints,8 lac/annum
+331,Sai Kanishka Chintapally,Stellantis,8 lac/annum
+332,Kalyan Shivanadhuni,Nations Benefits,7.75 lac/annum
+333,Sujith Kumar Boggavarapu,Audintel,7.5 lac/annum
+334,SAI KIRAN P,Audintel,7.5 lac/annum
+335,Sai Mani Deekshitha Mandiga,Celanese,7.5 lac/annum
+336,Praneeth Chitimella,Celanese,7.5 lac/annum
+337,Reddyshetty Gunasri Reddyshetty,Celanese,7.5 lac/annum
+338,Shreeya Murthy,Celanese,7.5 lac/annum
+339,Shruti Kantha,Celanese,7.5 lac/annum
+340,AJAY KUMAR MAIDAMPALLIY,Celanese,7.5 lac/annum
+341,SHIVANI METTU,Celanese,7.5 lac/annum
+342,Venkatesh Thoguta,Celanese,7.5 lac/annum
+343,Girish Murali,Celanese,7.5 lac/annum
+344,Sai Swaroop Poluri,Celanese,7.5 lac/annum
+345,Manvitha Chikoti,Celanese,7.5 lac/annum
+346,Rajesh Kumar Kolunapaka,Celanese,7.5 lac/annum
+347,Gaman Sai Nallamothu,Celanese,7.5 lac/annum
+348,Nithin Ganna,Copart,7.2 lac/annum
+349,Ashwanth A,Copart,7.2 lac/annum
+350,Gopi Chandu Injarapu,Copart,7.2 lac/annum
+351,Badhrinath Reddy Mekala,Copart,7.2 lac/annum
+352,Umang Sujeet Basuthkar,Copart,7.2 lac/annum
+353,Om Prakash reddy Jagannagari,Copart,7.2 lac/annum
+354,Varun Reddy Maram,Copart,7.2 lac/annum
+355,SUDHIKSHA GHANATHE Keyloop7.2 lac/annum,Unknown,
+356,Meghana KandukuriNNIIT7 lac/annum,Unknown,
+357,Jagadeep Datta H C V B SomavarapuNNIIT7 lac/annum,Unknown,
+358,Chaithanya Nivas MettuNNIIT7 lac/annum,Unknown,
+359,Akshitha reddy kollipallyNNIIT7 lac/annum,Unknown,
+360,Sania ShaikNNIIT7 lac/annum,Unknown,
+361,TADOOR ASHRITH TADOOR NNIIT7 lac/annum,Unknown,
+362,Thilak BasvaNNIIT7 lac/annum,Unknown,
+363,Akram MDNNIIT7 lac/annum,Unknown,
+364,Pravallika ThaniruNNIIT7 lac/annum,Unknown,
+365,trishul reddy gujjulaNNIIT7 lac/annum,Unknown,
+366,Vinya Reddy KarraNNIIT7 lac/annum,Unknown,
+367,Aadhya Reddy KandadaNNIIT7 lac/annum,Unknown,
+368,Manisai RejinthalaNNIIT7 lac/annum,Unknown,
+369,Aadeesh ReddiNNIIT7 lac/annum,Unknown,
+370,Sai AmoghNNIIT7 lac/annum,Unknown,
+371,CH. Priya Sai Anshu Anshu Cherukuri NNIIT7 lac/annum,Unknown,
+372,Vishnu Teja GundamNNIIT7 lac/annum,Unknown,
+373,Abhiram JaggaiahgariNNIIT7 lac/annum,Unknown,
+374,Surya Aneesh GatigantiCognida.AI7 lac/annum,Unknown,
+375,SujithRao NayiniInnovites7 lac/annum,Unknown,
+376,Kamal Kumar KonduriInnovites7 lac/annum,Unknown,
+377,Jayadeep TirumalaInnovites7 lac/annum,Unknown,
+378,Mohammed Tauseef AhmedDeltaX7 lac/annum,Unknown,
+379,Karthik KotaDeltaX7 lac/annum,Unknown,
+380,ROHAN BOINPALLY SOTI7 lac/annum,Unknown,
+381,Shiva Sai KandimallaSOTI7 lac/annum,Unknown,
+382,MURALIDHAR PASUPULA SOTI7 lac/annum,Unknown,
+383,Pranavi SandaBroadridge6.75 lac/annum,Unknown,
+384,Rasagna ChingaramBroadridge6.75 lac/annum,Unknown,
+385,Shereen .Broadridge6.75 lac/annum,Unknown,
+386,KEERTHANA GUNDA Broadridge6.75 lac/annum,Unknown,
+387,Seema BeheraBroadridge6.75 lac/annum,Unknown,
+388,Ananya PerwalaBroadridge6.75 lac/annum,Unknown,
+389,M Sharan MedamoniGowarm.AI6.5 lac/annum,Unknown,
+390,Arham farooq MohammedGowarm.AI6.5 lac/annum,Unknown,
+391,Ananya BathiniGowarm.AI6.5 lac/annum,Unknown,
+392,SANJAY KUMAR DESATLA Gowarm.AI6.5 lac/annum,Unknown,
+393,Sahith Raavi,Nations Benefits,6.5 lac/annum
+394,Parth Awate,Nations Benefits,6.5 lac/annum
+395,Sania .,Nations Benefits,6.5 lac/annum
+396,Vivek VaramADP6.5 lac/annum,Unknown,
+397,Vaishnavi KattelaADP6.5 lac/annum,Unknown,
+398,VISHWA ANAND V ADP6.5 lac/annum,Unknown,
+399,Abhinav DhanalaADP6.5 lac/annum,Unknown,
+400,Naga Rithika PoddatooruADP6.5 lac/annum,Unknown,
+401,HIRANYA AKSHITHA NAGOTHI ADP6.5 lac/annum,Unknown,
+402,Arsh DhananiADP6.5 lac/annum,Unknown,
+403,SAI CHARAN POLA ADP6.5 lac/annum,Unknown,
+404,Srinivas Sairam GANGISETTI ADP6.5 lac/annum,Unknown,
+405,Sahithi Allegapally,Modak Analytics,6 lac/annum
+406,Shivani Sonwane,Modak Analytics,6 lac/annum
+407,PRANATHI NANDYALA,Modak Analytics,6 lac/annum
+408,Sudha Sreekara Kolli,Modak Analytics,6 lac/annum
+409,Swetha Sri Anumula,Modak Analytics,6 lac/annum
+410,Yashwanth Tilak Akuthota,Data Marshall,6 lac/annum
+411,Ganitha Bupani,Data Marshall,6 lac/annum
+412,Sai Vishal Vempati,Data Marshall,6 lac/annum
+413,TEJNATH TUMMALA,Data Marshall,6 lac/annum
+414,Naga Sai Aryan Dosapati,Proteam Advisory,6 lac/annum
+415,Abhiram Jaggaiahgari,Proteam Advisory,6 lac/annum
+416,Rishika Nandikonda,Proteam Advisory,6 lac/annum
+417,Nidith Kalva,Proteam Advisory,6 lac/annum
+418,AISHWARYA APSINGIKAR,Proteam Advisory,6 lac/annum
+419,SAMEEKSHA MANCHIKA,Proteam Advisory,6 lac/annum
+420,Sai Akshay SonakulaTek Systems6 lac/annum,Unknown,
+421,KARTHEEK M K TANGIRALA Tek Systems6 lac/annum,Unknown,
+422,Shradda VinnakotaTek Systems6 lac/annum,Unknown,
+423,Naga Sai Aryan DosapatiXcubelabs6 lac/annum,Unknown,
+424,Syed Shah Fahad HussainiPaltech6 lac/annum,Unknown,
+425,Srikar AppaniPaltech6 lac/annum,Unknown,
+426,DEEKSHITHA TADAPANENI Paltech6 lac/annum,Unknown,
+427,Abhinav GiduguPaltech6 lac/annum,Unknown,
+428,PAVAN ANNA Paltech6 lac/annum,Unknown,
+429,Srija Reddy Marupaka,Amazon Data Intern,6 lac/annum
+430,Subhramanyam VorugantiAccelq6 lac/annum,Unknown,
+431,Shashank DharmavaramAccelq6 lac/annum,Unknown,
+432,Shiva Sai KandimallaAccelq6 lac/annum,Unknown,
+433,KHUSHI CHADA AccelQ6 lac/annum,Unknown,
+434,SHRI MEDHA ANUMASULA AccelQ6 lac/annum,Unknown,
+435,Sathwik Paladugu,OSI Digital,6 lac/annum
+436,Rakshitha Nampally,OSI Digital,6 lac/annum
+437,Mahesh Yadav Kursali,OSI Digital,6 lac/annum
+438,Ram Reddy Vennam,OSI Digital,6 lac/annum
+439,Benjamin Alladi,OSI Digital,6 lac/annum
+440,VAISHNAV K V R K V NARIGIRI,OSI Digital,6 lac/annum
+441,PRAGNA RACHAKONDA,OSI Digital,6 lac/annum
+442,Asheesh Bagili,OSI Digital,6 lac/annum
+443,Vardhini Koosuru,Risposta Corp,5.5 lac/annum
+444,KARTHEEK M K TANGIRALA,Risposta Corp,5.5 lac/annum
+445,Akanksha Potdar,Risposta Corp,5.5 lac/annum
+446,Shiva Rama Krishna Pullabhatla,Risposta Corp,5.5 lac/annum
+447,Mounika Sakare,Risposta Corp,5.5 lac/annum
+448,SIRI LAVANYA MALLADI,Risposta Corp,5.5 lac/annum
+449,Abhay Garlapad,Risposta Corp,5.5 lac/annum
+450,Govind Daliya,Risposta Corp,5.5 lac/annum
+451,ODRA BIRA,Risposta Corp,5.5 lac/annum
+452,Umang Sujeet Basuthkar,Risposta Corp,5.5 lac/annum
+453,Monish Badugu,Risposta Corp,5.5 lac/annum
+454,SHASHI TEJ REDDY SINGA REDDY,Risposta Corp,5.5 lac/annum
+455,Isha Tatia Jain,Risposta Corp,5.5 lac/annum
+456,Pooja Prajapathi,Risposta Corp,5.5 lac/annum
+457,B Manikya Chakravarthy Brahmadandi,Risposta Corp,5.5 lac/annum
+458,SAI ANVITHA ADEPUR,Risposta Corp,5.5 lac/annum
+459,Srinivasa Sai Bibipet,Risposta Corp,5.5 lac/annum
+460,Himavarsha Venkata,Risposta Corp,5.5 lac/annum
+461,Dakshayini Aluri,Risposta Corp,5.5 lac/annum
+462,Siri Varsha Manda,Risposta Corp,5.5 lac/annum
+463,ROHAN MADARAM,Risposta Corp,5.5 lac/annum
+464,Nandini Ramavat,Risposta Corp,5.5 lac/annum
+465,Srija Sangem,Risposta Corp,5.5 lac/annum
+466,SRINITH VANAMALA,Risposta Corp,5.5 lac/annum
+467,Rishitha Pasupunuri,Value labs,5.5 lac/annum
+468,NALAM MUDITHA SRIHARSHA,CSSI,5.5 lac/annum
+469,Sreeja Chakinala,CSSI,5.5 lac/annum
+470,Srivarsha Kulakarni,CSSI,5.5 lac/annum
+471,Mohammad Aseel Shaik,CSSI,5.5 lac/annum
+472,Tanmayie Pendyala,CSSI,5.5 lac/annum
+473,Rajashekar Manthena,CSSI,5.5 lac/annum
+474,Mantri Hima Vamshi,CSSI,5.5 lac/annum
+475,SaiManeeshwar Siddapuram,CSSI,5.5 lac/annum
+476,VIVEK PREETHAM VADDEPELLI,CSSI,5.5 lac/annum
+477,Sai Divya Tangedupalli,CSSI,5.5 lac/annum
+478,Surya Abhiram K .s,CSSI,5.5 lac/annum
+479,Sahitya Yellina,CSSI,5.5 lac/annum
+480,Srija Reddy Marupaka,CSSI,5.5 lac/annum
+481,Sravani Charugundla,Simply Grow Technologies,5 lac/annum
+482,Keerthika Reddy Gummati,CloudAngles,5 lac/annum
+483,SAI ABHI RAM POTHINI,CloudAngles,5 lac/annum
+484,Pranavi Sanda,CloudAngles,5 lac/annum
+485,Nandeeshwar Koripalli,Shipconsole,5 lac/annum
+486,Gladice Priscilla Buyyi,Shipconsole,5 lac/annum
+487,KALAVAKOLU TANVIK REDDY,Magnaquest,5 lac/annum
+488,JYOTHIRADITYA PAINDLA,Netenrich,5 lac/annum
+489,Niharika Thiruchurapalli,Netenrich,5 lac/annum
+490,Govind Daliya,Netenrich,5 lac/annum
+491,SIRI LAVANYA MALLADI,Netenrich,5 lac/annum
+492,Eshaan Sangyam,Netenrich,5 lac/annum
+493,GODUMALA KARTHIK SANJAY,Netenrich,5 lac/annum
+494,Yukta Reddy Dakkata,Netenrich,5 lac/annum
+495,Priya Sai Anshu Cherukuri,Fastpix,5 lac/annum
+496,Ashuthosh Dubey,Fastpix,5 lac/annum
+497,Raghuveer Oza,Agent Analytics,5 lac/annum
+498,VISHAL KUMAR,Nalsoft,5 lac/annum
+499,Rohan Gopalakrishna,360 EX Technologies,5 lac/annum
+500,Tanmay Odapally,Yellow.AI,5 lac/annum
+501,Srivatsan M,Ridhira,5 lac/annum
+502,K MAHESHWAR REDDY Koppula,Teachnook,4.6 lac/annum
+503,Aishwarya Bhukya,Teachnook,4.6 lac/annum
+504,Devika Pullemla,Teachnook,4.6 lac/annum
+505,Sri Vidwesh Kadarla,Teachnook,4.6 lac/annum
+506,A.Suvarnitha Addula,Teachnook,4.6 lac/annum
+507,Bhavana Chikkula,Teachnook,4.6 lac/annum
+508,Sindhu Pagindla,Teachnook,4.6 lac/annum
+509,Manaswini Racharla,Teachnook,4.6 lac/annum
+510,Saikumar Jannu,Teachnook,4.6 lac/annum
+511,Kavya Nagubandi,Teachnook,4.6 lac/annum
+512,Rishitha D,Teachnook,4.6 lac/annum
+513,KRISHNA TEJA CHITTAPRAGADA,Teachnook,4.6 lac/annum
+514,Rohan Varma,Teachnook,4.6 lac/annum
+515,NITHIN AKULA,Teachnook,4.6 lac/annum
+516,Palli Mohammad Afzal Basha,Teachnook,4.6 lac/annum
+517,BHARGAV RAM BANDAGI KUPENDER,Teachnook,4.6 lac/annum
+518,Saathvik Sheerla,Teachnook,4.6 lac/annum
+519,KEERTHANA KUTHADI,Teachnook,4.6 lac/annum
+520,Sai Praneeth Lapangi,Teachnook,4.6 lac/annum
+521,RISHITHA NEERATI,Teachnook,4.6 lac/annum
+522,S Tejaswini Rao,Teachnook,4.6 lac/annum
+523,NUTHAN SAI SIRIPURAPU,Teachnook,4.6 lac/annum
+524,Vivekananda Akula,Teachnook,4.6 lac/annum
+525,Kavya Madikonda,Teachnook,4.6 lac/annum
+526,Uday kiran Guttula,Teachnook,4.6 lac/annum
+527,SHEETAL SINGH,Teachnook,4.6 lac/annum
+528,Sowjanya Pudutha,Teachnook,4.6 lac/annum
+529,Harinath Narla,Teachnook,4.6 lac/annum
+530,Bhavya Harshini Suravaram,Teachnook,4.6 lac/annum
+531,Abhishek Komuravelli,Teachnook,4.6 lac/annum
+532,Pramodh Reddy Konyala,Teachnook,4.6 lac/annum
+533,Ashritha Ganji,Teachnook,4.6 lac/annum
+534,Srivasthav Reddy Dwarampudi,Teachnook,4.6 lac/annum
+535,Shaistha Aara,Teachnook,4.6 lac/annum
+536,Anisha Kodavati,Teachnook,4.6 lac/annum
+537,Yeknath Mudavath,Teachnook,4.6 lac/annum
+538,Meghana Meghana Saindla,Teachnook,4.6 lac/annum
+539,SIDDHARTH MASSETTY,Teachnook,4.6 lac/annum
+540,binitha basetty,Teachnook,4.6 lac/annum
+541,Suraj Massetty,Teachnook,4.6 lac/annum
+542,Yashwanth Raj Tandur,Teachnook,4.6 lac/annum
+543,TEJASHVINI SUNNAPU,Teachnook,4.6 lac/annum
+544,Srividhya Koutam,Teachnook,4.6 lac/annum
+545,Jayanth Pulikota,Teachnook,4.6 lac/annum
+546,R.Tulasi Durga Ragupathi,Teachnook,4.6 lac/annum
+547,MOHD MUSLEHUDDIN .,Teachnook,4.6 lac/annum
+548,Sanjana Boorla,Teachnook,4.6 lac/annum
+549,MANI CHANDRA KOTHAPALLY,Teachnook,4.6 lac/annum
+550,Aditya Vardhan Koda,Teachnook,4.6 lac/annum
+551,SRINIVASA SHREYAS MAHENDRA,Teachnook,4.6 lac/annum
+552,Nishchal Nuthulakanti,Teachnook,4.6 lac/annum
+553,VIJAYAVANI DONTHI,Teachnook,4.6 lac/annum
+554,Sai Yogith Palde,Teachnook,4.6 lac/annum
+555,Surya Sean Chowdary Nannuri,Teachnook,4.6 lac/annum
+556,JAYANTH KUMAR VADDI,Teachnook,4.6 lac/annum
+557,Meenakshi Bende,Teachnook,4.6 lac/annum
+558,ANIL KUMAR BOLLAPALLI,Teachnook,4.6 lac/annum
+559,Durgaprasad Prasad Dablikar,Teachnook,4.6 lac/annum
+560,Sujan Devarshetty,Teachnook,4.6 lac/annum
+561,Shreyas Basole,Teachnook,4.6 lac/annum
+562,Sai manikanta Mudimadugula,Teachnook,4.6 lac/annum
+563,Shravani Megavath,Teachnook,4.6 lac/annum
+564,Kolimi sneha,Smart Falcon,4.5 lac/annum
+565,Shreeya Peddi,Manomay Insurrtech,4.5 lac/annum
+566,tarun bongarala,Manomay Insurrtech,4.5 lac/annum
+567,Balda Sai Likhith,GoTatva,4.5 lac/annum
+568,PRERANA YEKKELE,KHJ Transcriptions,4.5 lac/annum
+569,Nandini Rakasi,Finisar Technology,4.5 lac/annum
+570,Manasvini Kandikunta,Intellipaat,4.2 lac/annum
+571,Naga Sai Aryan Dosapati,Intellipaat,4.2 lac/annum
+572,P . AASRITHA PASUPULETI,Intellipaat,4.2 lac/annum
+573,Sanjana Geggalapally,Intellipaat,4.2 lac/annum
+574,Vishnu Teja Gundam,Intellipaat,4.2 lac/annum
+575,Oordvishaa MummadiDeloitte4.05 lac/annum,Unknown,
+576,Sanjana MiddelaDeloitte4.05 lac/annum,Unknown,
+577,Madhusri GajjelliDeloitte4.05 lac/annum,Unknown,
+578,Shradda VinnakotaDeloitte4.05 lac/annum,Unknown,
+579,Nitin Potti,Smartwinnr,4 lac/annum
+580,NAGADATH CHELIMELA,Smartwinnr,4 lac/annum
+581,Harsha Vardhan Reddy Vempalla,Smartwinnr,4 lac/annum
+582,SAI ABHILESH PADIGELAWAR,Smartwinnr,4 lac/annum
+583,Kavya Borgam,Modak Analytics,4 lac/annum
+584,RAHUL KAKKIRENI,Modak Analytics,4 lac/annum
+585,Sharanya Ananthula,Modak Analytics/darwinbox,4 lac/annum
+586,Abhinav Chinmai Pydimarri,Modak Analytics,4 lac/annum
+587,Snikhitha Arram,Modak Analytics,4 lac/annum
+588,Rasagna Chingaram,Cregx,4 lac/annum
+589,Shiva Mani Arra,Cregx,4 lac/annum
+590,Pranava shivani Bhattu,EvJazz,4 lac/annum
+591,Asheesh Bagili,EvJazz,4 lac/annum
+592,Rushitha Gangadhari,EvJazz,4 lac/annum
+593,G Parthiv,EvJazz,4 lac/annum
+594,Ujwal Sujeet Basuthkar,Hopnet Communications,4 lac/annum
+595,RISHIKESH DEVARASHETTY,Hopnet Communications,4 lac/annum
+596,THIRUMALESHA BUPANI,Inam Solutions,4 lac/annum
+597,Om Swaroop Bajjuri,Inam Solutions,4 lac/annum
+598,Gaman Sai Nallamothu,DevDolphins,4 lac/annum
+599,Satya sai Charan Narra,DevDolphins,4 lac/annum
+600,Hari nath Reddy Sama,DevDolphins,4 lac/annum
+601,YUVARAJ S A,Bigworks,4 lac/annum
+602,Hasitha Kasoju,Bigworks,4 lac/annum
+603,Shuchendra Janapati,Bigworks,4 lac/annum
+604,Harika Kolli,Bigworks,4 lac/annum
+605,Aditi Koppole,Cognizant,4 lac/annum
+606,Hari Chandana Uppuluri,Cognizant,4 lac/annum
+607,Rudraksh Agarwal,Cognizant,4 lac/annum
+608,SAI SHANMUKH KUNTAMALLA S,Cognizant,4 lac/annum
+609,Dhruv Sarda,Cognizant,4 lac/annum
+610,ABHIRAM REDDY GANGARAPU,Cognizant,4 lac/annum
+611,Rashmi Ruthika P,Cognizant,4 lac/annum
+612,LOKESH NARAYANA PASHIKANTI,Cognizant,4 lac/annum
+613,sujayeendra joshi,Cognizant,4 lac/annum
+614,Soumith Kumar Arja,Cognizant,4 lac/annum
+615,Badhrinath Reddy Mekala,Cognizant,4 lac/annum
+616,ADITHYA CHARY PERIKETI,Cognizant,4 lac/annum
+617,AKANKSHA BINGI,Cognizant,4 lac/annum
+618,Thrishala Challamalla,Cognizant,4 lac/annum
+619,AFIFA AHMED,Cognizant,4 lac/annum
+620,Ysaswini Kanuri,Cognizant,4 lac/annum
+621,Chetana rupa Davuluri,Cognizant,4 lac/annum
+622,Yeerakar sneha Yeerakar,Cognizant,4 lac/annum
+623,Shashank Dharmavaram,Cognizant,4 lac/annum
+624,Suvarchala Gade,Cognizant,4 lac/annum
+625,Hasitha Kasoju,Cognizant,4 lac/annum
+626,Harika Kolli,Cognizant,4 lac/annum
+627,Sahitya Yellina,Cognizant,4 lac/annum
+628,Vivek Macha,Cognizant,4 lac/annum
+629,Ananya Bathini,Cognizant,4 lac/annum
+630,PRANATHI NANDYALA,Cognizant,4 lac/annum
+631,PRAVALIKA BOPPIDI,Cognizant,4 lac/annum
+632,SRINIVAS KORNI,Cognizant,4 lac/annum
+633,Geethika Palavarapu,Cognizant,4 lac/annum
+634,PAVAN ANNA,Cognizant,4 lac/annum
+635,Himavarsha Venkata,Cognizant,4 lac/annum
+636,Umang Sujeet Basuthkar,Cognizant,4 lac/annum
+637,Abhay Garlapad,Cognizant,4 lac/annum
+638,Mohammad Arshad Ali,Cognizant,4 lac/annum
+639,Bhanuprasad Nimmala,Cognizant,4 lac/annum
+640,Geethika Palavarapu,Tech Mahindra,4 lac/annum
+641,Vinay Marumamula,Eidiko Systems,4 lac/annum
+642,Pradhyumna Naga Sai Chilakapati,Eidiko Systems,4 lac/annum
+643,Srinivasa Sai Bibipet,Eidiko Systems,4 lac/annum
+644,Shritha PochampallyCyient4 lac/annum,Unknown,
+645,Kumar Makkala,Codetech IT Solutions,4 lac/annum
+646,Nomula Jitesh reddy,Yash Technologies,4 lac/annum
+647,Abhiram Jaggaiahgari,Yash Technologies,4 lac/annum
+648,Rachit Rahul Das,FUSAQ Technologies,4 lac/annum
+649,Arvind Agarwal,Datadive AI,4 lac/annum
+650,Farhan Mohammed ShaikAyna4 lac/annum,Unknown,
+651,Rishwanth Kumar Mekala,FinRapt,4 lac/annum
+652,Bhavani Prasad Allampally,GrafixUI,4 lac/annum
+653,Sai Vishal Vempati,GrafixUI,4 lac/annum
+654,Karthik Kota,GrafixUI,4 lac/annum
+655,Priyanka Madire,GrafixUI,4 lac/annum
+656,Kolimi sneha,GrafixUI,4 lac/annum
+657,Sathwik PaladuguOscowl4 lac/annum,Unknown,
+658,Satya Teja Yadlapalli,Aidevnex Technology,4 lac/annum
+659,Aditya Ayinapurapu,Algoleap,4 lac/annum
+660,Ruchith YaskiArgano4 lac/annum,Unknown,
+661,Gagan Chanda,Broken Enterpreneurs PVT Ltd,4 lac/annum
+662,Sahithi Gattu,Accenture,4 lac/annum
+663,Shiva Prasad Meda,Zidio,4 lac/annum
+664,Swetha Sri Anumula,Jussie AI,4 lac/annum
+665,Abhinav Chinmai Pydimarri,Seanenergy,4 lac/annum
+666,Sushmender Nomula,NxtGen,4 lac/annum
+667,Suvarchala Gade,Affielfy,4 lac/annum
+668,Revanthji Harkala,Yahva AI,4 lac/annum
+669,Shreya Suluganti,Techouts,3.8 lac/annum
+670,Vivek vemula,Techouts,3.8 lac/annum
+671,Nihanth Gaddam,Ashling Partners,3.5 lac/annum
+672,Vyshnavi Lenkalapelly,Ashling Partners,3.5 lac/annum
+673,Prashanth Banjallu,Leoforce,3.5 lac/annum
+674,Karthikeya Gundla,Leoforce,3.5 lac/annum
+675,Shravan Sakinala,Leoforce,3.5 lac/annum
+676,Nishanth Reddy Emmadi,Loyalty Methods,3.5 lac/annum
+677,Sravan Kumar Tipris,Loyalty Methods,3.5 lac/annum
+678,Mouneesh Gangadhari,Loyalty Methods,3.5 lac/annum
+679,Sai Anirudh Pittala,Loyalty Methods,3.5 lac/annum
+680,Rishitha Pasupunuri,Vectorsoft,3.5 lac/annum
+681,Harinath Narla,Intandemly,3 lac/annum
+682,Advaith Chowdarapu,Intandemly,3 lac/annum
+683,ASHRITH REDDY KUNDURU,Intandemly,3 lac/annum
+684,Sai Nithya Byreddy,Intandemly,3 lac/annum
+685,R.Tulasi Durga Ragupathi,Intandemly,3 lac/annum
+686,Srivasthav Reddy Dwarampudi,Prodesk IT,3 lac/annum
+687,Kavya Nagubandi,Prodesk IT,3 lac/annum
+688,Saiprasad Bandari,Prodesk IT,3 lac/annum
+689,Aashritha Miryala,Prodesk IT,3 lac/annum
+690,HIMA BINDHU NOMULA,Prodesk IT,3 lac/annum
+691,Karthikeya Srivatsa Kolahal,AstraZeneca,3 lac/annum
