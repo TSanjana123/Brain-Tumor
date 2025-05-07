@@ -163,3 +163,5 @@ const ChatModal = ({ userId, imageDetails, onClose, apiUrl }) => {
 };
 
 export default ChatModal;
+
+
