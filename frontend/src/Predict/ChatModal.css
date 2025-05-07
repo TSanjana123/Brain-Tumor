@@ -197,7 +197,7 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  width: 500px;
+  width: 750px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -213,7 +213,7 @@
 .chat-modal-header {
   background-color: #6d6d6e;
   color: #fff;
-  padding: 10px 10px;
+  padding: 12px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
