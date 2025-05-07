@@ -197,13 +197,18 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  width: 500px; /* Slimmer width for vertical layout */
+  width: 500px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
 }
+
 
 .chat-modal-header {
   background-color: #6d6d6e;
@@ -274,7 +279,7 @@
 }
 
 .message-bubble {
-  max-width: 90%;
+  max-width: 70%;
   padding: 10px 14px;
   border-radius: 18px;
   word-wrap: break-word;
