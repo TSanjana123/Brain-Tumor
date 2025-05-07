@@ -632,6 +632,7 @@ const Patient = () => {
               <p>No reports uploaded yet.</p>
             )}
           </div>
+          
 
           {/* Chat Widget */}
           <div className="chat-widget" onClick={() => setShowChat(true)}>
