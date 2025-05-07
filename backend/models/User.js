@@ -8,14 +8,13 @@ const userSchema = new mongoose.Schema({
   role: { type: String, required: true, enum: ['patient', 'medicalStaff', 'admin'] },
   patientId: {
     type: String,
-    required: function() { return this.role === 'patient'; },  // Only required if the role is 'patient'
-    // unique: true, // Consider adding unique index if patientId should be unique
+    required: function() { return this.role === 'patient'; },
   },
   gender: { type: String, required: false },
   dateOfBirth: { type: Date, required: false },
   dateOfRegistration: { type: Date, default: Date.now },
   referredDoctor: { type: String, required: false },
-  organizationName: { type: String }, // Applicable to medicalStaff or patient's org? Clarify if needed
+  organizationName: { type: String },
   imageData: [
     {
       // _id is added automatically by Mongoose/MongoDB for subdocuments
@@ -23,25 +22,26 @@ const userSchema = new mongoose.Schema({
       imageName: { type: String },
       imagePath: { type: String },
       uploadDate: { type: Date },
-      prediction: { type: String, required: false }, // <-- Added prediction field
+      prediction: { type: String, required: false },
     },
   ],
-  chatHistory: [ // Unrelated to this change, kept as is
+  chatHistory: [
     {
-      imagePath: { type: String },
+      imageId: { type: mongoose.Schema.Types.ObjectId, required: true }, // Refers to _id in imageData
+      imagePath: { type: String, required: true }, // For easier reference if needed
       imageName: { type: String },
-      uploadDate: { type: Date },
-      allChat: [
+      initialPrediction: { type: String }, // Prediction at the time chat started
+      messages: [
         {
-          prompt: { type: String },
-        },
+          role: { type: String, enum: ['user', 'model'], required: true },
+          content: { type: String, required: true },
+          timestamp: { type: Date, default: Date.now },
+        }
       ],
-    },
+      lastUpdated: { type: Date, default: Date.now }
+    }
   ],
 });
-
-// Add index on patientId if you frequently query by it and it should be unique
-// userSchema.index({ patientId: 1 }, { unique: true, partialFilterExpression: { patientId: { $type: "string" } } });
 
 const User = mongoose.model('User', userSchema);
 
