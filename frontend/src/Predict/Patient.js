@@ -951,7 +951,7 @@ const Patient = () => {
             <div className="detail-item"><strong>Referred Doctor:</strong> {patient.referredDoctor || 'N/A'}</div>
           </div>
 
-          <h2 className="section-heading">My Reports</h2>
+          <h2 className="section-heading">Report</h2>
           <div className="reports-section">
             {patient.imageData && patient.imageData.length > 0 ? (
               <div className="image-grid">
