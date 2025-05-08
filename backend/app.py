@@ -11,8 +11,8 @@ from flask_cors import CORS
 
 # --- Configuration ---
 # !!! IMPORTANT: Update this path to the actual location of your model file !!!
-MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
-# MODEL_PATH = 'Brain-Tumor\Models\densenet_201_brain_tumor.pth'
+# MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
+MODEL_PATH = 'Brain-Tumor/Models/densenet_201_brain_tumor.pth'
 # !!! IMPORTANT: Update this path to the base directory where images are stored !!!
 # This should be the directory containing the 'uploads' folder (or similar)
 # referred to by imagePath in your patient data.
@@ -134,7 +134,6 @@ def handle_prediction():
          else:
              print(f"Also not found at alternative path: {alt_path}")
              return jsonify({"error": f"Image file not found on server at path: {relative_image_path}"}), 404
-
 
     try:
         prediction_result = predict(full_image_path, model)
