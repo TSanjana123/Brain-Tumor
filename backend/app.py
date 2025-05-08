@@ -11,8 +11,8 @@ from flask_cors import CORS
 
 # --- Configuration ---
 # !!! IMPORTANT: Update this path to the actual location of your model file !!!
-MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
-# MODEL_PATH = 'Brain-Tumor\Models\densenet_201_brain_tumor.pth'
+# MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
+MODEL_PATH = 'Brain-Tumor\Models\densenet_201_brain_tumor.pth'
 # !!! IMPORTANT: Update this path to the base directory where images are stored !!!
 # This should be the directory containing the 'uploads' folder (or similar)
 # referred to by imagePath in your patient data.
@@ -110,8 +110,11 @@ def handle_prediction():
 
     data = request.get_json()
     print("data .................................................: ",data)
-    relative_image_path = 'backend/'+data.get('imagePath') # e.g., 'uploads/patientX/image.jpg'
+    relative_image_path = data.get('imagePath')
     print("relative_image_path : ",relative_image_path)
+    uploads/1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    Brain-Tumor\backend\uploads\1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # print("relative_image_path : ",relative_image_path)
     if not relative_image_path:
         return jsonify({"error": "Missing 'imagePath' in request body"}), 400
 # backend\uploads\1746728769605-671853097-BARK8345.JPG
