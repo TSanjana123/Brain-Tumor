@@ -674,175 +674,175 @@
 
 // // Patient.js
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './Patient.css';
-import ChatModal from './ChatModal'; // Import ChatModal
+// import React, { useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+// import './Patient.css';
+// import ChatModal from './ChatModal'; // Import ChatModal
 
-const Patient = () => {
-  const [showToast, setShowToast] = useState(false);
-  const localPatientId = localStorage.getItem('patientId'); // This is the application-specific patientId
-  const userName = localStorage.getItem('name'); // User's name from localStorage
-  const userId = localStorage.getItem('userId'); // MongoDB User _id from localStorage (ensure this is set at login)
-  const navigate = useNavigate();
+// const Patient = () => {
+//   const [showToast, setShowToast] = useState(false);
+//   const localPatientId = localStorage.getItem('patientId'); // This is the application-specific patientId
+//   const userName = localStorage.getItem('name'); // User's name from localStorage
+//   const userId = localStorage.getItem('userId'); // MongoDB User _id from localStorage (ensure this is set at login)
+//   const navigate = useNavigate();
 
-  const [patient, setPatient] = useState(null); // Initialize as null
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+//   const [patient, setPatient] = useState(null); // Initialize as null
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState('');
 
-  // Chat Modal State
-  const [showChatModal, setShowChatModal] = useState(false);
-  const [selectedImageForChat, setSelectedImageForChat] = useState(null);
+//   // Chat Modal State
+//   const [showChatModal, setShowChatModal] = useState(false);
+//   const [selectedImageForChat, setSelectedImageForChat] = useState(null);
 
-  const API_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001'; // Ensure this is correct
+//   const API_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001'; // Ensure this is correct
 
-  const handleLogout = () => {
-    setShowToast(true);
-    setTimeout(() => {
-      localStorage.clear();
-      navigate('/Login');
-    }, 500);
-  };
+//   const handleLogout = () => {
+//     setShowToast(true);
+//     setTimeout(() => {
+//       localStorage.clear();
+//       navigate('/Login');
+//     }, 500);
+//   };
 
-  useEffect(() => {
-    const fetchPatientData = async () => {
-      if (!localPatientId) {
-        setError("Patient ID not found in local storage. Please login again.");
-        setIsLoading(false);
-        // navigate('/Login'); // Optionally redirect
-        return;
-      }
-      if (!userId) {
-        setError("User ID not found in local storage. Chat functionality might be affected. Please login again.");
-        // It's crucial for API calls needing MongoDB _id
-      }
+//   useEffect(() => {
+//     const fetchPatientData = async () => {
+//       if (!localPatientId) {
+//         setError("Patient ID not found in local storage. Please login again.");
+//         setIsLoading(false);
+//         // navigate('/Login'); // Optionally redirect
+//         return;
+//       }
+//       if (!userId) {
+//         setError("User ID not found in local storage. Chat functionality might be affected. Please login again.");
+//         // It's crucial for API calls needing MongoDB _id
+//       }
 
-      setIsLoading(true);
-      try {
-        // Assuming /api/patients returns an array and we need to find the specific one
-        // Or, if you have an endpoint like /api/patients/:patientId (application ID) or /api/users/:userId (mongoDB ID)
-        const response = await axios.get(`${API_URL}/api/patients`); // This fetches ALL patients
-        const foundPatient = response.data.find(p => p.patientId === localPatientId);
+//       setIsLoading(true);
+//       try {
+//         // Assuming /api/patients returns an array and we need to find the specific one
+//         // Or, if you have an endpoint like /api/patients/:patientId (application ID) or /api/users/:userId (mongoDB ID)
+//         const response = await axios.get(`${API_URL}/api/patients`); // This fetches ALL patients
+//         const foundPatient = response.data.find(p => p.patientId === localPatientId);
         
-        if (foundPatient) {
-          setPatient(foundPatient);
-        } else {
-          setError(`Patient with ID ${localPatientId} not found.`);
-        }
-      } catch (err) {
-        console.error('Error fetching patient data:', err);
-        setError('Failed to fetch patient data. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+//         if (foundPatient) {
+//           setPatient(foundPatient);
+//         } else {
+//           setError(`Patient with ID ${localPatientId} not found.`);
+//         }
+//       } catch (err) {
+//         console.error('Error fetching patient data:', err);
+//         setError('Failed to fetch patient data. Please try again later.');
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
 
-    fetchPatientData();
-  }, [localPatientId, API_URL, navigate, userId]);
+//     fetchPatientData();
+//   }, [localPatientId, API_URL, navigate, userId]);
 
-  const handleOpenChat = (image) => {
-    if (!userId) {
-        alert("User session is invalid. Please log in again to use chat.");
-        return;
-    }
-    setSelectedImageForChat({
-      imageId: image._id, // This is the subdocument _id from imageData
-      imagePath: image.imagePath,
-      imageName: image.imageName,
-      prediction: image.prediction,
-    });
-    setShowChatModal(true);
-  };
+//   const handleOpenChat = (image) => {
+//     if (!userId) {
+//         alert("User session is invalid. Please log in again to use chat.");
+//         return;
+//     }
+//     setSelectedImageForChat({
+//       imageId: image._id, // This is the subdocument _id from imageData
+//       imagePath: image.imagePath,
+//       imageName: image.imageName,
+//       prediction: image.prediction,
+//     });
+//     setShowChatModal(true);
+//   };
 
-  if (isLoading) {
-    return <div className="loading-indicator">Loading patient data...</div>;
-  }
+//   if (isLoading) {
+//     return <div className="loading-indicator">Loading patient data...</div>;
+//   }
 
-  if (error) {
-    return <div className="error-message">Error: {error}</div>;
-  }
+//   if (error) {
+//     return <div className="error-message">Error: {error}</div>;
+//   }
 
-  if (!patient) {
-    return <div className="container mt-5">Patient data not available.</div>;
-  }
+//   if (!patient) {
+//     return <div className="container mt-5">Patient data not available.</div>;
+//   }
 
-  return (
-    <>
-      <div className="patient-page">
-        <aside className="sidebar">
-          <h3>Patient: {patient.name || userName}</h3>
-          <p>ID: {patient.patientId}</p>
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        </aside>
+//   return (
+//     <>
+//       <div className="patient-page">
+//         <aside className="sidebar">
+//           <h3>Patient: {patient.name || userName}</h3>
+//           <p>ID: {patient.patientId}</p>
+//           <button className="logout-btn" onClick={handleLogout}>
+//             Logout
+//           </button>
+//         </aside>
 
-        <div className="main-content">
-          <h2 className="section-heading">Patient Details</h2>
-          <div className="details-grid">
-            <div className="detail-item"><strong>Patient ID:</strong> {patient.patientId}</div>
-            <div className="detail-item"><strong>Name:</strong> {patient.name}</div>
-            <div className="detail-item"><strong>Email:</strong> {patient.email}</div>
-            <div className="detail-item"><strong>Gender:</strong> {patient.gender || 'N/A'}</div>
-            <div className="detail-item"><strong>Date of Birth:</strong> {patient.dateOfBirth ? new Date(patient.dateOfBirth).toLocaleDateString() : 'N/A'}</div>
-            <div className="detail-item"><strong>Referred Doctor:</strong> {patient.referredDoctor || 'N/A'}</div>
-          </div>
+//         <div className="main-content">
+//           <h2 className="section-heading">Patient Details</h2>
+//           <div className="details-grid">
+//             <div className="detail-item"><strong>Patient ID:</strong> {patient.patientId}</div>
+//             <div className="detail-item"><strong>Name:</strong> {patient.name}</div>
+//             <div className="detail-item"><strong>Email:</strong> {patient.email}</div>
+//             <div className="detail-item"><strong>Gender:</strong> {patient.gender || 'N/A'}</div>
+//             <div className="detail-item"><strong>Date of Birth:</strong> {patient.dateOfBirth ? new Date(patient.dateOfBirth).toLocaleDateString() : 'N/A'}</div>
+//             <div className="detail-item"><strong>Referred Doctor:</strong> {patient.referredDoctor || 'N/A'}</div>
+//           </div>
 
-          <h2 className="section-heading">My Reports</h2>
-          <div className="reports-section">
-            {patient.imageData && patient.imageData.length > 0 ? (
-              <div className="image-grid">
-                {patient.imageData.map((image, i) => (
-                  <div key={image._id || i} className="image-item">
-                    <img
-                      src={`${API_URL}/${image.imagePath}`}
-                      alt={image.imageName || `Uploaded Image ${i + 1}`}
-                      className="patient-image-report" // Renamed class to avoid conflict if any
-                      onClick={() => window.open(`${API_URL}/${image.imagePath}`, "_blank")}
-                    />
-                    <p className="prediction-text">Prediction: {image.prediction || 'Pending'}</p>
-                    <button className="chat-widget" onClick={() => handleOpenChat(image)} disabled={!userId}>
-                       <img src="https://img.icons8.com/ios-filled/50/3498db/chat.png" alt="Chat Icon" className="chat-icon" />
-                        <div className="chat-content">
-                        <div className="chat-title">Let’s Chat!</div>
-                           <div className="chat-subtitle">Connect with AI</div>
-                       </div>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No reports uploaded yet.</p>
-            )}
-          </div>
-        </div>
-      </div>
+//           <h2 className="section-heading">My Reports</h2>
+//           <div className="reports-section">
+//             {patient.imageData && patient.imageData.length > 0 ? (
+//               <div className="image-grid">
+//                 {patient.imageData.map((image, i) => (
+//                   <div key={image._id || i} className="image-item">
+//                     <img
+//                       src={`${API_URL}/${image.imagePath}`}
+//                       alt={image.imageName || `Uploaded Image ${i + 1}`}
+//                       className="patient-image-report" // Renamed class to avoid conflict if any
+//                       onClick={() => window.open(`${API_URL}/${image.imagePath}`, "_blank")}
+//                     />
+//                     <p className="prediction-text">Prediction: {image.prediction || 'Pending'}</p>
+//                     <button className="chat-widget" onClick={() => handleOpenChat(image)} disabled={!userId}>
+//                        <img src="https://img.icons8.com/ios-filled/50/3498db/chat.png" alt="Chat Icon" className="chat-icon" />
+//                         <div className="chat-content">
+//                         <div className="chat-title">Let’s Chat!</div>
+//                            <div className="chat-subtitle">Connect with AI</div>
+//                        </div>
+//                     </button>
+//                   </div>
+//                 ))}
+//               </div>
+//             ) : (
+//               <p>No reports uploaded yet.</p>
+//             )}
+//           </div>
+//         </div>
+//       </div>
 
-      {/* Toast for Logout */}
-      {showToast && (
-        <div className="toast show position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
-          <div className="toast-header">
-            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close" onClick={() => setShowToast(false)}></button>
-          </div>
-          <div className="toast-body">Logging Out......</div>
-        </div>
-      )}
+//       {/* Toast for Logout */}
+//       {showToast && (
+//         <div className="toast show position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+//           <div className="toast-header">
+//             <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close" onClick={() => setShowToast(false)}></button>
+//           </div>
+//           <div className="toast-body">Logging Out......</div>
+//         </div>
+//       )}
 
-      {/* Chat Modal */}
-      {showChatModal && selectedImageForChat && userId && (
-        <ChatModal
-          userId={userId} // Pass the MongoDB User _id
-          imageDetails={selectedImageForChat}
-          onClose={() => setShowChatModal(false)}
-          apiUrl={API_URL}
-        />
-      )}
-    </>
-  );
-};
+//       {/* Chat Modal */}
+//       {showChatModal && selectedImageForChat && userId && (
+//         <ChatModal
+//           userId={userId} // Pass the MongoDB User _id
+//           imageDetails={selectedImageForChat}
+//           onClose={() => setShowChatModal(false)}
+//           apiUrl={API_URL}
+//         />
+//       )}
+//     </>
+//   );
+// };
 
-export default Patient;
+// export default Patient;
 
 
 // import React, { useEffect, useState } from 'react';
@@ -1210,3 +1210,176 @@ export default Patient;
 // };
 
 // export default Patient;
+
+
+
+
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Patient.css';
+import ChatModal from './ChatModal'; // Import ChatModal
+
+const Patient = () => {
+  const [showToast, setShowToast] = useState(false);
+  const localPatientId = localStorage.getItem('patientId'); // This is the application-specific patientId
+  const userName = localStorage.getItem('name'); // User's name from localStorage
+  const userId = localStorage.getItem('userId'); // MongoDB User _id from localStorage (ensure this is set at login)
+  const navigate = useNavigate();
+
+  const [patient, setPatient] = useState(null); // Initialize as null
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  // Chat Modal State
+  const [showChatModal, setShowChatModal] = useState(false);
+  const [selectedImageForChat, setSelectedImageForChat] = useState(null);
+
+  const API_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001'; // Ensure this is correct
+
+  const handleLogout = () => {
+    setShowToast(true);
+    setTimeout(() => {
+      localStorage.clear();
+      navigate('/Login');
+    }, 500);
+  };
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      if (!localPatientId) {
+        setError("Patient ID not found in local storage. Please login again.");
+        setIsLoading(false);
+        // navigate('/Login'); // Optionally redirect
+        return;
+      }
+      if (!userId) {
+        setError("User ID not found in local storage. Chat functionality might be affected. Please login again.");
+        // It's crucial for API calls needing MongoDB _id
+      }
+
+      setIsLoading(true);
+      try {
+        // Assuming /api/patients returns an array and we need to find the specific one
+        // Or, if you have an endpoint like /api/patients/:patientId (application ID) or /api/users/:userId (mongoDB ID)
+        const response = await axios.get(`${API_URL}/api/patients`); // This fetches ALL patients
+        const foundPatient = response.data.find(p => p.patientId === localPatientId);
+        
+        if (foundPatient) {
+          setPatient(foundPatient);
+        } else {
+          setError(`Patient with ID ${localPatientId} not found.`);
+        }
+      } catch (err) {
+        console.error('Error fetching patient data:', err);
+        setError('Failed to fetch patient data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPatientData();
+  }, [localPatientId, API_URL, navigate, userId]);
+
+  const handleOpenChat = (image) => {
+    if (!userId) {
+        alert("User session is invalid. Please log in again to use chat.");
+        return;
+    }
+    setSelectedImageForChat({
+      imageId: image._id, // This is the subdocument _id from imageData
+      imagePath: image.imagePath,
+      imageName: image.imageName,
+      prediction: image.prediction,
+    });
+    setShowChatModal(true);
+  };
+
+  if (isLoading) {
+    return <div className="loading-indicator">Loading patient data...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">Error: {error}</div>;
+  }
+
+  if (!patient) {
+    return <div className="container mt-5">Patient data not available.</div>;
+  }
+
+  return (
+    <>
+      <div className="patient-page">
+        <aside className="sidebar">
+          <h3>Patient: {patient.name || userName}</h3>
+          <p>ID: {patient.patientId}</p>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </aside>
+
+        <div className="main-content">
+          <h2 className="section-heading">Patient Details</h2>
+          <div className="details-grid">
+            <div className="detail-item"><strong>Patient ID:</strong> {patient.patientId}</div>
+            <div className="detail-item"><strong>Name:</strong> {patient.name}</div>
+            <div className="detail-item"><strong>Email:</strong> {patient.email}</div>
+            <div className="detail-item"><strong>Gender:</strong> {patient.gender || 'N/A'}</div>
+            <div className="detail-item"><strong>Date of Birth:</strong> {patient.dateOfBirth ? new Date(patient.dateOfBirth).toLocaleDateString() : 'N/A'}</div>
+            <div className="detail-item"><strong>Referred Doctor:</strong> {patient.referredDoctor || 'N/A'}</div>
+          </div>
+
+          <h2 className="section-heading">My Reports</h2>
+          <div className="reports-section">
+            {patient.imageData && patient.imageData.length > 0 ? (
+              <div className="image-grid">
+                {patient.imageData.map((image, i) => (
+                  <div key={image._id || i} className="image-item">
+                    <img
+                      src={`${API_URL}/${image.imagePath}`}
+                      alt={image.imageName || `Uploaded Image ${i + 1}`}
+                      className="patient-image-report" // Renamed class to avoid conflict if any
+                      onClick={() => window.open(`${API_URL}/${image.imagePath}`, "_blank")}
+                    />
+                    <p className="prediction-text">Prediction: {image.prediction || 'Pending'}</p>
+                    <button className="chat-widget" onClick={() => handleOpenChat(image)} disabled={!userId}>
+                       <img src="https://img.icons8.com/ios-filled/50/3498db/chat.png" alt="Chat Icon" className="chat-icon" />
+                        <div className="chat-content">
+                        <div className="chat-title">Let’s Chat!</div>
+                           <div className="chat-subtitle">Connect with AI</div>
+                       </div>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No reports uploaded yet.</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Toast for Logout */}
+      {showToast && (
+        <div className="toast show position-fixed bottom-0 end-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="toast-header">
+            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close" onClick={() => setShowToast(false)}></button>
+          </div>
+          <div className="toast-body">Logging Out......</div>
+        </div>
+      )}
+
+      {/* Chat Modal */}
+      {showChatModal && selectedImageForChat && userId && (
+        <ChatModal
+          userId={userId} // Pass the MongoDB User _id
+          imageDetails={selectedImageForChat}
+          onClose={() => setShowChatModal(false)}
+          apiUrl={API_URL}
+        />
+      )}
+    </>
+  );
+};
+
+export default Patient;
