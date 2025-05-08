@@ -3948,443 +3948,10 @@
 
 
 
-// import React, { useState, useEffect, useCallback } from "react"; // Added useCallback
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import "./Organization.css";
-
-// const Organization = () => {
-//     const organizationName = localStorage.getItem("organizationName");
-//     const navigate = useNavigate();
-
-//     // Data states
-//     const [patients, setPatients] = useState([]);
-//     const [file, setFile] = useState(null);
-//     const [selectedPatientIdForUpload, setSelectedPatientIdForUpload] = useState(null);
-//     const [isModalOpen, setIsModalOpen] = useState(false);
-//     const [searchTerm, setSearchTerm] = useState("");
-//     // Removed local predictions state, rely on fetched patient data
-//     // const [predictions, setPredictions] = useState({});
-//     const [predicting, setPredicting] = useState({}); // Still useful for loading state { imageId: boolean }
-//     const [savingPrediction, setSavingPrediction] = useState({}); // State for saving { imageId: boolean }
-
-
-//     const [newPatient, setNewPatient] = useState({
-//         firstName: "",
-//         lastName: "",
-//         patientId: "",
-//         dob: "",
-//         gender: "",
-//         referredDoctor: ""
-//     });
-
-//     // Base URLs from environment variables (ensure they are set in your .env file)
-//     // Use REACT_APP_ prefix for create-react-app
-//     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001'; // Your Node.js backend
-//     const PREDICT_API_URL = process.env.REACT_APP_PREDICT_API_URL || 'http://localhost:5002'; // Your Python backend
-
-//     // Fetch patients from the Node.js API (now includes predictions in imageData)
-//     // Use useCallback to prevent re-creation on every render unless dependencies change
-//     const fetchPatients = useCallback(async () => {
-//         console.log("Fetching patients...");
-//         try {
-//             // TODO: Add authentication headers if needed
-//             // const token = localStorage.getItem('token');
-//             // const config = { headers: { Authorization: `Bearer ${token}` } };
-//             const response = await axios.get(`${API_BASE_URL}/api/patients` /*, config */);
-//             setPatients(response.data);
-//             console.log("Patients fetched:", response.data);
-//         } catch (error) {
-//             console.error("Error fetching patients:", error);
-//             alert(`Failed to fetch patients: ${error.response?.data?.message || error.message}`);
-//             // Handle specific errors like 401 Unauthorized if implementing auth
-//         }
-//     }, [API_BASE_URL]); // Dependency: API_BASE_URL
-
-//     useEffect(() => {
-//         fetchPatients();
-//         // Run fetchPatients when the component mounts and if fetchPatients changes (due to URL change)
-//     }, [fetchPatients]);
-
-//     const handleLogout = () => {
-//         localStorage.clear(); // Clear all local storage (token, user info, etc.)
-//         navigate("/Login");
-//     };
-
-//     // Filter patients based on search term
-//     const filteredPatients = patients.filter((patient) => {
-//         const fullName = patient.name?.toLowerCase() ?? '';
-//         const id = patient.patientId?.toLowerCase() ?? '';
-//         const email = patient.email?.toLowerCase() ?? '';
-//         const term = searchTerm.toLowerCase();
-//         return (
-//             fullName.includes(term) ||
-//             id.includes(term) ||
-//             email.includes(term)
-//         );
-//     });
-
-//     // Handle image upload for a patient
-//     const handleUpload = async (e) => {
-//         e.preventDefault();
-//         if (!selectedPatientIdForUpload || !file) {
-//             alert("Please select a patient and an image to upload.");
-//             return;
-//         }
-//         const formData = new FormData();
-//         formData.append("patientId", selectedPatientIdForUpload);
-//         // Ensure organizationName is available and sent if needed by backend
-//         if (organizationName) {
-//             formData.append("organizationName", organizationName);
-//         }
-//         formData.append("image", file);
-
-//         // Add loading state indicator if needed
-
-//         try {
-//             // TODO: Add authentication headers if needed
-//             // const token = localStorage.getItem('token');
-//             // const config = { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } };
-//              const config = { headers: { "Content-Type": "multipart/form-data" } }; // Basic config
-
-//             const response = await axios.post(
-//                 `${API_BASE_URL}/api/upload`,
-//                 formData,
-//                 config
-//             );
-//             alert(response.data.message || "Upload successful");
-//             setFile(null);
-//             setSelectedPatientIdForUpload(null);
-//             fetchPatients(); // Refresh patient list to show new image
-//         } catch (error) {
-//             console.error("Error uploading image:", error);
-//             alert(`Failed to upload image: ${error.response?.data?.message || error.message}`);
-//         } finally {
-//             // Clear loading state if added
-//         }
-//     };
-
-//     // Handle new patient submission (using the /api/signup endpoint)
-//     const handleAddNewPatient = async (e) => {
-//         e.preventDefault();
-//         const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
-
-//         // const fullName = `${firstName} ${lastName}`.trim();
-//         const fullName = `${firstName}`.trim();
-//         // Simple email generation (requires password field in modal)
-//         // You'll need to add password fields to the modal or adjust backend logic
-//         const password = prompt("Enter a temporary password for the new patient:"); // VERY insecure - just for demo
-//          if (!password) {
-//             alert("Password is required.");
-//             return;
-//         }
-//         // const email = `${firstName.toLowerCase().replace(/\s+/g, '')}${lastName.toLowerCase().replace(/\s+/g, '')}@example.com`;
-//         const email = `${firstName.toLowerCase().replace(/\s+/g, '')}@gmail.com`;
-
-//         if (!firstName || !lastName || !patientId || !dob || !gender || !referredDoctor) {
-//             alert("All fields are required.");
-//             return;
-//         }
-//         try {
-//             // TODO: Add authentication if needed (e.g., only staff can add patients)
-//             const response = await axios.post(
-//                 `${API_BASE_URL}/api/signup`,
-//                 {
-//                     name: fullName,
-//                     email: email, // Consider making email unique/user-provided
-//                     password: password, // Send password
-//                     role: "patient", // Hardcoded role
-//                     patientId,
-//                     gender,
-//                     dateOfBirth: dob,
-//                     referredDoctor,
-//                     organizationName: organizationName, // Pass current org context if relevant
-//                 }
-//             );
-//             alert(response.data.message || "Patient added successfully");
-//             setNewPatient({ // Reset form
-//                 firstName: "", lastName: "", patientId: "", dob: "", gender: "", referredDoctor: ""
-//             });
-//             setIsModalOpen(false);
-//             fetchPatients(); // Refresh patient list
-//         } catch (error) {
-//             console.error("Error adding new patient:", error);
-//             alert(`Failed to add patient: ${error.response?.data?.message || error.message}`);
-//         }
-//     };
-
-//     // --- Modified Function: Handle Prediction Request and Save ---
-//     const handlePredict = async (patientId, imageObject) => {
-//         if (!imageObject || !imageObject.imagePath || !imageObject._id) {
-//             alert("Image data is missing or invalid for prediction.");
-//             return;
-//         }
-
-//         const imagePath = imageObject.imagePath; // e.g., "uploads/xyz.jpg"
-//         const imageId = imageObject._id; // MongoDB ObjectId of the image subdocument
-
-//         // Use imageId for loading state keys
-//         setPredicting(prev => ({ ...prev, [imageId]: true }));
-//         setSavingPrediction(prev => ({ ...prev, [imageId]: false })); // Ensure saving state is reset
-
-//         let predictionResult = null;
-
-//         // Step 1: Call Python backend for prediction
-//         try {
-//             console.log(`1. Requesting prediction for imageId ${imageId} (path: ${imagePath})`);
-//             const predictResponse = await axios.post(`${PREDICT_API_URL}/api/predict`, {
-//                 // Send the image path *as stored* in MongoDB (relative path)
-//                 // The Python backend needs to resolve this to a local file path
-//                 imagePath: imagePath
-//             });
-//             predictionResult = predictResponse.data.prediction;
-//             console.log(`   Prediction received: ${predictionResult}`);
-
-//         } catch (error) {
-//             console.error(`Error predicting for imageId ${imageId}:`, error);
-//             alert(`Prediction failed: ${error.response?.data?.error || error.message}`);
-//             setPredicting(prev => ({ ...prev, [imageId]: false })); // Clear loading state on error
-//             return; // Stop the process if prediction fails
-//         } finally {
-//              // Set predicting false here only if NOT proceeding to save? Or keep it true until save finishes?
-//              // Let's keep predicting true and introduce savingPrediction state.
-//         }
-
-//         // Step 2: Call Node.js backend to save the prediction
-//         if (predictionResult) {
-//             setSavingPrediction(prev => ({ ...prev, [imageId]: true })); // Indicate saving started
-//             try {
-//                 console.log(`2. Saving prediction "${predictionResult}" for imageId ${imageId} (patientId: ${patientId})`);
-//                  // TODO: Add authentication headers if needed
-//                 // const token = localStorage.getItem('token');
-//                 // const config = { headers: { Authorization: `Bearer ${token}` } };
-
-//                 await axios.put(
-//                     `${API_BASE_URL}/api/patients/${patientId}/images/${imageId}/predict`,
-//                     { prediction: predictionResult } // Send prediction in request body
-//                    /* , config */
-//                 );
-//                 console.log(`   Prediction saved successfully.`);
-//                 // Refresh data to show the saved prediction
-//                 fetchPatients();
-
-//             } catch (error) {
-//                 console.error(`Error saving prediction for imageId ${imageId}:`, error);
-//                 alert(`Failed to save prediction: ${error.response?.data?.message || error.message}`);
-//                 // Optionally revert the UI or show a specific save error state
-//             } finally {
-//                  setPredicting(prev => ({ ...prev, [imageId]: false })); // Clear predicting state
-//                  setSavingPrediction(prev => ({ ...prev, [imageId]: false })); // Clear saving state
-//             }
-//         } else {
-//              setPredicting(prev => ({ ...prev, [imageId]: false })); // Clear predicting state if no result
-//         }
-//     };
-
-
-//     // Open/Close Modal
-//     const openModal = () => setIsModalOpen(true);
-//     const closeModal = () => setIsModalOpen(false);
-
-//     // --- JSX Rendering ---
-//     return (
-//         <div className="organization-page">
-//             {/* Sidebar */}
-//             <aside className="sidebar">
-//                 <h3>Organization: {organizationName || "N/A"}</h3>
-//                 <button className="logout-btn" onClick={handleLogout}>
-//                     Logout
-//                 </button>
-//             </aside>
-
-//             {/* Main Content */}
-//             <div className="main-content">
-//                 <div className="header-section">
-//                     <h1>Patients</h1>
-//                     <div className="search-container">
-//                         <input
-//                             type="text"
-//                             placeholder="Search patients..."
-//                             value={searchTerm}
-//                             onChange={(e) => setSearchTerm(e.target.value)}
-//                             className="search-input"
-//                         />
-//                     </div>
-//                     <button className="new-patient-btn" onClick={openModal}>
-//                         + New Patient
-//                     </button>
-//                 </div>
-
-//                 {/* Patients Table */}
-//                 <div className="table-container">
-//                     <table className="patients-table">
-//                         <thead>
-//                             <tr>
-//                                 <th>Patient ID</th>
-//                                 <th>Name</th>
-//                                 <th>Email</th>
-//                                 <th>Gender</th>
-//                                 <th>Date of Birth</th>
-//                                 <th>Referred Doctor</th>
-//                                 <th>Image(s)</th>
-//                                 <th>Update Image</th>
-//                                 <th>Prediction (1st Img)</th> {/* Label clearly */}
-//                                 <th>Action (1st Img)</th>    {/* Label clearly */}
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             {filteredPatients.length > 0 ? (
-//                                 filteredPatients.map((patient) => {
-//                                     // Get the first image object, if it exists
-//                                     const firstImage = patient.imageData && patient.imageData.length > 0
-//                                         ? patient.imageData[0]
-//                                         : null;
-//                                     const firstImageId = firstImage?._id; // Get ID of first image
-
-//                                     return (
-//                                         <tr key={patient.patientId}>
-//                                             <td>{patient.patientId || 'N/A'}</td>
-//                                             <td>{patient.name || 'N/A'}</td>
-//                                             <td>{patient.email || 'N/A'}</td>
-//                                             <td>{patient.gender || 'N/A'}</td>
-//                                             <td>{patient.dateOfBirth ? new Date(patient.dateOfBirth).toLocaleDateString() : 'N/A'}</td>
-//                                             <td>{patient.referredDoctor || 'N/A'}</td>
-//                                             <td>
-//                                                 {patient.imageData && patient.imageData.length > 0 ? (
-//                                                     <div className="image-box">
-//                                                         {patient.imageData.map((image, i) => (
-//                                                             image.imagePath ? (
-//                                                                 <img
-//                                                                     key={image._id || i} // Use mongo _id if available
-//                                                                     // Construct URL using API_BASE_URL (Node backend serves images)
-//                                                                     src={`${API_BASE_URL}/${image.imagePath}`}
-//                                                                     alt={`Patient ${patient.patientId} - ${i + 1}`}
-//                                                                     className="patient-image"
-//                                                                     onClick={() => window.open(`${API_BASE_URL}/${image.imagePath}`, "_blank")}
-//                                                                     onError={(e) => {
-//                                                                         e.target.style.display = 'none'; // Hide broken image icon
-//                                                                         // Optionally show a placeholder
-//                                                                         const placeholder = document.createElement('span');
-//                                                                         placeholder.textContent = 'Error';
-//                                                                         e.target.parentNode.insertBefore(placeholder, e.target.nextSibling);
-//                                                                         }}
-//                                                                 />
-//                                                             ) : <span key={i}>Invalid Path</span>
-//                                                         ))}
-//                                                     </div>
-//                                                 ) : (
-//                                                     <span>No image</span>
-//                                                 )}
-//                                             </td>
-//                                             <td>
-//                                                 {/* Button to select patient for upload */}
-//                                                 <button
-//                                                     className="upload-select-btn"
-//                                                     onClick={() => setSelectedPatientIdForUpload(patient.patientId)}
-//                                                     // Disable if already selected?
-//                                                     disabled={selectedPatientIdForUpload === patient.patientId}
-//                                                 >
-//                                                     {selectedPatientIdForUpload === patient.patientId ? 'Selected' : 'Select'}
-//                                                 </button>
-//                                             </td>
-//                                             <td>
-//                                                 {/* Display Prediction Result (from first image) */}
-//                                                 {firstImage?.prediction ? (
-//                                                     <span>{firstImage.prediction}</span>
-//                                                  ) : (
-//                                                      <span style={{ color: '#aaa' }}>N/A</span> // Style N/A
-//                                                  )}
-//                                                 {/* Show loading/saving indicators */}
-//                                                 {predicting[firstImageId] && <span className="status-indicator"> Predicting...</span>}
-//                                                 {savingPrediction[firstImageId] && <span className="status-indicator"> Saving...</span>}
-//                                             </td>
-//                                             <td>
-//                                                 {/* Prediction Button (for first image) */}
-//                                                 <button
-//                                                     className="predict-btn"
-//                                                     // Pass the entire first image object
-//                                                     onClick={() => handlePredict(patient.patientId, firstImage)}
-//                                                     // Disable if no first image or already processing this image
-//                                                     disabled={!firstImage || predicting[firstImageId] || savingPrediction[firstImageId]}
-//                                                 >
-//                                                      {(predicting[firstImageId] || savingPrediction[firstImageId]) ? 'Processing...' : 'Predict'}
-//                                                 </button>
-//                                             </td>
-//                                         </tr>
-//                                     );
-//                                 }) // End map patients
-//                             ) : (
-//                                 <tr>
-//                                     <td colSpan="10" style={{ textAlign: 'center' }}>No patients found matching search.</td>
-//                                 </tr>
-//                             )}
-//                         </tbody>
-//                     </table>
-//                 </div>
-
-//                 {/* Image Upload Form */}
-//                 {selectedPatientIdForUpload && (
-//                     <form onSubmit={handleUpload} className="upload-form">
-//                         <h3>Update Image for Patient ID: {selectedPatientIdForUpload}</h3>
-//                         <div className="file-input-group">
-//                             <label htmlFor="file">Select Image:</label>
-//                             <input
-//                                 type="file" id="file" accept="image/*" required
-//                                 onChange={(e) => setFile(e.target.files[0])}
-//                             />
-//                         </div>
-//                         <div className="upload-form-buttons">
-//                             <button type="submit" className="upload-submit-btn"> Upload Image </button>
-//                             <button type="button" className="cancel-btn" onClick={() => setSelectedPatientIdForUpload(null)}> Cancel </button>
-//                         </div>
-//                     </form>
-//                 )}
-//             </div> {/* End main-content */}
-
-//             {/* New Patient Modal */}
-//             {isModalOpen && (
-//                 <div className="modal-overlay" onClick={closeModal}>
-//                     <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-//                         <h2>New Patient</h2>
-//                         <form onSubmit={handleAddNewPatient}>
-//                            {/* Add password input fields here if using signup endpoint */}
-//                            {/* Example:
-//                             <input type="password" placeholder="Password" required onChange={...} />
-//                             <input type="password" placeholder="Confirm Password" required onChange={...} />
-//                            */}
-//                             <div className="modal-form-row">
-//                                 <input type="text" placeholder="First Name" value={newPatient.firstName} onChange={(e) => setNewPatient({ ...newPatient, firstName: e.target.value })} required/>
-//                                 <input type="text" placeholder="Last Name" value={newPatient.lastName} onChange={(e) => setNewPatient({ ...newPatient, lastName: e.target.value })} required/>
-//                             </div>
-//                             <div className="modal-form-row">
-//                                 <input type="text" placeholder="Patient ID" value={newPatient.patientId} onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })} required/>
-//                                 <input type="date" placeholder="Date of Birth" value={newPatient.dob} onChange={(e) => setNewPatient({ ...newPatient, dob: e.target.value })} required/>
-//                             </div>
-//                             <div className="modal-form-row">
-//                                 <input type="text" placeholder="Gender" value={newPatient.gender} onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })} required/>
-//                                 <input type="text" placeholder="Referred Doctor" value={newPatient.referredDoctor} onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })} required/>
-//                             </div>
-//                              {/* Add password and confirm password inputs here */}
-//                             <div className="modal-buttons">
-//                                 <button type="button" className="cancel-btn" onClick={closeModal}> Cancel </button>
-//                                 <button type="submit" className="submit-btn"> Create Patient </button>
-//                             </div>
-//                         </form>
-//                     </div>
-//                 </div>
-//             )}
-//         </div> // End organization-page
-//     );
-// };
-
-// export default Organization;
-
-
-
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react"; // Added useCallback
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Organization.css"; // Make sure this CSS file exists and is styled
+import "./Organization.css";
 
 const Organization = () => {
     const organizationName = localStorage.getItem("organizationName");
@@ -4393,70 +3960,66 @@ const Organization = () => {
     // Data states
     const [patients, setPatients] = useState([]);
     const [file, setFile] = useState(null);
-    const [selectedPatientIdForUpload, setSelectedPatientIdForUpload] = useState(null); // This will store CUSTOM patient ID for upload form
+    const [selectedPatientIdForUpload, setSelectedPatientIdForUpload] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const [predicting, setPredicting] = useState({}); // { imageId: boolean }
-    const [savingPrediction, setSavingPrediction] = useState({}); // { imageId: boolean }
+    // Removed local predictions state, rely on fetched patient data
+    // const [predictions, setPredictions] = useState({});
+    const [predicting, setPredicting] = useState({}); // Still useful for loading state { imageId: boolean }
+    const [savingPrediction, setSavingPrediction] = useState({}); // State for saving { imageId: boolean }
+
 
     const [newPatient, setNewPatient] = useState({
         firstName: "",
-        lastName: "", // Keep lastName if you intend to use it
-        patientId: "", // Custom Patient ID
+        lastName: "",
+        patientId: "",
         dob: "",
         gender: "",
         referredDoctor: ""
     });
 
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001';
-    const PREDICT_API_URL = process.env.REACT_APP_PREDICT_API_URL || 'http://localhost:5002';
+    // Base URLs from environment variables (ensure they are set in your .env file)
+    // Use REACT_APP_ prefix for create-react-app
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001'; // Your Node.js backend
+    const PREDICT_API_URL = process.env.REACT_APP_PREDICT_API_URL || 'http://localhost:5002'; // Your Python backend
 
+    // Fetch patients from the Node.js API (now includes predictions in imageData)
+    // Use useCallback to prevent re-creation on every render unless dependencies change
     const fetchPatients = useCallback(async () => {
         console.log("Fetching patients...");
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert("Authentication token not found. Please log in.");
-            navigate("/Login");
-            return;
-        }
         try {
-            const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get(`${API_BASE_URL}/api/patients`, config);
+            // TODO: Add authentication headers if needed
+            // const token = localStorage.getItem('token');
+            // const config = { headers: { Authorization: `Bearer ${token}` } };
+            const response = await axios.get(`${API_BASE_URL}/api/patients` /*, config */);
             setPatients(response.data);
             console.log("Patients fetched:", response.data);
         } catch (error) {
             console.error("Error fetching patients:", error);
-            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                alert("Session expired or unauthorized. Please log in again.");
-                localStorage.clear();
-                navigate("/Login");
-            } else {
-                alert(`Failed to fetch patients: ${error.response?.data?.message || error.message}`);
-            }
+            alert(`Failed to fetch patients: ${error.response?.data?.message || error.message}`);
+            // Handle specific errors like 401 Unauthorized if implementing auth
         }
-    }, [API_BASE_URL, navigate]);
+    }, [API_BASE_URL]); // Dependency: API_BASE_URL
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) { // Redirect if no token
-            navigate("/Login");
-        } else {
-            fetchPatients();
-        }
-    }, [fetchPatients, navigate]);
+        fetchPatients();
+        // Run fetchPatients when the component mounts and if fetchPatients changes (due to URL change)
+    }, [fetchPatients]);
 
     const handleLogout = () => {
-        localStorage.clear();
+        localStorage.clear(); // Clear all local storage (token, user info, etc.)
         navigate("/Login");
     };
 
+    // Filter patients based on search term
     const filteredPatients = patients.filter((patient) => {
-        const name = patient.name?.toLowerCase() ?? '';
-        const customId = patient.patientId?.toLowerCase() ?? ''; // Search by custom patientId
+        const fullName = patient.name?.toLowerCase() ?? '';
+        const id = patient.patientId?.toLowerCase() ?? '';
         const email = patient.email?.toLowerCase() ?? '';
         const term = searchTerm.toLowerCase();
         return (
-            name.includes(term) ||
-            customId.includes(term) ||
+            fullName.includes(term) ||
+            id.includes(term) ||
             email.includes(term)
         );
     });
@@ -4464,33 +4027,25 @@ const Organization = () => {
     // Handle image upload for a patient
     const handleUpload = async (e) => {
         e.preventDefault();
-        if (!selectedPatientIdForUpload || !file) { // selectedPatientIdForUpload is the CUSTOM ID
+        if (!selectedPatientIdForUpload || !file) {
             alert("Please select a patient and an image to upload.");
             return;
         }
         const formData = new FormData();
-        // This patientId is the CUSTOM ID (e.g., P001) which staff selects
         formData.append("patientId", selectedPatientIdForUpload);
-        if (organizationName) { // Logged-in user's organization
+        // Ensure organizationName is available and sent if needed by backend
+        if (organizationName) {
             formData.append("organizationName", organizationName);
         }
         formData.append("image", file);
 
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert("Authentication error. Please log in again.");
-            navigate("/Login");
-            return;
-        }
+        // Add loading state indicator if needed
 
-        console.log("Uploading image for custom patient ID:", selectedPatientIdForUpload);
         try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data"
-                }
-            };
+            // TODO: Add authentication headers if needed
+            // const token = localStorage.getItem('token');
+            // const config = { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } };
+             const config = { headers: { "Content-Type": "multipart/form-data" } }; // Basic config
 
             const response = await axios.post(
                 `${API_BASE_URL}/api/upload`,
@@ -4499,145 +4054,157 @@ const Organization = () => {
             );
             alert(response.data.message || "Upload successful");
             setFile(null);
-            document.getElementById('file').value = null; // Clear file input
-            setSelectedPatientIdForUpload(null); // Clear selection
+            setSelectedPatientIdForUpload(null);
             fetchPatients(); // Refresh patient list to show new image
         } catch (error) {
             console.error("Error uploading image:", error);
             alert(`Failed to upload image: ${error.response?.data?.message || error.message}`);
+        } finally {
+            // Clear loading state if added
         }
     };
 
+    // Handle new patient submission (using the /api/signup endpoint)
     const handleAddNewPatient = async (e) => {
         e.preventDefault();
         const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
-        // const fullName = `${firstName} ${lastName}`.trim(); // If using lastName
-        const fullName = firstName.trim(); // If only using firstName as 'name'
-        const email = `${firstName.toLowerCase().replace(/\s+/g, '')}@gmail.com`; // Auto-generate or have a field
 
-        if (!fullName || !patientId || !dob || !gender || !referredDoctor) { // Removed !lastName
-            alert("All fields (First Name, Patient ID, DOB, Gender, Referred Doctor) are required.");
+        // const fullName = `${firstName} ${lastName}`.trim();
+        const fullName = `${firstName}`.trim();
+        // Simple email generation (requires password field in modal)
+        // You'll need to add password fields to the modal or adjust backend logic
+        const password = prompt("Enter a temporary password for the new patient:"); // VERY insecure - just for demo
+         if (!password) {
+            alert("Password is required.");
             return;
         }
-        const password = prompt(`Enter a temporary password for new patient ${fullName} (ID: ${patientId}):`);
-        if (!password) {
-            alert("Password is required for the new patient account.");
-            return;
-        }
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert("Authentication error. Please log in again.");
-            navigate("/Login");
-            return;
-        }
+        // const email = `${firstName.toLowerCase().replace(/\s+/g, '')}${lastName.toLowerCase().replace(/\s+/g, '')}@example.com`;
+        const email = `${firstName.toLowerCase().replace(/\s+/g, '')}@gmail.com`;
 
+        if (!firstName || !lastName || !patientId || !dob || !gender || !referredDoctor) {
+            alert("All fields are required.");
+            return;
+        }
         try {
-            // Staff (authenticated by token) adds a new patient
-            const config = { headers: { Authorization: `Bearer ${token}` } };
+            // TODO: Add authentication if needed (e.g., only staff can add patients)
             const response = await axios.post(
                 `${API_BASE_URL}/api/signup`,
                 {
                     name: fullName,
-                    email: email,
-                    password: password,
-                    role: "patient",
-                    patientId, // This is the custom Patient ID
+                    email: email, // Consider making email unique/user-provided
+                    password: password, // Send password
+                    role: "patient", // Hardcoded role
+                    patientId,
                     gender,
                     dateOfBirth: dob,
                     referredDoctor,
-                    organizationName: organizationName, // Logged-in org's name
-                },
-                config // Send auth token if signup endpoint is protected for staff actions
+                    organizationName: organizationName, // Pass current org context if relevant
+                }
             );
             alert(response.data.message || "Patient added successfully");
-            setNewPatient({ firstName: "", lastName: "", patientId: "", dob: "", gender: "", referredDoctor: "" });
+            setNewPatient({ // Reset form
+                firstName: "", lastName: "", patientId: "", dob: "", gender: "", referredDoctor: ""
+            });
             setIsModalOpen(false);
-            fetchPatients();
+            fetchPatients(); // Refresh patient list
         } catch (error) {
             console.error("Error adding new patient:", error);
             alert(`Failed to add patient: ${error.response?.data?.message || error.message}`);
         }
     };
 
-    // patientMongoId is the patient's MongoDB _id
-    // imageObject is the specific image subdocument from patient.imageData
-    const handlePredict = async (patientMongoId, imageObject) => {
+    // --- Modified Function: Handle Prediction Request and Save ---
+    const handlePredict = async (patientId, imageObject) => {
         if (!imageObject || !imageObject.imagePath || !imageObject._id) {
             alert("Image data is missing or invalid for prediction.");
             return;
         }
 
+        const imagePath = imageObject.imagePath; // e.g., "uploads/xyz.jpg"
         const imageId = imageObject._id; // MongoDB ObjectId of the image subdocument
 
+        // Use imageId for loading state keys
         setPredicting(prev => ({ ...prev, [imageId]: true }));
-        setSavingPrediction(prev => ({ ...prev, [imageId]: false }));
+        setSavingPrediction(prev => ({ ...prev, [imageId]: false })); // Ensure saving state is reset
 
         let predictionResult = null;
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert("Authentication error. Please log in again.");
-            navigate("/Login");
-            setPredicting(prev => ({ ...prev, [imageId]: false }));
-            return;
-        }
 
+        // Step 1: Call Python backend for prediction
         try {
-            console.log(`1. Requesting prediction for imageId ${imageId} (path: ${imageObject.imagePath})`);
+            console.log(`1. Requesting prediction for imageId ${imageId} (path: ${imagePath})`);
             const predictResponse = await axios.post(`${PREDICT_API_URL}/api/predict`, {
-                imagePath: imageObject.imagePath // Path as stored in DB, e.g., "uploads/xyz.jpg"
+                // Send the image path *as stored* in MongoDB (relative path)
+                // The Python backend needs to resolve this to a local file path
+                imagePath: imagePath
             });
             predictionResult = predictResponse.data.prediction;
             console.log(`   Prediction received: ${predictionResult}`);
+
         } catch (error) {
             console.error(`Error predicting for imageId ${imageId}:`, error);
             alert(`Prediction failed: ${error.response?.data?.error || error.message}`);
-            setPredicting(prev => ({ ...prev, [imageId]: false }));
-            return;
+            setPredicting(prev => ({ ...prev, [imageId]: false })); // Clear loading state on error
+            return; // Stop the process if prediction fails
+        } finally {
+             // Set predicting false here only if NOT proceeding to save? Or keep it true until save finishes?
+             // Let's keep predicting true and introduce savingPrediction state.
         }
 
+        // Step 2: Call Node.js backend to save the prediction
         if (predictionResult) {
-            setSavingPrediction(prev => ({ ...prev, [imageId]: true }));
+            setSavingPrediction(prev => ({ ...prev, [imageId]: true })); // Indicate saving started
             try {
-                console.log(`2. Saving prediction "${predictionResult}" for imageId ${imageId} (patientMongoId: ${patientMongoId})`);
-                const config = { headers: { Authorization: `Bearer ${token}` } };
+                console.log(`2. Saving prediction "${predictionResult}" for imageId ${imageId} (patientId: ${patientId})`);
+                 // TODO: Add authentication headers if needed
+                // const token = localStorage.getItem('token');
+                // const config = { headers: { Authorization: `Bearer ${token}` } };
+
                 await axios.put(
-                    `${API_BASE_URL}/api/patients/${patientMongoId}/images/${imageId}/predict`,
-                    { prediction: predictionResult },
-                    config
+                    `${API_BASE_URL}/api/patients/${patientId}/images/${imageId}/predict`,
+                    { prediction: predictionResult } // Send prediction in request body
+                   /* , config */
                 );
                 console.log(`   Prediction saved successfully.`);
-                fetchPatients(); // Refresh data
+                // Refresh data to show the saved prediction
+                fetchPatients();
+
             } catch (error) {
                 console.error(`Error saving prediction for imageId ${imageId}:`, error);
                 alert(`Failed to save prediction: ${error.response?.data?.message || error.message}`);
+                // Optionally revert the UI or show a specific save error state
             } finally {
-                setPredicting(prev => ({ ...prev, [imageId]: false }));
-                setSavingPrediction(prev => ({ ...prev, [imageId]: false }));
+                 setPredicting(prev => ({ ...prev, [imageId]: false })); // Clear predicting state
+                 setSavingPrediction(prev => ({ ...prev, [imageId]: false })); // Clear saving state
             }
         } else {
-            setPredicting(prev => ({ ...prev, [imageId]: false }));
+             setPredicting(prev => ({ ...prev, [imageId]: false })); // Clear predicting state if no result
         }
     };
 
+
+    // Open/Close Modal
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
+    // --- JSX Rendering ---
     return (
         <div className="organization-page">
+            {/* Sidebar */}
             <aside className="sidebar">
-                <h3>Org: {organizationName || "N/A"}</h3>
+                <h3>Organization: {organizationName || "N/A"}</h3>
                 <button className="logout-btn" onClick={handleLogout}>
                     Logout
                 </button>
             </aside>
 
+            {/* Main Content */}
             <div className="main-content">
                 <div className="header-section">
                     <h1>Patients</h1>
                     <div className="search-container">
                         <input
                             type="text"
-                            placeholder="Search by Name, Patient ID, Email..."
+                            placeholder="Search patients..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="search-input"
@@ -4648,6 +4215,7 @@ const Organization = () => {
                     </button>
                 </div>
 
+                {/* Patients Table */}
                 <div className="table-container">
                     <table className="patients-table">
                         <thead>
@@ -4655,128 +4223,148 @@ const Organization = () => {
                                 <th>Patient ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Images</th>
-                                <th>Select to Upload</th>
-                                <th>Image Details (Prediction/Action for 1st Image)</th>
-                                <th>Image Details (Prediction/Action for 1st Image)</th>
+                                <th>Gender</th>
+                                <th>Date of Birth</th>
+                                <th>Referred Doctor</th>
+                                <th>Image(s)</th>
+                                <th>Update Image</th>
+                                <th>Prediction (1st Img)</th> {/* Label clearly */}
+                                <th>Action (1st Img)</th>    {/* Label clearly */}
                             </tr>
                         </thead>
                         <tbody>
                             {filteredPatients.length > 0 ? (
                                 filteredPatients.map((patient) => {
+                                    // Get the first image object, if it exists
                                     const firstImage = patient.imageData && patient.imageData.length > 0
                                         ? patient.imageData[0]
                                         : null;
-                                    const firstImageId = firstImage?._id;
+                                    const firstImageId = firstImage?._id; // Get ID of first image
 
                                     return (
-                                        <tr key={patient._id}> {/* Use patient's MongoDB _id for React key */}
-                                            <td>{patient.patientId || 'N/A'}</td> {/* Display CUSTOM Patient ID */}
+                                        <tr key={patient.patientId}>
+                                            <td>{patient.patientId || 'N/A'}</td>
                                             <td>{patient.name || 'N/A'}</td>
                                             <td>{patient.email || 'N/A'}</td>
+                                            <td>{patient.gender || 'N/A'}</td>
+                                            <td>{patient.dateOfBirth ? new Date(patient.dateOfBirth).toLocaleDateString() : 'N/A'}</td>
+                                            <td>{patient.referredDoctor || 'N/A'}</td>
                                             <td>
                                                 {patient.imageData && patient.imageData.length > 0 ? (
-                                                    <div className="image-previews">
-                                                        {patient.imageData.map((imgObj, idx) => (
-                                                            imgObj.imagePath ? (
+                                                    <div className="image-box">
+                                                        {patient.imageData.map((image, i) => (
+                                                            image.imagePath ? (
                                                                 <img
-                                                                    key={imgObj._id || idx}
-                                                                    src={`${API_BASE_URL}/${imgObj.imagePath}`}
-                                                                    alt={`${patient.name || 'Patient'} image ${idx + 1}`}
-                                                                    className="patient-image-thumbnail"
-                                                                    onClick={() => window.open(`${API_BASE_URL}/${imgObj.imagePath}`, "_blank")}
+                                                                    key={image._id || i} // Use mongo _id if available
+                                                                    // Construct URL using API_BASE_URL (Node backend serves images)
+                                                                    src={`${API_BASE_URL}/${image.imagePath}`}
+                                                                    alt={`Patient ${patient.patientId} - ${i + 1}`}
+                                                                    className="patient-image"
+                                                                    onClick={() => window.open(`${API_BASE_URL}/${image.imagePath}`, "_blank")}
+                                                                    onError={(e) => {
+                                                                        e.target.style.display = 'none'; // Hide broken image icon
+                                                                        // Optionally show a placeholder
+                                                                        const placeholder = document.createElement('span');
+                                                                        placeholder.textContent = 'Error';
+                                                                        e.target.parentNode.insertBefore(placeholder, e.target.nextSibling);
+                                                                        }}
                                                                 />
-                                                            ) : <span key={idx} className="no-image-text">Invalid Path</span>
+                                                            ) : <span key={i}>Invalid Path</span>
                                                         ))}
                                                     </div>
                                                 ) : (
-                                                    <span className="no-image-text">No images</span>
+                                                    <span>No image</span>
                                                 )}
                                             </td>
                                             <td>
+                                                {/* Button to select patient for upload */}
                                                 <button
-                                                    className={`upload-select-btn ${selectedPatientIdForUpload === patient.patientId ? 'selected' : ''}`}
-                                                    onClick={() => setSelectedPatientIdForUpload(patient.patientId)} // Select by CUSTOM patient ID
+                                                    className="upload-select-btn"
+                                                    onClick={() => setSelectedPatientIdForUpload(patient.patientId)}
+                                                    // Disable if already selected?
                                                     disabled={selectedPatientIdForUpload === patient.patientId}
                                                 >
                                                     {selectedPatientIdForUpload === patient.patientId ? 'Selected' : 'Select'}
                                                 </button>
                                             </td>
                                             <td>
-                                                {firstImage ? (
-                                                    <>
-                                                        {/* <span>Pred: {firstImage.prediction || 'N/A'}</span> */}
-                                                        <button
-                                                            className="predict-btn"
-                                                            onClick={() => handlePredict(patient._id, firstImage)} // Pass patient's MongoDB _id
-                                                            disabled={predicting[firstImageId] || savingPrediction[firstImageId]}
-                                                        >
-                                                            {(predicting[firstImageId] || savingPrediction[firstImageId]) ? 'Processing...' : 'Predict'}
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    <span className="no-image-text">N/A</span>
-                                                )}
+                                                {/* Display Prediction Result (from first image) */}
+                                                {firstImage?.prediction ? (
+                                                    <span>{firstImage.prediction}</span>
+                                                 ) : (
+                                                     <span style={{ color: '#aaa' }}>N/A</span> // Style N/A
+                                                 )}
+                                                {/* Show loading/saving indicators */}
+                                                {predicting[firstImageId] && <span className="status-indicator"> Predicting...</span>}
+                                                {savingPrediction[firstImageId] && <span className="status-indicator"> Saving...</span>}
                                             </td>
                                             <td>
-                                            {firstImage ? (
-                                                    <>
-                                                        <span>Pred: {firstImage.prediction || 'N/A'}</span>
-                                                        {predicting[firstImageId] && <span className="status-indicator"> Predicting...</span>}
-                                                        {savingPrediction[firstImageId] && <span className="status-indicator"> Saving...</span>}
-                                                    </>
-                                                ) : (
-                                                    <span className="no-image-text">N/A</span>
-                                                )}
+                                                {/* Prediction Button (for first image) */}
+                                                <button
+                                                    className="predict-btn"
+                                                    // Pass the entire first image object
+                                                    onClick={() => handlePredict(patient.patientId, firstImage)}
+                                                    // Disable if no first image or already processing this image
+                                                    disabled={!firstImage || predicting[firstImageId] || savingPrediction[firstImageId]}
+                                                >
+                                                     {(predicting[firstImageId] || savingPrediction[firstImageId]) ? 'Processing...' : 'Predict'}
+                                                </button>
                                             </td>
                                         </tr>
                                     );
-                                })
+                                }) // End map patients
                             ) : (
                                 <tr>
-                                    <td colSpan="6" style={{ textAlign: 'center' }}>
-                                        {patients.length === 0 ? "No patients found. Add a new patient." : "No patients match your search."}
-                                    </td>
+                                    <td colSpan="10" style={{ textAlign: 'center' }}>No patients found matching search.</td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
                 </div>
 
-                {selectedPatientIdForUpload && ( // selectedPatientIdForUpload is CUSTOM ID
+                {/* Image Upload Form */}
+                {selectedPatientIdForUpload && (
                     <form onSubmit={handleUpload} className="upload-form">
-                        <h3>Upload Image for Patient ID: {selectedPatientIdForUpload}</h3>
+                        <h3>Update Image for Patient ID: {selectedPatientIdForUpload}</h3>
                         <div className="file-input-group">
                             <label htmlFor="file">Select Image:</label>
-                            <input type="file" id="file" accept="image/*" required onChange={(e) => setFile(e.target.files[0])} />
+                            <input
+                                type="file" id="file" accept="image/*" required
+                                onChange={(e) => setFile(e.target.files[0])}
+                            />
                         </div>
                         <div className="upload-form-buttons">
                             <button type="submit" className="upload-submit-btn"> Upload Image </button>
-                            <button type="button" className="cancel-btn" onClick={() => { setFile(null); setSelectedPatientIdForUpload(null); if (document.getElementById('file')) document.getElementById('file').value = null; }}> Cancel </button>
+                            <button type="button" className="cancel-btn" onClick={() => setSelectedPatientIdForUpload(null)}> Cancel </button>
                         </div>
-                        {file && <p className="selected-file-info">Selected file: {file.name}</p>}
                     </form>
                 )}
-            </div>
+            </div> {/* End main-content */}
 
+            {/* New Patient Modal */}
             {isModalOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-                        <h2>Add New Patient</h2>
+                        <h2>New Patient</h2>
                         <form onSubmit={handleAddNewPatient}>
+                           {/* Add password input fields here if using signup endpoint */}
+                           {/* Example:
+                            <input type="password" placeholder="Password" required onChange={...} />
+                            <input type="password" placeholder="Confirm Password" required onChange={...} />
+                           */}
                             <div className="modal-form-row">
-                                <input type="text" placeholder="First Name (becomes 'Name')" value={newPatient.firstName} onChange={(e) => setNewPatient({ ...newPatient, firstName: e.target.value })} required />
-                                {/* <input type="text" placeholder="Last Name" value={newPatient.lastName} onChange={(e) => setNewPatient({ ...newPatient, lastName: e.target.value })} required/> */}
+                                <input type="text" placeholder="First Name" value={newPatient.firstName} onChange={(e) => setNewPatient({ ...newPatient, firstName: e.target.value })} required/>
+                                <input type="text" placeholder="Last Name" value={newPatient.lastName} onChange={(e) => setNewPatient({ ...newPatient, lastName: e.target.value })} required/>
                             </div>
                             <div className="modal-form-row">
-                                <input type="text" placeholder="Patient ID (e.g., P001, must be unique)" value={newPatient.patientId} onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })} required />
-                                <input type="date" placeholder="Date of Birth" value={newPatient.dob} onChange={(e) => setNewPatient({ ...newPatient, dob: e.target.value })} required />
+                                <input type="text" placeholder="Patient ID" value={newPatient.patientId} onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })} required/>
+                                <input type="date" placeholder="Date of Birth" value={newPatient.dob} onChange={(e) => setNewPatient({ ...newPatient, dob: e.target.value })} required/>
                             </div>
                             <div className="modal-form-row">
-                                <input type="text" placeholder="Gender" value={newPatient.gender} onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })} required />
-                                <input type="text" placeholder="Referred Doctor" value={newPatient.referredDoctor} onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })} required />
+                                <input type="text" placeholder="Gender" value={newPatient.gender} onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })} required/>
+                                <input type="text" placeholder="Referred Doctor" value={newPatient.referredDoctor} onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })} required/>
                             </div>
-                            <p className="modal-note">An email and password will be auto-generated/prompted. Ensure the patient ID is unique.</p>
+                             {/* Add password and confirm password inputs here */}
                             <div className="modal-buttons">
                                 <button type="button" className="cancel-btn" onClick={closeModal}> Cancel </button>
                                 <button type="submit" className="submit-btn"> Create Patient </button>
@@ -4785,8 +4373,420 @@ const Organization = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </div> // End organization-page
     );
 };
 
 export default Organization;
+
+
+
+// import React, { useState, useEffect, useCallback } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// import "./Organization.css"; // Make sure this CSS file exists and is styled
+
+// const Organization = () => {
+//     const organizationName = localStorage.getItem("organizationName");
+//     const navigate = useNavigate();
+
+//     // Data states
+//     const [patients, setPatients] = useState([]);
+//     const [file, setFile] = useState(null);
+//     const [selectedPatientIdForUpload, setSelectedPatientIdForUpload] = useState(null); // This will store CUSTOM patient ID for upload form
+//     const [isModalOpen, setIsModalOpen] = useState(false);
+//     const [searchTerm, setSearchTerm] = useState("");
+//     const [predicting, setPredicting] = useState({}); // { imageId: boolean }
+//     const [savingPrediction, setSavingPrediction] = useState({}); // { imageId: boolean }
+
+//     const [newPatient, setNewPatient] = useState({
+//         firstName: "",
+//         lastName: "", // Keep lastName if you intend to use it
+//         patientId: "", // Custom Patient ID
+//         dob: "",
+//         gender: "",
+//         referredDoctor: ""
+//     });
+
+//     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001';
+//     const PREDICT_API_URL = process.env.REACT_APP_PREDICT_API_URL || 'http://localhost:5002';
+
+//     const fetchPatients = useCallback(async () => {
+//         console.log("Fetching patients...");
+//         const token = localStorage.getItem('token');
+//         if (!token) {
+//             alert("Authentication token not found. Please log in.");
+//             navigate("/Login");
+//             return;
+//         }
+//         try {
+//             const config = { headers: { Authorization: `Bearer ${token}` } };
+//             const response = await axios.get(`${API_BASE_URL}/api/patients`, config);
+//             setPatients(response.data);
+//             console.log("Patients fetched:", response.data);
+//         } catch (error) {
+//             console.error("Error fetching patients:", error);
+//             if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+//                 alert("Session expired or unauthorized. Please log in again.");
+//                 localStorage.clear();
+//                 navigate("/Login");
+//             } else {
+//                 alert(`Failed to fetch patients: ${error.response?.data?.message || error.message}`);
+//             }
+//         }
+//     }, [API_BASE_URL, navigate]);
+
+//     useEffect(() => {
+//         if (!localStorage.getItem('token')) { // Redirect if no token
+//             navigate("/Login");
+//         } else {
+//             fetchPatients();
+//         }
+//     }, [fetchPatients, navigate]);
+
+//     const handleLogout = () => {
+//         localStorage.clear();
+//         navigate("/Login");
+//     };
+
+//     const filteredPatients = patients.filter((patient) => {
+//         const name = patient.name?.toLowerCase() ?? '';
+//         const customId = patient.patientId?.toLowerCase() ?? ''; // Search by custom patientId
+//         const email = patient.email?.toLowerCase() ?? '';
+//         const term = searchTerm.toLowerCase();
+//         return (
+//             name.includes(term) ||
+//             customId.includes(term) ||
+//             email.includes(term)
+//         );
+//     });
+
+//     // Handle image upload for a patient
+//     const handleUpload = async (e) => {
+//         e.preventDefault();
+//         if (!selectedPatientIdForUpload || !file) { // selectedPatientIdForUpload is the CUSTOM ID
+//             alert("Please select a patient and an image to upload.");
+//             return;
+//         }
+//         const formData = new FormData();
+//         // This patientId is the CUSTOM ID (e.g., P001) which staff selects
+//         formData.append("patientId", selectedPatientIdForUpload);
+//         if (organizationName) { // Logged-in user's organization
+//             formData.append("organizationName", organizationName);
+//         }
+//         formData.append("image", file);
+
+//         const token = localStorage.getItem('token');
+//         if (!token) {
+//             alert("Authentication error. Please log in again.");
+//             navigate("/Login");
+//             return;
+//         }
+
+//         console.log("Uploading image for custom patient ID:", selectedPatientIdForUpload);
+//         try {
+//             const config = {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`,
+//                     "Content-Type": "multipart/form-data"
+//                 }
+//             };
+
+//             const response = await axios.post(
+//                 `${API_BASE_URL}/api/upload`,
+//                 formData,
+//                 config
+//             );
+//             alert(response.data.message || "Upload successful");
+//             setFile(null);
+//             document.getElementById('file').value = null; // Clear file input
+//             setSelectedPatientIdForUpload(null); // Clear selection
+//             fetchPatients(); // Refresh patient list to show new image
+//         } catch (error) {
+//             console.error("Error uploading image:", error);
+//             alert(`Failed to upload image: ${error.response?.data?.message || error.message}`);
+//         }
+//     };
+
+//     const handleAddNewPatient = async (e) => {
+//         e.preventDefault();
+//         const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
+//         // const fullName = `${firstName} ${lastName}`.trim(); // If using lastName
+//         const fullName = firstName.trim(); // If only using firstName as 'name'
+//         const email = `${firstName.toLowerCase().replace(/\s+/g, '')}@gmail.com`; // Auto-generate or have a field
+
+//         if (!fullName || !patientId || !dob || !gender || !referredDoctor) { // Removed !lastName
+//             alert("All fields (First Name, Patient ID, DOB, Gender, Referred Doctor) are required.");
+//             return;
+//         }
+//         const password = prompt(`Enter a temporary password for new patient ${fullName} (ID: ${patientId}):`);
+//         if (!password) {
+//             alert("Password is required for the new patient account.");
+//             return;
+//         }
+//         const token = localStorage.getItem('token');
+//         if (!token) {
+//             alert("Authentication error. Please log in again.");
+//             navigate("/Login");
+//             return;
+//         }
+
+//         try {
+//             // Staff (authenticated by token) adds a new patient
+//             const config = { headers: { Authorization: `Bearer ${token}` } };
+//             const response = await axios.post(
+//                 `${API_BASE_URL}/api/signup`,
+//                 {
+//                     name: fullName,
+//                     email: email,
+//                     password: password,
+//                     role: "patient",
+//                     patientId, // This is the custom Patient ID
+//                     gender,
+//                     dateOfBirth: dob,
+//                     referredDoctor,
+//                     organizationName: organizationName, // Logged-in org's name
+//                 },
+//                 config // Send auth token if signup endpoint is protected for staff actions
+//             );
+//             alert(response.data.message || "Patient added successfully");
+//             setNewPatient({ firstName: "", lastName: "", patientId: "", dob: "", gender: "", referredDoctor: "" });
+//             setIsModalOpen(false);
+//             fetchPatients();
+//         } catch (error) {
+//             console.error("Error adding new patient:", error);
+//             alert(`Failed to add patient: ${error.response?.data?.message || error.message}`);
+//         }
+//     };
+
+//     // patientMongoId is the patient's MongoDB _id
+//     // imageObject is the specific image subdocument from patient.imageData
+//     const handlePredict = async (patientMongoId, imageObject) => {
+//         if (!imageObject || !imageObject.imagePath || !imageObject._id) {
+//             alert("Image data is missing or invalid for prediction.");
+//             return;
+//         }
+
+//         const imageId = imageObject._id; // MongoDB ObjectId of the image subdocument
+
+//         setPredicting(prev => ({ ...prev, [imageId]: true }));
+//         setSavingPrediction(prev => ({ ...prev, [imageId]: false }));
+
+//         let predictionResult = null;
+//         const token = localStorage.getItem('token');
+//         if (!token) {
+//             alert("Authentication error. Please log in again.");
+//             navigate("/Login");
+//             setPredicting(prev => ({ ...prev, [imageId]: false }));
+//             return;
+//         }
+
+//         try {
+//             console.log(`1. Requesting prediction for imageId ${imageId} (path: ${imageObject.imagePath})`);
+//             const predictResponse = await axios.post(`${PREDICT_API_URL}/api/predict`, {
+//                 imagePath: imageObject.imagePath // Path as stored in DB, e.g., "uploads/xyz.jpg"
+//             });
+//             predictionResult = predictResponse.data.prediction;
+//             console.log(`   Prediction received: ${predictionResult}`);
+//         } catch (error) {
+//             console.error(`Error predicting for imageId ${imageId}:`, error);
+//             alert(`Prediction failed: ${error.response?.data?.error || error.message}`);
+//             setPredicting(prev => ({ ...prev, [imageId]: false }));
+//             return;
+//         }
+
+//         if (predictionResult) {
+//             setSavingPrediction(prev => ({ ...prev, [imageId]: true }));
+//             try {
+//                 console.log(`2. Saving prediction "${predictionResult}" for imageId ${imageId} (patientMongoId: ${patientMongoId})`);
+//                 const config = { headers: { Authorization: `Bearer ${token}` } };
+//                 await axios.put(
+//                     `${API_BASE_URL}/api/patients/${patientMongoId}/images/${imageId}/predict`,
+//                     { prediction: predictionResult },
+//                     config
+//                 );
+//                 console.log(`   Prediction saved successfully.`);
+//                 fetchPatients(); // Refresh data
+//             } catch (error) {
+//                 console.error(`Error saving prediction for imageId ${imageId}:`, error);
+//                 alert(`Failed to save prediction: ${error.response?.data?.message || error.message}`);
+//             } finally {
+//                 setPredicting(prev => ({ ...prev, [imageId]: false }));
+//                 setSavingPrediction(prev => ({ ...prev, [imageId]: false }));
+//             }
+//         } else {
+//             setPredicting(prev => ({ ...prev, [imageId]: false }));
+//         }
+//     };
+
+//     const openModal = () => setIsModalOpen(true);
+//     const closeModal = () => setIsModalOpen(false);
+
+//     return (
+//         <div className="organization-page">
+//             <aside className="sidebar">
+//                 <h3>Org: {organizationName || "N/A"}</h3>
+//                 <button className="logout-btn" onClick={handleLogout}>
+//                     Logout
+//                 </button>
+//             </aside>
+
+//             <div className="main-content">
+//                 <div className="header-section">
+//                     <h1>Patients</h1>
+//                     <div className="search-container">
+//                         <input
+//                             type="text"
+//                             placeholder="Search by Name, Patient ID, Email..."
+//                             value={searchTerm}
+//                             onChange={(e) => setSearchTerm(e.target.value)}
+//                             className="search-input"
+//                         />
+//                     </div>
+//                     <button className="new-patient-btn" onClick={openModal}>
+//                         + New Patient
+//                     </button>
+//                 </div>
+
+//                 <div className="table-container">
+//                     <table className="patients-table">
+//                         <thead>
+//                             <tr>
+//                                 <th>Patient ID</th>
+//                                 <th>Name</th>
+//                                 <th>Email</th>
+//                                 <th>Images</th>
+//                                 <th>Select to Upload</th>
+//                                 <th>Image Details (Prediction/Action for 1st Image)</th>
+//                                 <th>Image Details (Prediction/Action for 1st Image)</th>
+//                             </tr>
+//                         </thead>
+//                         <tbody>
+//                             {filteredPatients.length > 0 ? (
+//                                 filteredPatients.map((patient) => {
+//                                     const firstImage = patient.imageData && patient.imageData.length > 0
+//                                         ? patient.imageData[0]
+//                                         : null;
+//                                     const firstImageId = firstImage?._id;
+
+//                                     return (
+//                                         <tr key={patient._id}> {/* Use patient's MongoDB _id for React key */}
+//                                             <td>{patient.patientId || 'N/A'}</td> {/* Display CUSTOM Patient ID */}
+//                                             <td>{patient.name || 'N/A'}</td>
+//                                             <td>{patient.email || 'N/A'}</td>
+//                                             <td>
+//                                                 {patient.imageData && patient.imageData.length > 0 ? (
+//                                                     <div className="image-previews">
+//                                                         {patient.imageData.map((imgObj, idx) => (
+//                                                             imgObj.imagePath ? (
+//                                                                 <img
+//                                                                     key={imgObj._id || idx}
+//                                                                     src={`${API_BASE_URL}/${imgObj.imagePath}`}
+//                                                                     alt={`${patient.name || 'Patient'} image ${idx + 1}`}
+//                                                                     className="patient-image-thumbnail"
+//                                                                     onClick={() => window.open(`${API_BASE_URL}/${imgObj.imagePath}`, "_blank")}
+//                                                                 />
+//                                                             ) : <span key={idx} className="no-image-text">Invalid Path</span>
+//                                                         ))}
+//                                                     </div>
+//                                                 ) : (
+//                                                     <span className="no-image-text">No images</span>
+//                                                 )}
+//                                             </td>
+//                                             <td>
+//                                                 <button
+//                                                     className={`upload-select-btn ${selectedPatientIdForUpload === patient.patientId ? 'selected' : ''}`}
+//                                                     onClick={() => setSelectedPatientIdForUpload(patient.patientId)} // Select by CUSTOM patient ID
+//                                                     disabled={selectedPatientIdForUpload === patient.patientId}
+//                                                 >
+//                                                     {selectedPatientIdForUpload === patient.patientId ? 'Selected' : 'Select'}
+//                                                 </button>
+//                                             </td>
+//                                             <td>
+//                                                 {firstImage ? (
+//                                                     <>
+//                                                         {/* <span>Pred: {firstImage.prediction || 'N/A'}</span> */}
+//                                                         <button
+//                                                             className="predict-btn"
+//                                                             onClick={() => handlePredict(patient._id, firstImage)} // Pass patient's MongoDB _id
+//                                                             disabled={predicting[firstImageId] || savingPrediction[firstImageId]}
+//                                                         >
+//                                                             {(predicting[firstImageId] || savingPrediction[firstImageId]) ? 'Processing...' : 'Predict'}
+//                                                         </button>
+//                                                     </>
+//                                                 ) : (
+//                                                     <span className="no-image-text">N/A</span>
+//                                                 )}
+//                                             </td>
+//                                             <td>
+//                                             {firstImage ? (
+//                                                     <>
+//                                                         <span>Pred: {firstImage.prediction || 'N/A'}</span>
+//                                                         {predicting[firstImageId] && <span className="status-indicator"> Predicting...</span>}
+//                                                         {savingPrediction[firstImageId] && <span className="status-indicator"> Saving...</span>}
+//                                                     </>
+//                                                 ) : (
+//                                                     <span className="no-image-text">N/A</span>
+//                                                 )}
+//                                             </td>
+//                                         </tr>
+//                                     );
+//                                 })
+//                             ) : (
+//                                 <tr>
+//                                     <td colSpan="6" style={{ textAlign: 'center' }}>
+//                                         {patients.length === 0 ? "No patients found. Add a new patient." : "No patients match your search."}
+//                                     </td>
+//                                 </tr>
+//                             )}
+//                         </tbody>
+//                     </table>
+//                 </div>
+
+//                 {selectedPatientIdForUpload && ( // selectedPatientIdForUpload is CUSTOM ID
+//                     <form onSubmit={handleUpload} className="upload-form">
+//                         <h3>Upload Image for Patient ID: {selectedPatientIdForUpload}</h3>
+//                         <div className="file-input-group">
+//                             <label htmlFor="file">Select Image:</label>
+//                             <input type="file" id="file" accept="image/*" required onChange={(e) => setFile(e.target.files[0])} />
+//                         </div>
+//                         <div className="upload-form-buttons">
+//                             <button type="submit" className="upload-submit-btn"> Upload Image </button>
+//                             <button type="button" className="cancel-btn" onClick={() => { setFile(null); setSelectedPatientIdForUpload(null); if (document.getElementById('file')) document.getElementById('file').value = null; }}> Cancel </button>
+//                         </div>
+//                         {file && <p className="selected-file-info">Selected file: {file.name}</p>}
+//                     </form>
+//                 )}
+//             </div>
+
+//             {isModalOpen && (
+//                 <div className="modal-overlay" onClick={closeModal}>
+//                     <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+//                         <h2>Add New Patient</h2>
+//                         <form onSubmit={handleAddNewPatient}>
+//                             <div className="modal-form-row">
+//                                 <input type="text" placeholder="First Name (becomes 'Name')" value={newPatient.firstName} onChange={(e) => setNewPatient({ ...newPatient, firstName: e.target.value })} required />
+//                                 {/* <input type="text" placeholder="Last Name" value={newPatient.lastName} onChange={(e) => setNewPatient({ ...newPatient, lastName: e.target.value })} required/> */}
+//                             </div>
+//                             <div className="modal-form-row">
+//                                 <input type="text" placeholder="Patient ID (e.g., P001, must be unique)" value={newPatient.patientId} onChange={(e) => setNewPatient({ ...newPatient, patientId: e.target.value })} required />
+//                                 <input type="date" placeholder="Date of Birth" value={newPatient.dob} onChange={(e) => setNewPatient({ ...newPatient, dob: e.target.value })} required />
+//                             </div>
+//                             <div className="modal-form-row">
+//                                 <input type="text" placeholder="Gender" value={newPatient.gender} onChange={(e) => setNewPatient({ ...newPatient, gender: e.target.value })} required />
+//                                 <input type="text" placeholder="Referred Doctor" value={newPatient.referredDoctor} onChange={(e) => setNewPatient({ ...newPatient, referredDoctor: e.target.value })} required />
+//                             </div>
+//                             <p className="modal-note">An email and password will be auto-generated/prompted. Ensure the patient ID is unique.</p>
+//                             <div className="modal-buttons">
+//                                 <button type="button" className="cancel-btn" onClick={closeModal}> Cancel </button>
+//                                 <button type="submit" className="submit-btn"> Create Patient </button>
+//                             </div>
+//                         </form>
+//                     </div>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+// export default Organization;

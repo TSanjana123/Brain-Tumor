@@ -2715,493 +2715,493 @@
 
 
 // // // server.js
-// // const express = require('express');
-// // const mongoose = require('mongoose');
-// // const bcrypt = require('bcryptjs');
-// // const jwt = require('jsonwebtoken');
-// // const cors = require('cors');
-// // const multer = require('multer');
-// // const path = require('path');
-// // const fs = require('fs'); // Used for directory check and file deletion
-// // const User = require('./models/User'); // Make sure path is correct
-
-// // const app = express();
-
-// // // --- Environment Variables ---
-// // const dotenv = require('dotenv');
-// // dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-// // // --- Middleware ---
-// // app.use(cors({
-// //     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-// //     credentials: true
-// // }));
-// // app.use(express.json());
-
-// // // --- Static Files ---
-// // const uploadsDir = path.join(__dirname, 'uploads');
-// // // Ensure uploads directory exists
-// // if (!fs.existsSync(uploadsDir)) {
-// //     console.log(`Creating uploads directory at: ${uploadsDir}`);
-// //     fs.mkdirSync(uploadsDir, { recursive: true });
-// // }
-// // app.use('/uploads', express.static(uploadsDir));
-// // console.log(`Serving static files from: ${uploadsDir}`);
-
-
-// // // --- MongoDB Connection ---
-// // const mongoUri = process.env.MONGODB_URI;
-// // if (!mongoUri) {
-// //     console.error("FATAL ERROR: MONGODB_URI environment variable is not set.");
-// //     process.exit(1);
-// // }
-// // mongoose.connect(mongoUri)
-// //     .then(() => console.log('MongoDB connected successfully'))
-// //     .catch(err => {
-// //         console.error('MongoDB connection error:', err);
-// //         process.exit(1);
-// //     });
-
-// // // --- Multer Setup (File Uploads) ---
-// // const storage = multer.diskStorage({
-// //     destination: (req, file, cb) => {
-// //         cb(null, uploadsDir); // Use the validated uploads directory path
-// //     },
-// //     filename: (req, file, cb) => {
-// //         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-// //         cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_'));
-// //     },
-// // });
-// // const upload = multer({
-// //     storage: storage,
-// //     limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
-// // });
-
-// // // --- JWT Secret ---
-// // const jwtSecret = process.env.JWT_SECRET;
-// // if (!jwtSecret) {
-// //     console.error("FATAL ERROR: JWT_SECRET environment variable is not set.");
-// //     process.exit(1);
-// // }
-
-// // // --- Authentication Middleware (Example - Apply where needed) ---
-// // const authenticateToken = (req, res, next) => {
-// //     const authHeader = req.headers['authorization'];
-// //     const token = authHeader && authHeader.split(' ')[1];
-
-// //     if (token == null) return res.sendStatus(401); // if there isn't any token
-
-// //     jwt.verify(token, jwtSecret, (err, user) => {
-// //         if (err) {
-// //             console.error("JWT Verification Error:", err.message);
-// //             return res.sendStatus(403); // Forbidden (invalid token)
-// //         }
-// //         req.user = user; // Add decoded user payload to request object
-// //         next();
-// //     });
-// // };
-
-// // // --- API Routes ---
-
-// // // Signup Route
-// // app.post('/api/signup', async (req, res) => {
-// //     const { name, email, role, password, patientId, organizationName, gender, dateOfBirth, referredDoctor } = req.body;
-
-// //     // Basic Validation
-// //     if (!name || !email || !password || !role) {
-// //         return res.status(400).json({ message: 'Missing required fields (name, email, password, role)' });
-// //     }
-// //     if (role === 'patient' && !patientId) {
-// //         return res.status(400).json({ message: 'Patient ID is required for patient role' });
-// //     }
-// //     // Add stricter validation (email format, password strength, date format etc.)
-
-// //     try {
-// //         const existingUser = await User.findOne({ email });
-// //         if (existingUser) {
-// //             return res.status(400).json({ message: 'Email already in use' });
-// //         }
-// //         if (role === 'patient') {
-// //             const existingPatient = await User.findOne({ patientId });
-// //             if (existingPatient) {
-// //                 return res.status(400).json({ message: 'Patient ID already exists' });
-// //             }
-// //         }
-
-// //         const hashedPassword = await bcrypt.hash(password, 10);
-
-// //         const newUser = new User({
-// //             name,
-// //             email,
-// //             password: hashedPassword,
-// //             role,
-// //             patientId: role === 'patient' ? patientId : undefined,
-// //             organizationName, // Store for all? Adjust if needed.
-// //             gender: role === 'patient' ? gender : undefined,
-// //             dateOfBirth: role === 'patient' ? dateOfBirth : undefined,
-// //             referredDoctor: role === 'patient' ? referredDoctor : undefined,
-// //             imageData: [],
-// //             chatHistory: [],
-// //         });
-
-// //         await newUser.save();
-// //         res.status(201).json({ message: 'User registered successfully' });
-
-// //     } catch (err) {
-// //         console.error("Signup Error:", err);
-// //         if (err.name === 'ValidationError') {
-// //             return res.status(400).json({ message: "Validation Error", errors: err.errors });
-// //         }
-// //         res.status(500).json({ message: 'Server error during registration' });
-// //     }
-// // });
-
-// // // Login Route
-// // app.post('/api/login', async (req, res) => {
-// //     const { email, password } = req.body;
-
-// //     if (!email || !password) {
-// //         return res.status(400).json({ message: 'Email and password are required' });
-// //     }
-
-// //     try {
-// //         const user = await User.findOne({ email });
-// //         if (!user) {
-// //             return res.status(401).json({ message: 'Invalid credentials' });
-// //         }
-
-// //         const isMatch = await bcrypt.compare(password, user.password);
-// //         if (!isMatch) {
-// //             return res.status(401).json({ message: 'Invalid credentials' });
-// //         }
-
-// //         const payload = {
-// //             userId: user._id,
-// //             role: user.role,
-// //             name: user.name,
-// //         };
-// //         const token = jwt.sign(payload, jwtSecret, { expiresIn: process.env.JWT_EXPIRES_IN || '1h' });
-
-// //         res.status(200).json({
-// //             token,
-// //             user: { // Send necessary user info, exclude password
-// //                 _id: user._id,
-// //                 name: user.name,
-// //                 email: user.email,
-// //                 role: user.role,
-// //                 patientId: user.patientId,
-// //                 organizationName: user.organizationName,
-// //             }
-// //         });
-
-// //     } catch (err) {
-// //         console.error('Login Error:', err);
-// //         res.status(500).json({ message: 'Server error during login' });
-// //     }
-// // });
-
-// // // Get All Patients Route
-// // // TODO: Add authentication (e.g., ensure only admin/staff can access)
-// // // app.get('/api/patients', authenticateToken, async (req, res) => { // Example with auth
-// // app.get('/api/patients', async (req, res) => {
-// //     // Optional: Check req.user.role if using authentication
-// //     // if (req.user.role !== 'admin' && req.user.role !== 'staff') {
-// //     //     return res.status(403).json({ message: 'Access forbidden: Insufficient privileges.' });
-// //     // }
-// //     try {
-// //         const patients = await User.find({ role: 'patient' }).select('-password'); // Exclude password
-
-// //         res.status(200).json(patients); // Return patients (empty array if none found)
-
-// //     } catch (err) {
-// //         console.error("Error fetching patients:", err);
-// //         res.status(500).json({ message: 'Server error fetching patients' });
-// //     }
-// // });
-
-// // // Upload Image Route
-// // // TODO: Add authentication (e.g., ensure logged-in user can upload, maybe check role)
-// // app.post('/api/upload', upload.single('image'), async (req, res) => {
-// //     const { patientId, organizationName } = req.body;
-// //     // Add validation: Ensure patientId exists and corresponds to a patient role user
-
-// //     if (!req.file) {
-// //         return res.status(400).json({ message: 'No image file provided' });
-// //     }
-// //     if (!patientId) {
-// //         // Clean up uploaded file if patientId is missing
-// //         fs.unlink(req.file.path, (err) => {
-// //             if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
-// //         });
-// //         return res.status(400).json({ message: 'Patient ID is required' });
-// //     }
-
-// //     // Path relative to the '/uploads' static route
-// //     // Ensure forward slashes for consistency, especially for URLs
-// //     const servedImagePath = `uploads/${req.file.filename}`.replace(/\\/g, '/');
-
-// //     try {
-// //         const patient = await User.findOne({ patientId: patientId, role: 'patient' });
-
-// //         if (!patient) {
-// //             // If no patient found, clean up the uploaded file
-// //             fs.unlink(req.file.path, (err) => {
-// //                 if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
-// //             });
-// //             return res.status(404).json({ message: 'Patient not found' });
-// //         }
-
-// //         const newImageData = {
-// //             // Mongoose will add _id automatically here
-// //             organizationName: organizationName || 'Unknown Org',
-// //             imageName: req.file.originalname,
-// //             imagePath: servedImagePath, // Store the relative path
-// //             uploadDate: new Date(),
-// //             // prediction: undefined // Initialize prediction if needed
-// //         };
-
-// //         patient.imageData.push(newImageData);
-// //         await patient.save();
-
-// //         // Find the newly added image data to include its _id in the response if needed
-// //         const addedImage = patient.imageData[patient.imageData.length - 1];
-
-// //         res.status(200).json({
-// //             message: 'Image uploaded successfully',
-// //             filePath: servedImagePath,
-// //             imageId: addedImage._id // Send back the ID of the created image subdocument
-// //         });
-
-// //     } catch (err) {
-// //         console.error("Image Upload Error:", err);
-// //         // Clean up uploaded file on error
-// //         fs.unlink(req.file.path, (unlinkErr) => {
-// //             if (unlinkErr) console.error(`Error deleting file ${req.file.path} after upload error:`, unlinkErr);
-// //         });
-// //         res.status(500).json({ message: 'Server error during image upload' });
-// //     }
-// // });
-
-// // // Update Prediction for a Specific Image
-// // // TODO: Add authentication
-// // app.put('/api/patients/:patientId/images/:imageId/predict', async (req, res) => {
-// //     const { patientId, imageId } = req.params;
-// //     const { prediction } = req.body;
-
-// //     if (!prediction) {
-// //         return res.status(400).json({ message: 'Prediction result is required' });
-// //     }
-// //     if (!mongoose.Types.ObjectId.isValid(imageId)) {
-// //         return res.status(400).json({ message: 'Invalid image ID format' });
-// //     }
-
-// //     try {
-// //         const updateResult = await User.updateOne(
-// //             // Use patientId for matching user, and imageId for matching subdocument
-// //             { patientId: patientId, role: 'patient', "imageData._id": new mongoose.Types.ObjectId(imageId) },
-// //             { $set: { "imageData.$.prediction": prediction } } // Update only the prediction of the matched image
-// //         );
-
-// //         if (updateResult.matchedCount === 0) {
-// //             return res.status(404).json({ message: 'Patient or specific image not found' });
-// //         }
-
-// //         if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
-// //             // Found but not modified, maybe prediction was the same
-// //              return res.status(200).json({ message: 'Prediction unchanged (already set to this value or no change needed)' });
-// //         }
-
-// //         console.log(`Prediction updated for patient ${patientId}, image ${imageId}`);
-// //         // Optionally: Fetch and return the updated user document
-// //          const updatedUser = await User.findOne({ patientId: patientId, role: 'patient' }).select('-password');
-// //          res.status(200).json(updatedUser || { message: 'Prediction updated successfully' });
-
-
-// //     } catch (err) {
-// //         console.error(`Error updating prediction for patient ${patientId}, image ${imageId}:`, err);
-// //         res.status(500).json({ message: 'Server error updating prediction' });
-// //     }
-// // });
-
-// // // Update Image Path for a Specific Image
-// // // TODO: Add authentication (ensure user has permission to update)
-// // app.put('/api/patients/:userId/images/:imageId/path', async (req, res) => {
-// //     const { userId, imageId } = req.params;
-// //     const { newImagePath } = req.body; // Expecting { "newImagePath": "new/path/to/image.jpg" }
-
-// //     // Validation
-// //     if (!newImagePath || typeof newImagePath !== 'string' || newImagePath.trim() === '') {
-// //         return res.status(400).json({ message: 'New image path is required and must be a non-empty string' });
-// //     }
-// //     if (!mongoose.Types.ObjectId.isValid(userId)) {
-// //          return res.status(400).json({ message: 'Invalid user ID format' });
-// //     }
-// //     if (!mongoose.Types.ObjectId.isValid(imageId)) {
-// //         return res.status(400).json({ message: 'Invalid image ID format' });
-// //     }
-
-// //     // Consider adding validation for the path format if necessary (e.g., ensure it starts with 'uploads/')
-
-// //     try {
-// //         // Find the user and the specific image, then update the path
-// //         const updateResult = await User.updateOne(
-// //             {
-// //                 _id: new mongoose.Types.ObjectId(userId),       // Match user by _id
-// //                 role: 'patient',                               // Ensure it's a patient
-// //                 "imageData._id": new mongoose.Types.ObjectId(imageId) // Match specific image in the array
-// //             },
-// //             {
-// //                 $set: { "imageData.$.imagePath": newImagePath.trim() } // Update only the imagePath of the matched element ($)
-// //             }
-// //         );
-
-// //         // Check if the update was successful
-// //         if (updateResult.matchedCount === 0) {
-// //             // No document matched the criteria (user not found, or image not found within that user)
-// //             return res.status(404).json({ message: 'Patient or specific image not found' });
-// //         }
-
-// //         if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
-// //             // Document was found, but the path was not modified (it might be the same as the existing path)
-// //             console.log(`Image path update requested for user ${userId}, image ${imageId}, but value was likely unchanged.`);
-// //             // Still fetch and return the user data as the state is consistent
-// //         } else {
-// //             console.log(`Image path updated successfully for user ${userId}, image ${imageId}`);
-// //         }
-
-// //         // Fetch the updated user document to send back to the client
-// //         const updatedUser = await User.findById(userId).select('-password'); // Exclude password
-// //         if (!updatedUser) {
-// //             // Should not happen if update succeeded, but handle defensively
-// //              return res.status(404).json({ message: 'Updated user not found after update operation.' });
-// //         }
-
-// //         res.status(200).json(updatedUser); // Send the full updated user document back
-
-// //     } catch (err) {
-// //         console.error(`Error updating image path for user ${userId}, image ${imageId}:`, err);
-// //         res.status(500).json({ message: 'Server error updating image path' });
-// //     }
-// // });
-
-// // // --- NEW ROUTE: Delete Specific Image ---
-// // // TODO: Add authentication (ensure user has permission to delete)
-// // app.delete('/api/patients/:userId/images/:imageId', async (req, res) => {
-// //     const { userId, imageId } = req.params;
-
-// //     // Validate IDs
-// //     if (!mongoose.Types.ObjectId.isValid(userId)) {
-// //          return res.status(400).json({ message: 'Invalid user ID format' });
-// //     }
-// //     if (!mongoose.Types.ObjectId.isValid(imageId)) {
-// //         return res.status(400).json({ message: 'Invalid image ID format' });
-// //     }
-
-// //     try {
-// //         // 1. Find the user and the image to get the path *before* deleting the record
-// //         const user = await User.findOne(
-// //             { _id: userId, role: 'patient', "imageData._id": imageId },
-// //             { 'imageData.$': 1 } // Project only the matching imageData element
-// //         );
-
-// //         if (!user || !user.imageData || user.imageData.length === 0) {
-// //             return res.status(404).json({ message: 'Patient or specific image not found' });
-// //         }
-
-// //         const imageToDelete = user.imageData[0]; // The matched image subdocument
-// //         const imagePathToDelete = imageToDelete.imagePath; // e.g., "uploads/unique-name.jpg"
-
-// //         // 2. Remove the image subdocument from the user's imageData array
-// //         const updateResult = await User.updateOne(
-// //             { _id: userId },
-// //             { $pull: { imageData: { _id: imageId } } } // Use $pull to remove the item from the array
-// //         );
-
-// //         if (updateResult.modifiedCount === 0) {
-// //             // This might happen if the image was already deleted between step 1 and 2 (race condition)
-// //             // or if the findOne found it but updateOne somehow didn't. Treat as not found.
-// //             console.warn(`Image ${imageId} for user ${userId} was found but DB record update failed (modifiedCount=0).`);
-// //             // You could re-query here to be sure, but often $pull handles this gracefully.
-// //             // Proceed to attempt file deletion anyway, as the goal is deletion.
-// //             // return res.status(404).json({ message: 'Image record could not be removed from database.' });
-// //         }
-
-// //         // 3. Delete the actual image file from the filesystem
-// //         if (imagePathToDelete) {
-// //             const fullPath = path.join(__dirname, imagePathToDelete); // Get the absolute path
-// //             console.log(`Attempting to delete file: ${fullPath}`);
-
-// //             fs.unlink(fullPath, (err) => {
-// //                 if (err && err.code === 'ENOENT') {
-// //                     // File not found - might have been deleted manually or already processed
-// //                     console.log(`File not found (already deleted?): ${fullPath}`);
-// //                 } else if (err) {
-// //                     // Other error deleting file (e.g., permissions)
-// //                     console.error(`Error deleting file ${fullPath}:`, err);
-// //                     // Note: The database record is already deleted. We might log this failure
-// //                     // but still return success for the DB operation. Or return a specific error.
-// //                     // For simplicity here, we log the error but still report overall success.
-// //                 } else {
-// //                     console.log(`Successfully deleted file: ${fullPath}`);
-// //                 }
-// //             });
-// //         } else {
-// //             console.warn(`No imagePath found for image ${imageId} of user ${userId}. Cannot delete file.`);
-// //         }
-
-// //         console.log(`Image record ${imageId} deleted successfully for user ${userId}`);
-// //         // Send success response - you could also send back the updated user doc if needed
-// //         res.status(200).json({ message: 'Image deleted successfully' });
-
-// //     } catch (err) {
-// //         console.error(`Error deleting image ${imageId} for user ${userId}:`, err);
-// //         res.status(500).json({ message: 'Server error deleting image' });
-// //     }
-// // });
-// // // --- END OF NEW DELETE ROUTE ---
-
-
-// // // --- Server Start ---
-// // const PORT = process.env.PORT || 5001;
-// // app.listen(PORT, '0.0.0.0', () => {
-// //     console.log(`------------------------------------------------------`);
-// //     console.log(`Server running on port ${PORT}`);
-// //     console.log(`Local access:   http://localhost:${PORT}`);
-// //     // Find local IP for network access (optional)
-// //     try {
-// //         const { networkInterfaces } = require('os');
-// //         const nets = networkInterfaces();
-// //         for (const name of Object.keys(nets)) {
-// //             for (const net of nets[name]) {
-// //                 // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-// //                 if (net.family === 'IPv4' && !net.internal) {
-// //                     console.log(`Network access: http://${net.address}:${PORT}`);
-// //                     break; // Show first non-internal IPv4
-// //                 }
-// //             }
-// //         }
-// //     } catch(e) { console.log("Could not determine network IP.")}
-
-// //     console.log(`Frontend URL:   ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
-// //     console.log(`Static files:   ${uploadsDir}`);
-// //     console.log(`------------------------------------------------------`);
-// // });
-
-// // // --- Graceful Shutdown ---
-// // const gracefulShutdown = async (signal) => {
-// //     console.log(`\n${signal} signal received: closing MongoDB connection...`);
-// //     try {
-// //         await mongoose.connection.close(false);
-// //         console.log('MongoDB connection closed successfully.');
-// //         process.exit(0);
-// //     } catch (err) {
-// //         console.error('Error closing MongoDB connection:', err);
-// //         process.exit(1);
-// //     }
-// // };
-
-// // process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-// // process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+// const cors = require('cors');
+// const multer = require('multer');
+// const path = require('path');
+// const fs = require('fs'); // Used for directory check and file deletion
+// const User = require('./models/User'); // Make sure path is correct
+
+// const app = express();
+
+// // --- Environment Variables ---
+// const dotenv = require('dotenv');
+// dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+// // --- Middleware ---
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+//     credentials: true
+// }));
+// app.use(express.json());
+
+// // --- Static Files ---
+// const uploadsDir = path.join(__dirname, 'uploads');
+// // Ensure uploads directory exists
+// if (!fs.existsSync(uploadsDir)) {
+//     console.log(`Creating uploads directory at: ${uploadsDir}`);
+//     fs.mkdirSync(uploadsDir, { recursive: true });
+// }
+// app.use('/uploads', express.static(uploadsDir));
+// console.log(`Serving static files from: ${uploadsDir}`);
+
+
+// // --- MongoDB Connection ---
+// const mongoUri = process.env.MONGODB_URI;
+// if (!mongoUri) {
+//     console.error("FATAL ERROR: MONGODB_URI environment variable is not set.");
+//     process.exit(1);
+// }
+// mongoose.connect(mongoUri)
+//     .then(() => console.log('MongoDB connected successfully'))
+//     .catch(err => {
+//         console.error('MongoDB connection error:', err);
+//         process.exit(1);
+//     });
+
+// // --- Multer Setup (File Uploads) ---
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, uploadsDir); // Use the validated uploads directory path
+//     },
+//     filename: (req, file, cb) => {
+//         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//         cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_'));
+//     },
+// });
+// const upload = multer({
+//     storage: storage,
+//     limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+// });
+
+// // --- JWT Secret ---
+// const jwtSecret = process.env.JWT_SECRET;
+// if (!jwtSecret) {
+//     console.error("FATAL ERROR: JWT_SECRET environment variable is not set.");
+//     process.exit(1);
+// }
+
+// // --- Authentication Middleware (Example - Apply where needed) ---
+// const authenticateToken = (req, res, next) => {
+//     const authHeader = req.headers['authorization'];
+//     const token = authHeader && authHeader.split(' ')[1];
+
+//     if (token == null) return res.sendStatus(401); // if there isn't any token
+
+//     jwt.verify(token, jwtSecret, (err, user) => {
+//         if (err) {
+//             console.error("JWT Verification Error:", err.message);
+//             return res.sendStatus(403); // Forbidden (invalid token)
+//         }
+//         req.user = user; // Add decoded user payload to request object
+//         next();
+//     });
+// };
+
+// // --- API Routes ---
+
+// // Signup Route
+// app.post('/api/signup', async (req, res) => {
+//     const { name, email, role, password, patientId, organizationName, gender, dateOfBirth, referredDoctor } = req.body;
+
+//     // Basic Validation
+//     if (!name || !email || !password || !role) {
+//         return res.status(400).json({ message: 'Missing required fields (name, email, password, role)' });
+//     }
+//     if (role === 'patient' && !patientId) {
+//         return res.status(400).json({ message: 'Patient ID is required for patient role' });
+//     }
+//     // Add stricter validation (email format, password strength, date format etc.)
+
+//     try {
+//         const existingUser = await User.findOne({ email });
+//         if (existingUser) {
+//             return res.status(400).json({ message: 'Email already in use' });
+//         }
+//         if (role === 'patient') {
+//             const existingPatient = await User.findOne({ patientId });
+//             if (existingPatient) {
+//                 return res.status(400).json({ message: 'Patient ID already exists' });
+//             }
+//         }
+
+//         const hashedPassword = await bcrypt.hash(password, 10);
+
+//         const newUser = new User({
+//             name,
+//             email,
+//             password: hashedPassword,
+//             role,
+//             patientId: role === 'patient' ? patientId : undefined,
+//             organizationName, // Store for all? Adjust if needed.
+//             gender: role === 'patient' ? gender : undefined,
+//             dateOfBirth: role === 'patient' ? dateOfBirth : undefined,
+//             referredDoctor: role === 'patient' ? referredDoctor : undefined,
+//             imageData: [],
+//             chatHistory: [],
+//         });
+
+//         await newUser.save();
+//         res.status(201).json({ message: 'User registered successfully' });
+
+//     } catch (err) {
+//         console.error("Signup Error:", err);
+//         if (err.name === 'ValidationError') {
+//             return res.status(400).json({ message: "Validation Error", errors: err.errors });
+//         }
+//         res.status(500).json({ message: 'Server error during registration' });
+//     }
+// });
+
+// // Login Route
+// app.post('/api/login', async (req, res) => {
+//     const { email, password } = req.body;
+
+//     if (!email || !password) {
+//         return res.status(400).json({ message: 'Email and password are required' });
+//     }
+
+//     try {
+//         const user = await User.findOne({ email });
+//         if (!user) {
+//             return res.status(401).json({ message: 'Invalid credentials' });
+//         }
+
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if (!isMatch) {
+//             return res.status(401).json({ message: 'Invalid credentials' });
+//         }
+
+//         const payload = {
+//             userId: user._id,
+//             role: user.role,
+//             name: user.name,
+//         };
+//         const token = jwt.sign(payload, jwtSecret, { expiresIn: process.env.JWT_EXPIRES_IN || '1h' });
+
+//         res.status(200).json({
+//             token,
+//             user: { // Send necessary user info, exclude password
+//                 _id: user._id,
+//                 name: user.name,
+//                 email: user.email,
+//                 role: user.role,
+//                 patientId: user.patientId,
+//                 organizationName: user.organizationName,
+//             }
+//         });
+
+//     } catch (err) {
+//         console.error('Login Error:', err);
+//         res.status(500).json({ message: 'Server error during login' });
+//     }
+// });
+
+// // Get All Patients Route
+// // TODO: Add authentication (e.g., ensure only admin/staff can access)
+// // app.get('/api/patients', authenticateToken, async (req, res) => { // Example with auth
+// app.get('/api/patients', async (req, res) => {
+//     // Optional: Check req.user.role if using authentication
+//     // if (req.user.role !== 'admin' && req.user.role !== 'staff') {
+//     //     return res.status(403).json({ message: 'Access forbidden: Insufficient privileges.' });
+//     // }
+//     try {
+//         const patients = await User.find({ role: 'patient' }).select('-password'); // Exclude password
+
+//         res.status(200).json(patients); // Return patients (empty array if none found)
+
+//     } catch (err) {
+//         console.error("Error fetching patients:", err);
+//         res.status(500).json({ message: 'Server error fetching patients' });
+//     }
+// });
+
+// // Upload Image Route
+// // TODO: Add authentication (e.g., ensure logged-in user can upload, maybe check role)
+// app.post('/api/upload', upload.single('image'), async (req, res) => {
+//     const { patientId, organizationName } = req.body;
+//     // Add validation: Ensure patientId exists and corresponds to a patient role user
+
+//     if (!req.file) {
+//         return res.status(400).json({ message: 'No image file provided' });
+//     }
+//     if (!patientId) {
+//         // Clean up uploaded file if patientId is missing
+//         fs.unlink(req.file.path, (err) => {
+//             if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
+//         });
+//         return res.status(400).json({ message: 'Patient ID is required' });
+//     }
+
+//     // Path relative to the '/uploads' static route
+//     // Ensure forward slashes for consistency, especially for URLs
+//     const servedImagePath = `uploads/${req.file.filename}`.replace(/\\/g, '/');
+
+//     try {
+//         const patient = await User.findOne({ patientId: patientId, role: 'patient' });
+
+//         if (!patient) {
+//             // If no patient found, clean up the uploaded file
+//             fs.unlink(req.file.path, (err) => {
+//                 if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
+//             });
+//             return res.status(404).json({ message: 'Patient not found' });
+//         }
+
+//         const newImageData = {
+//             // Mongoose will add _id automatically here
+//             organizationName: organizationName || 'Unknown Org',
+//             imageName: req.file.originalname,
+//             imagePath: servedImagePath, // Store the relative path
+//             uploadDate: new Date(),
+//             // prediction: undefined // Initialize prediction if needed
+//         };
+
+//         patient.imageData.push(newImageData);
+//         await patient.save();
+
+//         // Find the newly added image data to include its _id in the response if needed
+//         const addedImage = patient.imageData[patient.imageData.length - 1];
+
+//         res.status(200).json({
+//             message: 'Image uploaded successfully',
+//             filePath: servedImagePath,
+//             imageId: addedImage._id // Send back the ID of the created image subdocument
+//         });
+
+//     } catch (err) {
+//         console.error("Image Upload Error:", err);
+//         // Clean up uploaded file on error
+//         fs.unlink(req.file.path, (unlinkErr) => {
+//             if (unlinkErr) console.error(`Error deleting file ${req.file.path} after upload error:`, unlinkErr);
+//         });
+//         res.status(500).json({ message: 'Server error during image upload' });
+//     }
+// });
+
+// // Update Prediction for a Specific Image
+// // TODO: Add authentication
+// app.put('/api/patients/:patientId/images/:imageId/predict', async (req, res) => {
+//     const { patientId, imageId } = req.params;
+//     const { prediction } = req.body;
+
+//     if (!prediction) {
+//         return res.status(400).json({ message: 'Prediction result is required' });
+//     }
+//     if (!mongoose.Types.ObjectId.isValid(imageId)) {
+//         return res.status(400).json({ message: 'Invalid image ID format' });
+//     }
+
+//     try {
+//         const updateResult = await User.updateOne(
+//             // Use patientId for matching user, and imageId for matching subdocument
+//             { patientId: patientId, role: 'patient', "imageData._id": new mongoose.Types.ObjectId(imageId) },
+//             { $set: { "imageData.$.prediction": prediction } } // Update only the prediction of the matched image
+//         );
+
+//         if (updateResult.matchedCount === 0) {
+//             return res.status(404).json({ message: 'Patient or specific image not found' });
+//         }
+
+//         if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
+//             // Found but not modified, maybe prediction was the same
+//              return res.status(200).json({ message: 'Prediction unchanged (already set to this value or no change needed)' });
+//         }
+
+//         console.log(`Prediction updated for patient ${patientId}, image ${imageId}`);
+//         // Optionally: Fetch and return the updated user document
+//          const updatedUser = await User.findOne({ patientId: patientId, role: 'patient' }).select('-password');
+//          res.status(200).json(updatedUser || { message: 'Prediction updated successfully' });
+
+
+//     } catch (err) {
+//         console.error(`Error updating prediction for patient ${patientId}, image ${imageId}:`, err);
+//         res.status(500).json({ message: 'Server error updating prediction' });
+//     }
+// });
+
+// // Update Image Path for a Specific Image
+// // TODO: Add authentication (ensure user has permission to update)
+// app.put('/api/patients/:userId/images/:imageId/path', async (req, res) => {
+//     const { userId, imageId } = req.params;
+//     const { newImagePath } = req.body; // Expecting { "newImagePath": "new/path/to/image.jpg" }
+
+//     // Validation
+//     if (!newImagePath || typeof newImagePath !== 'string' || newImagePath.trim() === '') {
+//         return res.status(400).json({ message: 'New image path is required and must be a non-empty string' });
+//     }
+//     if (!mongoose.Types.ObjectId.isValid(userId)) {
+//          return res.status(400).json({ message: 'Invalid user ID format' });
+//     }
+//     if (!mongoose.Types.ObjectId.isValid(imageId)) {
+//         return res.status(400).json({ message: 'Invalid image ID format' });
+//     }
+
+//     // Consider adding validation for the path format if necessary (e.g., ensure it starts with 'uploads/')
+
+//     try {
+//         // Find the user and the specific image, then update the path
+//         const updateResult = await User.updateOne(
+//             {
+//                 _id: new mongoose.Types.ObjectId(userId),       // Match user by _id
+//                 role: 'patient',                               // Ensure it's a patient
+//                 "imageData._id": new mongoose.Types.ObjectId(imageId) // Match specific image in the array
+//             },
+//             {
+//                 $set: { "imageData.$.imagePath": newImagePath.trim() } // Update only the imagePath of the matched element ($)
+//             }
+//         );
+
+//         // Check if the update was successful
+//         if (updateResult.matchedCount === 0) {
+//             // No document matched the criteria (user not found, or image not found within that user)
+//             return res.status(404).json({ message: 'Patient or specific image not found' });
+//         }
+
+//         if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
+//             // Document was found, but the path was not modified (it might be the same as the existing path)
+//             console.log(`Image path update requested for user ${userId}, image ${imageId}, but value was likely unchanged.`);
+//             // Still fetch and return the user data as the state is consistent
+//         } else {
+//             console.log(`Image path updated successfully for user ${userId}, image ${imageId}`);
+//         }
+
+//         // Fetch the updated user document to send back to the client
+//         const updatedUser = await User.findById(userId).select('-password'); // Exclude password
+//         if (!updatedUser) {
+//             // Should not happen if update succeeded, but handle defensively
+//              return res.status(404).json({ message: 'Updated user not found after update operation.' });
+//         }
+
+//         res.status(200).json(updatedUser); // Send the full updated user document back
+
+//     } catch (err) {
+//         console.error(`Error updating image path for user ${userId}, image ${imageId}:`, err);
+//         res.status(500).json({ message: 'Server error updating image path' });
+//     }
+// });
+
+// // --- NEW ROUTE: Delete Specific Image ---
+// // TODO: Add authentication (ensure user has permission to delete)
+// app.delete('/api/patients/:userId/images/:imageId', async (req, res) => {
+//     const { userId, imageId } = req.params;
+
+//     // Validate IDs
+//     if (!mongoose.Types.ObjectId.isValid(userId)) {
+//          return res.status(400).json({ message: 'Invalid user ID format' });
+//     }
+//     if (!mongoose.Types.ObjectId.isValid(imageId)) {
+//         return res.status(400).json({ message: 'Invalid image ID format' });
+//     }
+
+//     try {
+//         // 1. Find the user and the image to get the path *before* deleting the record
+//         const user = await User.findOne(
+//             { _id: userId, role: 'patient', "imageData._id": imageId },
+//             { 'imageData.$': 1 } // Project only the matching imageData element
+//         );
+
+//         if (!user || !user.imageData || user.imageData.length === 0) {
+//             return res.status(404).json({ message: 'Patient or specific image not found' });
+//         }
+
+//         const imageToDelete = user.imageData[0]; // The matched image subdocument
+//         const imagePathToDelete = imageToDelete.imagePath; // e.g., "uploads/unique-name.jpg"
+
+//         // 2. Remove the image subdocument from the user's imageData array
+//         const updateResult = await User.updateOne(
+//             { _id: userId },
+//             { $pull: { imageData: { _id: imageId } } } // Use $pull to remove the item from the array
+//         );
+
+//         if (updateResult.modifiedCount === 0) {
+//             // This might happen if the image was already deleted between step 1 and 2 (race condition)
+//             // or if the findOne found it but updateOne somehow didn't. Treat as not found.
+//             console.warn(`Image ${imageId} for user ${userId} was found but DB record update failed (modifiedCount=0).`);
+//             // You could re-query here to be sure, but often $pull handles this gracefully.
+//             // Proceed to attempt file deletion anyway, as the goal is deletion.
+//             // return res.status(404).json({ message: 'Image record could not be removed from database.' });
+//         }
+
+//         // 3. Delete the actual image file from the filesystem
+//         if (imagePathToDelete) {
+//             const fullPath = path.join(__dirname, imagePathToDelete); // Get the absolute path
+//             console.log(`Attempting to delete file: ${fullPath}`);
+
+//             fs.unlink(fullPath, (err) => {
+//                 if (err && err.code === 'ENOENT') {
+//                     // File not found - might have been deleted manually or already processed
+//                     console.log(`File not found (already deleted?): ${fullPath}`);
+//                 } else if (err) {
+//                     // Other error deleting file (e.g., permissions)
+//                     console.error(`Error deleting file ${fullPath}:`, err);
+//                     // Note: The database record is already deleted. We might log this failure
+//                     // but still return success for the DB operation. Or return a specific error.
+//                     // For simplicity here, we log the error but still report overall success.
+//                 } else {
+//                     console.log(`Successfully deleted file: ${fullPath}`);
+//                 }
+//             });
+//         } else {
+//             console.warn(`No imagePath found for image ${imageId} of user ${userId}. Cannot delete file.`);
+//         }
+
+//         console.log(`Image record ${imageId} deleted successfully for user ${userId}`);
+//         // Send success response - you could also send back the updated user doc if needed
+//         res.status(200).json({ message: 'Image deleted successfully' });
+
+//     } catch (err) {
+//         console.error(`Error deleting image ${imageId} for user ${userId}:`, err);
+//         res.status(500).json({ message: 'Server error deleting image' });
+//     }
+// });
+// // --- END OF NEW DELETE ROUTE ---
+
+
+// // --- Server Start ---
+// const PORT = process.env.PORT || 5001;
+// app.listen(PORT, '0.0.0.0', () => {
+//     console.log(`------------------------------------------------------`);
+//     console.log(`Server running on port ${PORT}`);
+//     console.log(`Local access:   http://localhost:${PORT}`);
+//     // Find local IP for network access (optional)
+//     try {
+//         const { networkInterfaces } = require('os');
+//         const nets = networkInterfaces();
+//         for (const name of Object.keys(nets)) {
+//             for (const net of nets[name]) {
+//                 // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+//                 if (net.family === 'IPv4' && !net.internal) {
+//                     console.log(`Network access: http://${net.address}:${PORT}`);
+//                     break; // Show first non-internal IPv4
+//                 }
+//             }
+//         }
+//     } catch(e) { console.log("Could not determine network IP.")}
+
+//     console.log(`Frontend URL:   ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+//     console.log(`Static files:   ${uploadsDir}`);
+//     console.log(`------------------------------------------------------`);
+// });
+
+// // --- Graceful Shutdown ---
+// const gracefulShutdown = async (signal) => {
+//     console.log(`\n${signal} signal received: closing MongoDB connection...`);
+//     try {
+//         await mongoose.connection.close(false);
+//         console.log('MongoDB connection closed successfully.');
+//         process.exit(0);
+//     } catch (err) {
+//         console.error('Error closing MongoDB connection:', err);
+//         process.exit(1);
+//     }
+// };
+
+// process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+// process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
 
 
@@ -3707,6 +3707,613 @@
 
 
 // server.js
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+// const cors = require('cors');
+// const multer = require('multer');
+// const path = require('path');
+// const fs = require('fs'); // Used for directory check and file deletion
+// const User = require('./models/User'); // Make sure path is correct
+
+// // --- Environment Variables ---
+// const dotenv = require('dotenv');
+// dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+// // --- Google Generative AI Setup ---
+// const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@google/generative-ai");
+// let genAI;
+// const geminiApiKey = process.env.GEMINI_API_KEY;
+
+// if (!geminiApiKey) {
+//     console.warn("GEMINI_API_KEY environment variable is not set. Chat functionality will be disabled.");
+// } else {
+//     genAI = new GoogleGenerativeAI(geminiApiKey);
+// }
+
+// const app = express();
+
+// // --- Middleware ---
+// app.use(cors({
+//     origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Ensure your React app's URL is covered
+//     credentials: true
+// }));
+// app.use(express.json());
+
+// // --- Static Files ---
+// const uploadsDir = path.join(__dirname, 'uploads');
+// if (!fs.existsSync(uploadsDir)) {
+//     console.log(`Creating uploads directory at: ${uploadsDir}`);
+//     fs.mkdirSync(uploadsDir, { recursive: true });
+// }
+// app.use('/uploads', express.static(uploadsDir));
+// console.log(`Serving static files from: ${uploadsDir}`);
+
+
+// // --- MongoDB Connection ---
+// const mongoUri = process.env.MONGODB_URI;
+// if (!mongoUri) {
+//     console.error("FATAL ERROR: MONGODB_URI environment variable is not set.");
+//     process.exit(1);
+// }
+// mongoose.connect(mongoUri)
+//     .then(() => console.log('MongoDB connected successfully'))
+//     .catch(err => {
+//         console.error('MongoDB connection error:', err);
+//         process.exit(1);
+//     });
+
+// // --- Multer Setup (File Uploads) ---
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, uploadsDir);
+//     },
+//     filename: (req, file, cb) => {
+//         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//         cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_'));
+//     },
+// });
+// const upload = multer({
+//     storage: storage,
+//     limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+// });
+
+// // --- JWT Secret ---
+// const jwtSecret = process.env.JWT_SECRET;
+// if (!jwtSecret) {
+//     console.error("FATAL ERROR: JWT_SECRET environment variable is not set.");
+//     process.exit(1);
+// }
+
+// // --- Authentication Middleware ---
+// const authenticateToken = (req, res, next) => {
+//     const authHeader = req.headers['authorization'];
+//     const token = authHeader && authHeader.split(' ')[1];
+
+//     if (token == null) return res.sendStatus(401); // Unauthorized
+
+//     jwt.verify(token, jwtSecret, (err, user) => {
+//         if (err) {
+//             console.error("JWT Verification Error:", err.message);
+//             return res.sendStatus(403); // Forbidden
+//         }
+//         req.user = user; // Contains { userId (_id), role, name, patientId (custom) }
+//         next();
+//     });
+// };
+
+
+// // --- API Routes ---
+
+// // Signup Route
+// app.post('/api/signup', async (req, res) => {
+//     const { name, email, role, password, patientId, organizationName, gender, dateOfBirth, referredDoctor } = req.body;
+
+//     if (!name || !email || !password || !role) {
+//         return res.status(400).json({ message: 'Missing required fields (name, email, password, role)' });
+//     }
+//     if (role === 'patient' && !patientId) {
+//         return res.status(400).json({ message: 'Patient ID is required for patient role' });
+//     }
+
+//     try {
+//         const existingUser = await User.findOne({ email });
+//         if (existingUser) {
+//             return res.status(400).json({ message: 'Email already in use' });
+//         }
+//         if (role === 'patient') {
+//             const existingPatient = await User.findOne({ patientId }); // Check custom patientId uniqueness
+//             if (existingPatient) {
+//                 return res.status(400).json({ message: 'Patient ID already exists' });
+//             }
+//         }
+
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         const newUser = new User({
+//             name, email, password: hashedPassword, role,
+//             patientId: role === 'patient' ? patientId : undefined, // Custom Patient ID
+//             organizationName,
+//             gender: role === 'patient' ? gender : undefined,
+//             dateOfBirth: role === 'patient' ? dateOfBirth : undefined,
+//             referredDoctor: role === 'patient' ? referredDoctor : undefined,
+//             imageData: [], chatHistory: [],
+//         });
+
+//         await newUser.save();
+//         res.status(201).json({ message: 'User registered successfully' });
+
+//     } catch (err) {
+//         console.error("Signup Error:", err);
+//         if (err.name === 'ValidationError') {
+//             return res.status(400).json({ message: "Validation Error", errors: err.errors });
+//         }
+//         res.status(500).json({ message: 'Server error during registration' });
+//     }
+// });
+
+// // Login Route
+// app.post('/api/login', async (req, res) => {
+//     const { email, password } = req.body;
+//     if (!email || !password) {
+//         return res.status(400).json({ message: 'Email and password are required' });
+//     }
+//     try {
+//         const user = await User.findOne({ email });
+//         if (!user) return res.status(401).json({ message: 'Invalid credentials (email not found)' });
+
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if (!isMatch) return res.status(401).json({ message: 'Invalid credentials (password mismatch)' });
+
+//         // patientId in payload is the custom one, userId is MongoDB _id
+//         const payload = { userId: user._id, role: user.role, name: user.name, patientId: user.patientId };
+//         const token = jwt.sign(payload, jwtSecret, { expiresIn: process.env.JWT_EXPIRES_IN || '1h' });
+
+//         res.status(200).json({
+//             token,
+//             user: {
+//                 _id: user._id, name: user.name, email: user.email, role: user.role,
+//                 patientId: user.patientId, // Custom patient ID
+//                 organizationName: user.organizationName,
+//             }
+//         });
+//     } catch (err) {
+//         console.error('Login Error:', err);
+//         res.status(500).json({ message: 'Server error during login' });
+//     }
+// });
+
+// // Get All Patients Route
+// app.get('/api/patients', authenticateToken, async (req, res) => { // Added authenticateToken
+//     // Optionally restrict by organization or role
+//     // if(req.user.role !== 'medicalStaff' && req.user.role !== 'admin') {
+//     // return res.status(403).json({ message: 'Not authorized to view all patients' });
+//     // }
+//     try {
+//         // Fetches all users with role 'patient'. Consider filtering by organization if applicable.
+//         const patients = await User.find({ role: 'patient' }).select('-password');
+//         res.status(200).json(patients);
+//     } catch (err) {
+//         console.error("Error fetching patients:", err);
+//         res.status(500).json({ message: 'Server error fetching patients' });
+//     }
+// });
+
+
+// // Upload Image Route - CORRECTED
+// app.post('/api/upload', authenticateToken, upload.single('image'), async (req, res) => {
+//     const uploaderRole = req.user.role;
+//     const uploaderUserId = req.user.userId; // MongoDB _id of the logged-in user (uploader)
+
+//     // targetPatientCustomId is the custom ID like "P001" from the form, used when staff uploads for a patient
+//     const targetPatientCustomId = req.body.patientId;
+//     let organizationNameFromForm = req.body.organizationName;
+
+//     if (!req.file) {
+//         return res.status(400).json({ message: 'No image file provided' });
+//     }
+
+//     const servedImagePath = `uploads/${req.file.filename}`.replace(/\\/g, '/');
+//     const cleanupFile = () => {
+//         fs.unlink(req.file.path, (err) => {
+//             if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
+//             else console.log(`Cleaned up orphaned file: ${req.file.path}`);
+//         });
+//     };
+
+//     try {
+//         let patientToUpdate;
+//         let finalOrganizationName;
+
+//         if (uploaderRole === 'patient') {
+//             // Patient is uploading for themselves. Their JWT's userId is their User model's _id.
+//             patientToUpdate = await User.findById(uploaderUserId);
+//             if (!patientToUpdate) {
+//                 cleanupFile();
+//                 return res.status(404).json({ message: 'Patient (uploader) not found.' });
+//             }
+//             // For a patient uploading for themselves, organizationName might come from their profile
+//             // or could be overridden by form data if the form allows it.
+//             finalOrganizationName = organizationNameFromForm || patientToUpdate.organizationName || 'Unknown Org';
+
+//         } else if (uploaderRole === 'medicalStaff' || uploaderRole === 'admin') { // Or other authorized roles
+//             // Staff is uploading for a patient specified by targetPatientCustomId.
+//             if (!targetPatientCustomId) {
+//                 cleanupFile();
+//                 return res.status(400).json({ message: 'Patient ID is required in the request body for staff uploads.' });
+//             }
+//             patientToUpdate = await User.findOne({ patientId: targetPatientCustomId, role: 'patient' });
+//             if (!patientToUpdate) {
+//                 cleanupFile();
+//                 return res.status(404).json({ message: `Patient with custom ID '${targetPatientCustomId}' not found or is not a patient.` });
+//             }
+//             // For staff, organizationName usually comes from their own profile or the form.
+//             const staffUser = await User.findById(uploaderUserId); // Get staff user details
+//             finalOrganizationName = organizationNameFromForm || staffUser?.organizationName || patientToUpdate.organizationName || 'Unknown Org';
+//         } else {
+//             cleanupFile();
+//             return res.status(403).json({ message: 'User role not authorized for image upload.' });
+//         }
+
+//         const newImageData = {
+//             organizationName: finalOrganizationName,
+//             imageName: req.file.originalname,
+//             imagePath: servedImagePath, // Path relative to 'uploads' dir, served via static route
+//             uploadDate: new Date(),
+//             // prediction will be added/updated via a different route
+//         };
+
+//         patientToUpdate.imageData.push(newImageData);
+//         await patientToUpdate.save();
+//         const addedImage = patientToUpdate.imageData[patientToUpdate.imageData.length - 1];
+
+//         res.status(200).json({
+//             message: 'Image uploaded successfully',
+//             filePath: servedImagePath, // e.g., uploads/filename.jpg
+//             imageId: addedImage._id,    // MongoDB _id of the subdocument
+//             image: addedImage           // Full image object
+//         });
+
+//     } catch (err) {
+//         console.error("Image Upload Error:", err);
+//         cleanupFile(); // Attempt to delete the file if an error occurs during DB operation
+//         res.status(500).json({ message: 'Server error during image upload' });
+//     }
+// });
+
+
+// // Update Prediction for a Specific Image
+// // :userId here is the PATIENT'S MongoDB _id
+// app.put('/api/patients/:userId/images/:imageId/predict', authenticateToken, async (req, res) => {
+//     const { userId, imageId } = req.params; // userId is patient's MongoDB _id
+//     const { prediction } = req.body;
+
+//     // Check if the logged-in user is the patient themselves, or an admin/medicalStaff
+//     if (req.user.userId !== userId && req.user.role !== 'admin' && req.user.role !== 'medicalStaff') {
+//         return res.status(403).json({ message: "Forbidden: You cannot update this user's data." });
+//     }
+//     if (!prediction) {
+//         return res.status(400).json({ message: 'Prediction result is required' });
+//     }
+//     if (!mongoose.Types.ObjectId.isValid(imageId) || !mongoose.Types.ObjectId.isValid(userId)) {
+//         return res.status(400).json({ message: 'Invalid User or Image ID format' });
+//     }
+
+//     try {
+//         const updateResult = await User.updateOne(
+//             { _id: userId, "imageData._id": imageId }, // Query by patient's _id and image's _id
+//             { $set: { "imageData.$.prediction": prediction } }
+//         );
+
+//         if (updateResult.matchedCount === 0) {
+//             return res.status(404).json({ message: 'Patient or specific image not found' });
+//         }
+//         if (updateResult.modifiedCount === 0) {
+//             // This can happen if the prediction value is the same as the existing one
+//             console.log(`Prediction for user ${userId}, image ${imageId} was already set to '${prediction}'.`);
+//         }
+//         // Fetch the updated image data to return
+//         const updatedUser = await User.findById(userId).select('imageData'); // Only select imageData
+//         const updatedImage = updatedUser.imageData.id(imageId);
+
+//         res.status(200).json({ message: 'Prediction updated successfully', image: updatedImage });
+
+//     } catch (err) {
+//         console.error(`Error updating prediction for user ${userId}, image ${imageId}:`, err);
+//         res.status(500).json({ message: 'Server error updating prediction' });
+//     }
+// });
+
+
+// // --- CHAT API ENDPOINTS ---
+
+// // GET Chat History for a specific image
+// // :userId here is PATIENT'S MongoDB _id
+// app.get('/api/chat/:userId/:imageId/history', authenticateToken, async (req, res) => {
+//     const { userId, imageId } = req.params; // Patient's MongoDB _id
+
+//     if (req.user.userId !== userId && req.user.role !== 'admin' && req.user.role !== 'medicalStaff') { // Allow staff
+//         return res.status(403).json({ message: "Forbidden: You cannot access this chat history." });
+//     }
+//     if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(imageId)) {
+//         return res.status(400).json({ message: "Invalid User or Image ID format." });
+//     }
+
+//     try {
+//         const user = await User.findById(userId); // Find patient by their MongoDB _id
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found." });
+//         }
+
+//         const chatSession = user.chatHistory.find(ch => ch.imageId.equals(imageId));
+//         const imageForContext = user.imageData.id(imageId); // Get image details
+
+//         if (!imageForContext) {
+//             return res.status(404).json({ message: "Associated image data not found." });
+//         }
+
+//         if (!chatSession) {
+//             return res.status(200).json({
+//                 messages: [],
+//                 imageName: imageForContext.imageName,
+//                 initialPrediction: imageForContext.prediction
+//             });
+//         }
+//         res.status(200).json({
+//             ...chatSession.toObject(), // Spread the chat session
+//             imageName: imageForContext.imageName, // Add latest image name
+//             initialPrediction: imageForContext.prediction // Add latest prediction
+//         });
+
+//     } catch (error) {
+//         console.error(`Error fetching chat history for user ${userId}, image ${imageId}:`, error);
+//         res.status(500).json({ message: "Server error fetching chat history." });
+//     }
+// });
+
+// // POST a new message to chat and get AI response
+// // :userId here is PATIENT'S MongoDB _id
+// app.post('/api/chat/:userId/:imageId/message', authenticateToken, async (req, res) => {
+//     if (!genAI) {
+//         return res.status(503).json({ message: "Chat service is currently unavailable (API key missing)." });
+//     }
+
+//     const { userId, imageId } = req.params; // Patient's MongoDB _id
+//     const { prompt } = req.body;
+
+//     // Allow staff to initiate or participate in chat on behalf of a patient context
+//     // The JWT req.user is the logged-in staff. The userId param is the patient.
+//     // The current check only allows the patient themselves to send messages.
+//     // This needs to be decided: Who can chat? Patient only, or staff too?
+//     // For now, let's assume only the patient associated with userId can initiate their own chat.
+//     // If staff should chat, the frontend needs to make it clear which patient's context they are in.
+//     // And this authorization logic would need to change.
+//     // Let's adjust for staff to be able to send messages if they are admin/medicalStaff for that patient.
+//     const isPatientSelf = req.user.userId === userId;
+//     const isAuthorizedStaff = (req.user.role === 'admin' || req.user.role === 'medicalStaff');
+
+//     if (!isPatientSelf && !isAuthorizedStaff) {
+//          return res.status(403).json({ message: "Forbidden: You cannot send messages for this user's chat." });
+//     }
+
+//     if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(imageId)) {
+//         return res.status(400).json({ message: "Invalid User or Image ID format." });
+//     }
+//     if (!prompt || typeof prompt !== 'string' || prompt.trim() === '') {
+//         return res.status(400).json({ message: "Prompt is required and must be a non-empty string." });
+//     }
+
+//     try {
+//         const patientUser = await User.findById(userId); // The patient for whom the chat is
+//         if (!patientUser || patientUser.role !== 'patient') {
+//             return res.status(404).json({ message: "Patient context for chat not found." });
+//         }
+
+//         const image = patientUser.imageData.id(imageId);
+//         if (!image) {
+//             return res.status(404).json({ message: "Image not found for this chat." });
+//         }
+
+//         let chatSession = patientUser.chatHistory.find(ch => ch.imageId.equals(imageId));
+
+//         let geminiChatHistory = [];
+//         if (chatSession && chatSession.messages.length > 0) {
+//             geminiChatHistory = chatSession.messages.map(msg => ({
+//                 role: msg.role,
+//                 parts: [{ text: msg.content }]
+//             }));
+//         }
+//         // Add system instruction for context
+//         const systemInstruction = `You are a helpful medical assistant AI. You are discussing a medical image named "${image.imageName}" (e.g., a brain scan) with a user. The image has a preliminary prediction of "${image.prediction || 'Not yet available'}". Be informative, empathetic. If asked for a diagnosis or medical advice, state that you are an AI assistant and cannot provide medical diagnoses, and advise consulting a qualified medical professional.`;
+
+
+//         const model = genAI.getGenerativeModel({
+//              model: "gemini-1.5-flash", // Updated model
+//              systemInstruction: systemInstruction,
+//         });
+
+//         const generationConfig = {
+//             temperature: 0.7,
+//             topK: 1,
+//             topP: 1,
+//             maxOutputTokens: 2048,
+//         };
+//         const safetySettings = [
+//             { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+//             { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+//             { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+//             { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+//         ];
+
+//         const geminiChat = model.startChat({
+//             history: geminiChatHistory,
+//             generationConfig,
+//             safetySettings
+//         });
+
+//         // The prompt from the user (patient or staff on behalf of patient)
+//         const result = await geminiChat.sendMessage(prompt);
+//         const response = result.response;
+//         const modelReply = response.text();
+
+//         // Save to DB under the patientUser's record
+//         // The 'user' role here refers to the human interacting with the 'model' in this turn.
+//         const userMessage = { role: 'user', content: prompt, timestamp: new Date(), sentBy: req.user.userId }; // Store who sent it
+//         const aiMessage = { role: 'model', content: modelReply, timestamp: new Date() };
+
+//         if (!chatSession) {
+//             chatSession = {
+//                 imageId: imageId,
+//                 imagePath: image.imagePath, // Store for reference
+//                 imageName: image.imageName, // Store for reference
+//                 initialPrediction: image.prediction, // Store for reference
+//                 messages: [userMessage, aiMessage],
+//                 lastUpdated: new Date()
+//             };
+//             patientUser.chatHistory.push(chatSession);
+//         } else {
+//             chatSession.messages.push(userMessage, aiMessage);
+//             chatSession.lastUpdated = new Date();
+//         }
+
+//         await patientUser.save();
+//         const latestChatSession = patientUser.chatHistory.find(ch => ch.imageId.equals(imageId)); // Get the updated session
+
+//         res.status(200).json({
+//             reply: modelReply,
+//             userMessage, // The message sent by the user in this request
+//             fullHistory: latestChatSession ? latestChatSession.messages : [], // The complete history for this image
+//             chatSession: latestChatSession // Send the whole updated session object
+//         });
+
+//     } catch (error) {
+//         console.error(`Error processing chat message for user ${userId}, image ${imageId}:`, error);
+//         if (error.response && error.response.candidates && error.response.candidates.length > 0 && error.response.candidates[0].finishReason === 'SAFETY') {
+//              return res.status(400).json({ message: "Response blocked due to safety settings. Please rephrase your message." });
+//         }
+//         if (error.message.includes("SAFETY")) { // Broader check for safety blocks
+//             return res.status(400).json({ message: "Response blocked due to safety settings. Please rephrase your message." });
+//         }
+//         res.status(500).json({ message: "Server error processing chat message." });
+//     }
+// });
+
+// app.get('/api/patients', authenticateToken, async (req, res) => {
+//     // This route is kept for potential use by medicalStaff/admin
+//     // You might want to add role checks here if only staff should access it
+//     if (req.user.role !== 'medicalStaff' && req.user.role !== 'admin') {
+//         // return res.status(403).json({ message: "Forbidden: Only staff can access the full patient list." });
+//         // For now, let's assume if a patient calls this, it's an error, they should use /api/patient/me
+//         console.warn(`User with role ${req.user.role} attempted to access /api/patients. They should use /api/patient/me if a patient.`);
+//     }
+//     try {
+//         const patients = await User.find({ role: 'patient' }).select('-password');
+//         res.status(200).json(patients);
+//     } catch (err) {
+//         console.error("Error fetching all patients:", err);
+//         res.status(500).json({ message: 'Server error fetching patients' });
+//     }
+// });
+
+// // NEW ROUTE: Patient fetching their own data
+// app.get('/api/patient/me', authenticateToken, async (req, res) => {
+//     if (req.user.role !== 'patient') {
+//         return res.status(403).json({ message: "Forbidden: This route is for patients to fetch their own data." });
+//     }
+//     try {
+//         // req.user.userId is the MongoDB _id of the logged-in patient from the token
+//         const patient = await User.findById(req.user.userId).select('-password'); // Exclude password
+//         if (!patient) {
+//             return res.status(404).json({ message: "Patient data not found for the logged-in user." });
+//         }
+//         res.status(200).json(patient);
+//     } catch (err) {
+//         console.error("Error fetching patient's own data (/api/patient/me):", err);
+//         res.status(500).json({ message: "Server error fetching your patient data." });
+//     }
+// });
+
+// // Delete Specific Image
+// // :userId here is PATIENT'S MongoDB _id
+// app.delete('/api/patients/:userId/images/:imageId', authenticateToken, async (req, res) => {
+//     const { userId, imageId } = req.params; // Patient's MongoDB _id
+
+//     // Allow patient to delete their own, or admin/staff to delete for any patient
+//     if (req.user.userId !== userId && req.user.role !== 'admin' && req.user.role !== 'medicalStaff') {
+//         return res.status(403).json({ message: "Forbidden: You cannot delete this user's image data." });
+//     }
+//      if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(imageId)) {
+//         return res.status(400).json({ message: 'Invalid User or Image ID format' });
+//     }
+
+//     try {
+//         const user = await User.findById(userId); // Find patient by their MongoDB _id
+//         if (!user) return res.status(404).json({ message: 'User not found' });
+
+//         const image = user.imageData.id(imageId);
+//         if (!image) return res.status(404).json({ message: 'Image not found in user data' });
+
+//         const imagePathToDelete = image.imagePath;
+
+//         // Remove image from imageData array using pull
+//         user.imageData.pull({ _id: imageId });
+
+//         // Remove associated chat history for this image
+//         user.chatHistory = user.chatHistory.filter(ch => !ch.imageId.equals(imageId));
+
+//         await user.save();
+
+//         if (imagePathToDelete) {
+//             const fullPath = path.join(__dirname, imagePathToDelete); // imagePath is like 'uploads/filename.jpg'
+//             fs.unlink(fullPath, (err) => {
+//                 if (err && err.code === 'ENOENT') console.log(`File not found (already deleted?): ${fullPath}`);
+//                 else if (err) console.error(`Error deleting file ${fullPath}:`, err);
+//                 else console.log(`Successfully deleted file: ${fullPath}`);
+//             });
+//         }
+//         res.status(200).json({ message: 'Image and associated chat history (if any) deleted successfully' });
+//     } catch (err) {
+//         console.error(`Error deleting image ${imageId} for user ${userId}:`, err);
+//         res.status(500).json({ message: 'Server error deleting image' });
+//     }
+// });
+
+
+// // --- Server Start ---
+// const PORT = process.env.PORT || 5001;
+// const serverInstance = app.listen(PORT, '0.0.0.0', () => { // Save server instance
+//     console.log(`------------------------------------------------------`);
+//     console.log(`Server running on port ${PORT}`);
+//     console.log(`Frontend URL (for CORS): ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+//     console.log(`MongoDB URI: ${mongoUri ? 'Set' : 'NOT SET!'}`);
+//     console.log(`JWT Secret: ${jwtSecret ? 'Set' : 'NOT SET!'}`);
+//     console.log(`Gemini API Key: ${geminiApiKey ? 'Set' : 'NOT SET! Chat disabled.'}`);
+//     console.log(`Uploads directory: ${uploadsDir}`);
+//     console.log(`------------------------------------------------------`);
+// });
+
+// // --- Graceful Shutdown ---
+// const gracefulShutdown = async (signal) => {
+//     console.log(`\n${signal} signal received: closing server and MongoDB connection...`);
+//     serverInstance.close(async () => { // Close HTTP server
+//         console.log('HTTP server closed.');
+//         try {
+//             await mongoose.connection.close(false);
+//             console.log('MongoDB connection closed successfully.');
+//             process.exit(0);
+//         } catch (err) {
+//             console.error('Error closing MongoDB connection:', err);
+//             process.exit(1);
+//         }
+//     });
+// };
+
+// process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+// process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+
+
+
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -3717,10 +4324,11 @@ const path = require('path');
 const fs = require('fs'); // Used for directory check and file deletion
 const User = require('./models/User'); // Make sure path is correct
 
+const app = express();
+
 // --- Environment Variables ---
 const dotenv = require('dotenv');
 dotenv.config({ path: path.resolve(__dirname, '.env') });
-
 // --- Google Generative AI Setup ---
 const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@google/generative-ai");
 let genAI;
@@ -3732,22 +4340,23 @@ if (!geminiApiKey) {
     genAI = new GoogleGenerativeAI(geminiApiKey);
 }
 
-const app = express();
+
 
 // --- Middleware ---
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Ensure your React app's URL is covered
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true
 }));
 app.use(express.json());
 
 // --- Static Files ---
 const uploadsDir = path.join(__dirname, 'uploads');
+// Ensure uploads directory exists
 if (!fs.existsSync(uploadsDir)) {
     console.log(`Creating uploads directory at: ${uploadsDir}`);
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
-app.use('/uploads', express.static(uploadsDir));
+app.use('Brain-Tumor//backend//uploads', express.static(uploadsDir));
 console.log(`Serving static files from: ${uploadsDir}`);
 
 
@@ -3767,7 +4376,7 @@ mongoose.connect(mongoUri)
 // --- Multer Setup (File Uploads) ---
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, uploadsDir);
+        cb(null, uploadsDir); // Use the validated uploads directory path
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -3786,23 +4395,22 @@ if (!jwtSecret) {
     process.exit(1);
 }
 
-// --- Authentication Middleware ---
+// --- Authentication Middleware (Example - Apply where needed) ---
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if (token == null) return res.sendStatus(401); // Unauthorized
+    if (token == null) return res.sendStatus(401); // if there isn't any token
 
     jwt.verify(token, jwtSecret, (err, user) => {
         if (err) {
             console.error("JWT Verification Error:", err.message);
-            return res.sendStatus(403); // Forbidden
+            return res.sendStatus(403); // Forbidden (invalid token)
         }
-        req.user = user; // Contains { userId (_id), role, name, patientId (custom) }
+        req.user = user; // Add decoded user payload to request object
         next();
     });
 };
-
 
 // --- API Routes ---
 
@@ -3810,12 +4418,14 @@ const authenticateToken = (req, res, next) => {
 app.post('/api/signup', async (req, res) => {
     const { name, email, role, password, patientId, organizationName, gender, dateOfBirth, referredDoctor } = req.body;
 
+    // Basic Validation
     if (!name || !email || !password || !role) {
         return res.status(400).json({ message: 'Missing required fields (name, email, password, role)' });
     }
     if (role === 'patient' && !patientId) {
         return res.status(400).json({ message: 'Patient ID is required for patient role' });
     }
+    // Add stricter validation (email format, password strength, date format etc.)
 
     try {
         const existingUser = await User.findOne({ email });
@@ -3823,21 +4433,26 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ message: 'Email already in use' });
         }
         if (role === 'patient') {
-            const existingPatient = await User.findOne({ patientId }); // Check custom patientId uniqueness
+            const existingPatient = await User.findOne({ patientId });
             if (existingPatient) {
                 return res.status(400).json({ message: 'Patient ID already exists' });
             }
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+
         const newUser = new User({
-            name, email, password: hashedPassword, role,
-            patientId: role === 'patient' ? patientId : undefined, // Custom Patient ID
-            organizationName,
+            name,
+            email,
+            password: hashedPassword,
+            role,
+            patientId: role === 'patient' ? patientId : undefined,
+            organizationName, // Store for all? Adjust if needed.
             gender: role === 'patient' ? gender : undefined,
             dateOfBirth: role === 'patient' ? dateOfBirth : undefined,
             referredDoctor: role === 'patient' ? referredDoctor : undefined,
-            imageData: [], chatHistory: [],
+            imageData: [],
+            chatHistory: [],
         });
 
         await newUser.save();
@@ -3855,28 +4470,41 @@ app.post('/api/signup', async (req, res) => {
 // Login Route
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
+
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
     }
+
     try {
         const user = await User.findOne({ email });
-        if (!user) return res.status(401).json({ message: 'Invalid credentials (email not found)' });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ message: 'Invalid credentials (password mismatch)' });
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
 
-        // patientId in payload is the custom one, userId is MongoDB _id
-        const payload = { userId: user._id, role: user.role, name: user.name, patientId: user.patientId };
+        const payload = {
+            userId: user._id,
+            role: user.role,
+            name: user.name,
+        };
         const token = jwt.sign(payload, jwtSecret, { expiresIn: process.env.JWT_EXPIRES_IN || '1h' });
 
         res.status(200).json({
             token,
-            user: {
-                _id: user._id, name: user.name, email: user.email, role: user.role,
-                patientId: user.patientId, // Custom patient ID
+            user: { // Send necessary user info, exclude password
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                patientId: user.patientId,
                 organizationName: user.organizationName,
             }
         });
+
     } catch (err) {
         console.error('Login Error:', err);
         res.status(500).json({ message: 'Server error during login' });
@@ -3884,155 +4512,271 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Get All Patients Route
-app.get('/api/patients', authenticateToken, async (req, res) => { // Added authenticateToken
-    // Optionally restrict by organization or role
-    // if(req.user.role !== 'medicalStaff' && req.user.role !== 'admin') {
-    // return res.status(403).json({ message: 'Not authorized to view all patients' });
+// TODO: Add authentication (e.g., ensure only admin/staff can access)
+// app.get('/api/patients', authenticateToken, async (req, res) => { // Example with auth
+app.get('/api/patients', async (req, res) => {
+    // Optional: Check req.user.role if using authentication
+    // if (req.user.role !== 'admin' && req.user.role !== 'staff') {
+    //     return res.status(403).json({ message: 'Access forbidden: Insufficient privileges.' });
     // }
     try {
-        // Fetches all users with role 'patient'. Consider filtering by organization if applicable.
-        const patients = await User.find({ role: 'patient' }).select('-password');
-        res.status(200).json(patients);
+        const patients = await User.find({ role: 'patient' }).select('-password'); // Exclude password
+
+        res.status(200).json(patients); // Return patients (empty array if none found)
+
     } catch (err) {
         console.error("Error fetching patients:", err);
         res.status(500).json({ message: 'Server error fetching patients' });
     }
 });
 
-
-// Upload Image Route - CORRECTED
-app.post('/api/upload', authenticateToken, upload.single('image'), async (req, res) => {
-    const uploaderRole = req.user.role;
-    const uploaderUserId = req.user.userId; // MongoDB _id of the logged-in user (uploader)
-
-    // targetPatientCustomId is the custom ID like "P001" from the form, used when staff uploads for a patient
-    const targetPatientCustomId = req.body.patientId;
-    let organizationNameFromForm = req.body.organizationName;
+// Upload Image Route
+// TODO: Add authentication (e.g., ensure logged-in user can upload, maybe check role)
+app.post('/api/upload', upload.single('image'), async (req, res) => {
+    const { patientId, organizationName } = req.body;
+    // Add validation: Ensure patientId exists and corresponds to a patient role user
 
     if (!req.file) {
         return res.status(400).json({ message: 'No image file provided' });
     }
-
-    const servedImagePath = `uploads/${req.file.filename}`.replace(/\\/g, '/');
-    const cleanupFile = () => {
+    if (!patientId) {
+        // Clean up uploaded file if patientId is missing
         fs.unlink(req.file.path, (err) => {
             if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
-            else console.log(`Cleaned up orphaned file: ${req.file.path}`);
         });
-    };
+        return res.status(400).json({ message: 'Patient ID is required' });
+    }
+
+    // Path relative to the '/uploads' static route
+    // Ensure forward slashes for consistency, especially for URLs
+    const servedImagePath = `uploads/${req.file.filename}`.replace(/\\/g, '/');
 
     try {
-        let patientToUpdate;
-        let finalOrganizationName;
+        const patient = await User.findOne({ patientId: patientId, role: 'patient' });
 
-        if (uploaderRole === 'patient') {
-            // Patient is uploading for themselves. Their JWT's userId is their User model's _id.
-            patientToUpdate = await User.findById(uploaderUserId);
-            if (!patientToUpdate) {
-                cleanupFile();
-                return res.status(404).json({ message: 'Patient (uploader) not found.' });
-            }
-            // For a patient uploading for themselves, organizationName might come from their profile
-            // or could be overridden by form data if the form allows it.
-            finalOrganizationName = organizationNameFromForm || patientToUpdate.organizationName || 'Unknown Org';
-
-        } else if (uploaderRole === 'medicalStaff' || uploaderRole === 'admin') { // Or other authorized roles
-            // Staff is uploading for a patient specified by targetPatientCustomId.
-            if (!targetPatientCustomId) {
-                cleanupFile();
-                return res.status(400).json({ message: 'Patient ID is required in the request body for staff uploads.' });
-            }
-            patientToUpdate = await User.findOne({ patientId: targetPatientCustomId, role: 'patient' });
-            if (!patientToUpdate) {
-                cleanupFile();
-                return res.status(404).json({ message: `Patient with custom ID '${targetPatientCustomId}' not found or is not a patient.` });
-            }
-            // For staff, organizationName usually comes from their own profile or the form.
-            const staffUser = await User.findById(uploaderUserId); // Get staff user details
-            finalOrganizationName = organizationNameFromForm || staffUser?.organizationName || patientToUpdate.organizationName || 'Unknown Org';
-        } else {
-            cleanupFile();
-            return res.status(403).json({ message: 'User role not authorized for image upload.' });
+        if (!patient) {
+            // If no patient found, clean up the uploaded file
+            fs.unlink(req.file.path, (err) => {
+                if (err) console.error(`Error deleting orphaned file ${req.file.path}:`, err);
+            });
+            return res.status(404).json({ message: 'Patient not found' });
         }
 
         const newImageData = {
-            organizationName: finalOrganizationName,
+            // Mongoose will add _id automatically here
+            organizationName: organizationName || 'Unknown Org',
             imageName: req.file.originalname,
-            imagePath: servedImagePath, // Path relative to 'uploads' dir, served via static route
+            imagePath: servedImagePath, // Store the relative path
             uploadDate: new Date(),
-            // prediction will be added/updated via a different route
+            // prediction: undefined // Initialize prediction if needed
         };
 
-        patientToUpdate.imageData.push(newImageData);
-        await patientToUpdate.save();
-        const addedImage = patientToUpdate.imageData[patientToUpdate.imageData.length - 1];
+        patient.imageData.push(newImageData);
+        await patient.save();
+
+        // Find the newly added image data to include its _id in the response if needed
+        const addedImage = patient.imageData[patient.imageData.length - 1];
 
         res.status(200).json({
             message: 'Image uploaded successfully',
-            filePath: servedImagePath, // e.g., uploads/filename.jpg
-            imageId: addedImage._id,    // MongoDB _id of the subdocument
-            image: addedImage           // Full image object
+            filePath: servedImagePath,
+            imageId: addedImage._id // Send back the ID of the created image subdocument
         });
 
     } catch (err) {
         console.error("Image Upload Error:", err);
-        cleanupFile(); // Attempt to delete the file if an error occurs during DB operation
+        // Clean up uploaded file on error
+        fs.unlink(req.file.path, (unlinkErr) => {
+            if (unlinkErr) console.error(`Error deleting file ${req.file.path} after upload error:`, unlinkErr);
+        });
         res.status(500).json({ message: 'Server error during image upload' });
     }
 });
 
-
 // Update Prediction for a Specific Image
-// :userId here is the PATIENT'S MongoDB _id
-app.put('/api/patients/:userId/images/:imageId/predict', authenticateToken, async (req, res) => {
-    const { userId, imageId } = req.params; // userId is patient's MongoDB _id
+// TODO: Add authentication
+app.put('/api/patients/:patientId/images/:imageId/predict', async (req, res) => {
+    const { patientId, imageId } = req.params;
     const { prediction } = req.body;
 
-    // Check if the logged-in user is the patient themselves, or an admin/medicalStaff
-    if (req.user.userId !== userId && req.user.role !== 'admin' && req.user.role !== 'medicalStaff') {
-        return res.status(403).json({ message: "Forbidden: You cannot update this user's data." });
-    }
     if (!prediction) {
         return res.status(400).json({ message: 'Prediction result is required' });
     }
-    if (!mongoose.Types.ObjectId.isValid(imageId) || !mongoose.Types.ObjectId.isValid(userId)) {
-        return res.status(400).json({ message: 'Invalid User or Image ID format' });
+    if (!mongoose.Types.ObjectId.isValid(imageId)) {
+        return res.status(400).json({ message: 'Invalid image ID format' });
     }
 
     try {
         const updateResult = await User.updateOne(
-            { _id: userId, "imageData._id": imageId }, // Query by patient's _id and image's _id
-            { $set: { "imageData.$.prediction": prediction } }
+            // Use patientId for matching user, and imageId for matching subdocument
+            { patientId: patientId, role: 'patient', "imageData._id": new mongoose.Types.ObjectId(imageId) },
+            { $set: { "imageData.$.prediction": prediction } } // Update only the prediction of the matched image
         );
 
         if (updateResult.matchedCount === 0) {
             return res.status(404).json({ message: 'Patient or specific image not found' });
         }
-        if (updateResult.modifiedCount === 0) {
-            // This can happen if the prediction value is the same as the existing one
-            console.log(`Prediction for user ${userId}, image ${imageId} was already set to '${prediction}'.`);
-        }
-        // Fetch the updated image data to return
-        const updatedUser = await User.findById(userId).select('imageData'); // Only select imageData
-        const updatedImage = updatedUser.imageData.id(imageId);
 
-        res.status(200).json({ message: 'Prediction updated successfully', image: updatedImage });
+        if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
+            // Found but not modified, maybe prediction was the same
+             return res.status(200).json({ message: 'Prediction unchanged (already set to this value or no change needed)' });
+        }
+
+        console.log(`Prediction updated for patient ${patientId}, image ${imageId}`);
+        // Optionally: Fetch and return the updated user document
+         const updatedUser = await User.findOne({ patientId: patientId, role: 'patient' }).select('-password');
+         res.status(200).json(updatedUser || { message: 'Prediction updated successfully' });
+
 
     } catch (err) {
-        console.error(`Error updating prediction for user ${userId}, image ${imageId}:`, err);
+        console.error(`Error updating prediction for patient ${patientId}, image ${imageId}:`, err);
         res.status(500).json({ message: 'Server error updating prediction' });
     }
 });
 
+// Update Image Path for a Specific Image
+// TODO: Add authentication (ensure user has permission to update)
+app.put('/api/patients/:userId/images/:imageId/path', async (req, res) => {
+    const { userId, imageId } = req.params;
+    const { newImagePath } = req.body; // Expecting { "newImagePath": "new/path/to/image.jpg" }
 
+    // Validation
+    if (!newImagePath || typeof newImagePath !== 'string' || newImagePath.trim() === '') {
+        return res.status(400).json({ message: 'New image path is required and must be a non-empty string' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+         return res.status(400).json({ message: 'Invalid user ID format' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(imageId)) {
+        return res.status(400).json({ message: 'Invalid image ID format' });
+    }
+
+    // Consider adding validation for the path format if necessary (e.g., ensure it starts with 'uploads/')
+
+    try {
+        // Find the user and the specific image, then update the path
+        const updateResult = await User.updateOne(
+            {
+                _id: new mongoose.Types.ObjectId(userId),       // Match user by _id
+                role: 'patient',                               // Ensure it's a patient
+                "imageData._id": new mongoose.Types.ObjectId(imageId) // Match specific image in the array
+            },
+            {
+                $set: { "imageData.$.imagePath": newImagePath.trim() } // Update only the imagePath of the matched element ($)
+            }
+        );
+
+        // Check if the update was successful
+        if (updateResult.matchedCount === 0) {
+            // No document matched the criteria (user not found, or image not found within that user)
+            return res.status(404).json({ message: 'Patient or specific image not found' });
+        }
+
+        if (updateResult.modifiedCount === 0 && updateResult.matchedCount === 1) {
+            // Document was found, but the path was not modified (it might be the same as the existing path)
+            console.log(`Image path update requested for user ${userId}, image ${imageId}, but value was likely unchanged.`);
+            // Still fetch and return the user data as the state is consistent
+        } else {
+            console.log(`Image path updated successfully for user ${userId}, image ${imageId}`);
+        }
+
+        // Fetch the updated user document to send back to the client
+        const updatedUser = await User.findById(userId).select('-password'); // Exclude password
+        if (!updatedUser) {
+            // Should not happen if update succeeded, but handle defensively
+             return res.status(404).json({ message: 'Updated user not found after update operation.' });
+        }
+
+        res.status(200).json(updatedUser); // Send the full updated user document back
+
+    } catch (err) {
+        console.error(`Error updating image path for user ${userId}, image ${imageId}:`, err);
+        res.status(500).json({ message: 'Server error updating image path' });
+    }
+});
+
+// --- NEW ROUTE: Delete Specific Image ---
+// TODO: Add authentication (ensure user has permission to delete)
+app.delete('/api/patients/:userId/images/:imageId', async (req, res) => {
+    const { userId, imageId } = req.params;
+
+    // Validate IDs
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+         return res.status(400).json({ message: 'Invalid user ID format' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(imageId)) {
+        return res.status(400).json({ message: 'Invalid image ID format' });
+    }
+
+    try {
+        // 1. Find the user and the image to get the path *before* deleting the record
+        const user = await User.findOne(
+            { _id: userId, role: 'patient', "imageData._id": imageId },
+            { 'imageData.$': 1 } // Project only the matching imageData element
+        );
+
+        if (!user || !user.imageData || user.imageData.length === 0) {
+            return res.status(404).json({ message: 'Patient or specific image not found' });
+        }
+
+        const imageToDelete = user.imageData[0]; // The matched image subdocument
+        const imagePathToDelete = imageToDelete.imagePath; // e.g., "uploads/unique-name.jpg"
+
+        // 2. Remove the image subdocument from the user's imageData array
+        const updateResult = await User.updateOne(
+            { _id: userId },
+            { $pull: { imageData: { _id: imageId } } } // Use $pull to remove the item from the array
+        );
+
+        if (updateResult.modifiedCount === 0) {
+            // This might happen if the image was already deleted between step 1 and 2 (race condition)
+            // or if the findOne found it but updateOne somehow didn't. Treat as not found.
+            console.warn(`Image ${imageId} for user ${userId} was found but DB record update failed (modifiedCount=0).`);
+            // You could re-query here to be sure, but often $pull handles this gracefully.
+            // Proceed to attempt file deletion anyway, as the goal is deletion.
+            // return res.status(404).json({ message: 'Image record could not be removed from database.' });
+        }
+
+        // 3. Delete the actual image file from the filesystem
+        if (imagePathToDelete) {
+            const fullPath = path.join(__dirname, imagePathToDelete); // Get the absolute path
+            console.log(`Attempting to delete file: ${fullPath}`);
+
+            fs.unlink(fullPath, (err) => {
+                if (err && err.code === 'ENOENT') {
+                    // File not found - might have been deleted manually or already processed
+                    console.log(`File not found (already deleted?): ${fullPath}`);
+                } else if (err) {
+                    // Other error deleting file (e.g., permissions)
+                    console.error(`Error deleting file ${fullPath}:`, err);
+                    // Note: The database record is already deleted. We might log this failure
+                    // but still return success for the DB operation. Or return a specific error.
+                    // For simplicity here, we log the error but still report overall success.
+                } else {
+                    console.log(`Successfully deleted file: ${fullPath}`);
+                }
+            });
+        } else {
+            console.warn(`No imagePath found for image ${imageId} of user ${userId}. Cannot delete file.`);
+        }
+
+        console.log(`Image record ${imageId} deleted successfully for user ${userId}`);
+        // Send success response - you could also send back the updated user doc if needed
+        res.status(200).json({ message: 'Image deleted successfully' });
+
+    } catch (err) {
+        console.error(`Error deleting image ${imageId} for user ${userId}:`, err);
+        res.status(500).json({ message: 'Server error deleting image' });
+    }
+});
+// --- END OF NEW DELETE ROUTE ---
 // --- CHAT API ENDPOINTS ---
 
 // GET Chat History for a specific image
-// :userId here is PATIENT'S MongoDB _id
 app.get('/api/chat/:userId/:imageId/history', authenticateToken, async (req, res) => {
-    const { userId, imageId } = req.params; // Patient's MongoDB _id
+    const { userId, imageId } = req.params;
 
-    if (req.user.userId !== userId && req.user.role !== 'admin' && req.user.role !== 'medicalStaff') { // Allow staff
+    if (req.user.userId !== userId && req.user.role !== 'admin') { // Allow admin to view history too
         return res.status(403).json({ message: "Forbidden: You cannot access this chat history." });
     }
     if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(imageId)) {
@@ -4040,30 +4784,25 @@ app.get('/api/chat/:userId/:imageId/history', authenticateToken, async (req, res
     }
 
     try {
-        const user = await User.findById(userId); // Find patient by their MongoDB _id
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
 
         const chatSession = user.chatHistory.find(ch => ch.imageId.equals(imageId));
-        const imageForContext = user.imageData.id(imageId); // Get image details
-
-        if (!imageForContext) {
-            return res.status(404).json({ message: "Associated image data not found." });
-        }
-
         if (!chatSession) {
-            return res.status(200).json({
-                messages: [],
-                imageName: imageForContext.imageName,
-                initialPrediction: imageForContext.prediction
-            });
+            // No history yet, return empty or a specific message based on frontend needs
+            const imageForContext = user.imageData.id(imageId);
+            if (imageForContext) {
+                 return res.status(200).json({ 
+                    messages: [], 
+                    imageName: imageForContext.imageName, 
+                    initialPrediction: imageForContext.prediction 
+                });
+            }
+            return res.status(404).json({ message: "Chat history not found for this image, and image data missing."})
         }
-        res.status(200).json({
-            ...chatSession.toObject(), // Spread the chat session
-            imageName: imageForContext.imageName, // Add latest image name
-            initialPrediction: imageForContext.prediction // Add latest prediction
-        });
+        res.status(200).json(chatSession); // Send the whole chat session object
 
     } catch (error) {
         console.error(`Error fetching chat history for user ${userId}, image ${imageId}:`, error);
@@ -4072,30 +4811,17 @@ app.get('/api/chat/:userId/:imageId/history', authenticateToken, async (req, res
 });
 
 // POST a new message to chat and get AI response
-// :userId here is PATIENT'S MongoDB _id
 app.post('/api/chat/:userId/:imageId/message', authenticateToken, async (req, res) => {
     if (!genAI) {
         return res.status(503).json({ message: "Chat service is currently unavailable (API key missing)." });
     }
 
-    const { userId, imageId } = req.params; // Patient's MongoDB _id
+    const { userId, imageId } = req.params;
     const { prompt } = req.body;
 
-    // Allow staff to initiate or participate in chat on behalf of a patient context
-    // The JWT req.user is the logged-in staff. The userId param is the patient.
-    // The current check only allows the patient themselves to send messages.
-    // This needs to be decided: Who can chat? Patient only, or staff too?
-    // For now, let's assume only the patient associated with userId can initiate their own chat.
-    // If staff should chat, the frontend needs to make it clear which patient's context they are in.
-    // And this authorization logic would need to change.
-    // Let's adjust for staff to be able to send messages if they are admin/medicalStaff for that patient.
-    const isPatientSelf = req.user.userId === userId;
-    const isAuthorizedStaff = (req.user.role === 'admin' || req.user.role === 'medicalStaff');
-
-    if (!isPatientSelf && !isAuthorizedStaff) {
-         return res.status(403).json({ message: "Forbidden: You cannot send messages for this user's chat." });
+    if (req.user.userId !== userId) {
+        return res.status(403).json({ message: "Forbidden: You cannot send messages for this user." });
     }
-
     if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(imageId)) {
         return res.status(400).json({ message: "Invalid User or Image ID format." });
     }
@@ -4104,41 +4830,42 @@ app.post('/api/chat/:userId/:imageId/message', authenticateToken, async (req, re
     }
 
     try {
-        const patientUser = await User.findById(userId); // The patient for whom the chat is
-        if (!patientUser || patientUser.role !== 'patient') {
-            return res.status(404).json({ message: "Patient context for chat not found." });
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
         }
 
-        const image = patientUser.imageData.id(imageId);
+        const image = user.imageData.id(imageId);
         if (!image) {
             return res.status(404).json({ message: "Image not found for this chat." });
         }
 
-        let chatSession = patientUser.chatHistory.find(ch => ch.imageId.equals(imageId));
-
+        let chatSession = user.chatHistory.find(ch => ch.imageId.equals(imageId));
+        
+        // Prepare history for Gemini
         let geminiChatHistory = [];
         if (chatSession && chatSession.messages.length > 0) {
             geminiChatHistory = chatSession.messages.map(msg => ({
-                role: msg.role,
+                role: msg.role, // Gemini expects 'user' or 'model'
                 parts: [{ text: msg.content }]
             }));
         }
-        // Add system instruction for context
-        const systemInstruction = `You are a helpful medical assistant AI. You are discussing a medical image named "${image.imageName}" (e.g., a brain scan) with a user. The image has a preliminary prediction of "${image.prediction || 'Not yet available'}". Be informative, empathetic. If asked for a diagnosis or medical advice, state that you are an AI assistant and cannot provide medical diagnoses, and advise consulting a qualified medical professional.`;
-
 
         const model = genAI.getGenerativeModel({
-             model: "gemini-1.5-flash", // Updated model
-             systemInstruction: systemInstruction,
-        });
+             model: "gemini-2.0-flash-exp", // Or your preferred model
+            //  systemInstruction: "You are a helpful medical assistant AI. You are discussing a medical image (e.g., a brain scan) with a patient. The image has a preliminary prediction. Be informative, empathetic, and clarify that you are not a doctor and your information is not a diagnosis. Always advise the user to consult with their doctor for any medical decisions or serious concerns.",
+           //  systemInstruction: "You are a helpful medical assistant AI. You are discussing a medical image (e.g., a brain scan) with a patient. The image has a preliminary prediction. Be informative, empathetic.",
+           systemInstruction: "You are an intelligent and compassionate AI assistant trained to interpret MRI brain scans using a deep learning model with 44 tumor classes. For every patient query, respond in exactly four concise lines. Explain the prediction, briefly describe the tumor type (if any), and offer supportive guidance. Always remind the user that final diagnosis and treatment decisions should be made by a medical professional."
 
+        });
+        
         const generationConfig = {
             temperature: 0.7,
-            topK: 1,
-            topP: 1,
+            topK: 1, // Default is 1
+            topP: 1, // Default is 1
             maxOutputTokens: 2048,
         };
-        const safetySettings = [
+        const safetySettings = [ // Example safety settings
             { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
             { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
             { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
@@ -4150,163 +4877,90 @@ app.post('/api/chat/:userId/:imageId/message', authenticateToken, async (req, re
             generationConfig,
             safetySettings
         });
-
-        // The prompt from the user (patient or staff on behalf of patient)
-        const result = await geminiChat.sendMessage(prompt);
+        
+        let promptForGemini = prompt;
+        // If this is the first user message in a new session for this image, prepend context.
+        // (The systemInstruction should also cover context, but this makes it explicit in the first turn)
+        if (!chatSession || chatSession.messages.filter(m => m.role === 'user').length === 0) {
+            promptForGemini = `Regarding the medical image named "${image.imageName}" with an initial prediction of "${image.prediction || 'Pending'}": ${prompt}`;
+        }
+        
+        const result = await geminiChat.sendMessage(promptForGemini);
         const response = result.response;
         const modelReply = response.text();
 
-        // Save to DB under the patientUser's record
-        // The 'user' role here refers to the human interacting with the 'model' in this turn.
-        const userMessage = { role: 'user', content: prompt, timestamp: new Date(), sentBy: req.user.userId }; // Store who sent it
+        // Save to DB
+        const userMessage = { role: 'user', content: prompt, timestamp: new Date() };
         const aiMessage = { role: 'model', content: modelReply, timestamp: new Date() };
 
         if (!chatSession) {
             chatSession = {
                 imageId: imageId,
-                imagePath: image.imagePath, // Store for reference
-                imageName: image.imageName, // Store for reference
-                initialPrediction: image.prediction, // Store for reference
+                imagePath: image.imagePath,
+                imageName: image.imageName,
+                initialPrediction: image.prediction,
                 messages: [userMessage, aiMessage],
                 lastUpdated: new Date()
             };
-            patientUser.chatHistory.push(chatSession);
+            user.chatHistory.push(chatSession);
         } else {
             chatSession.messages.push(userMessage, aiMessage);
             chatSession.lastUpdated = new Date();
         }
-
-        await patientUser.save();
-        const latestChatSession = patientUser.chatHistory.find(ch => ch.imageId.equals(imageId)); // Get the updated session
-
-        res.status(200).json({
-            reply: modelReply,
-            userMessage, // The message sent by the user in this request
-            fullHistory: latestChatSession ? latestChatSession.messages : [], // The complete history for this image
-            chatSession: latestChatSession // Send the whole updated session object
-        });
+        
+        await user.save();
+        res.status(200).json({ reply: modelReply, userMessage, fullHistory: chatSession.messages });
 
     } catch (error) {
         console.error(`Error processing chat message for user ${userId}, image ${imageId}:`, error);
-        if (error.response && error.response.candidates && error.response.candidates.length > 0 && error.response.candidates[0].finishReason === 'SAFETY') {
+        if (error.message.includes("SAFETY")) {
              return res.status(400).json({ message: "Response blocked due to safety settings. Please rephrase your message." });
         }
-        if (error.message.includes("SAFETY")) { // Broader check for safety blocks
-            return res.status(400).json({ message: "Response blocked due to safety settings. Please rephrase your message." });
-        }
         res.status(500).json({ message: "Server error processing chat message." });
-    }
-});
-
-app.get('/api/patients', authenticateToken, async (req, res) => {
-    // This route is kept for potential use by medicalStaff/admin
-    // You might want to add role checks here if only staff should access it
-    if (req.user.role !== 'medicalStaff' && req.user.role !== 'admin') {
-        // return res.status(403).json({ message: "Forbidden: Only staff can access the full patient list." });
-        // For now, let's assume if a patient calls this, it's an error, they should use /api/patient/me
-        console.warn(`User with role ${req.user.role} attempted to access /api/patients. They should use /api/patient/me if a patient.`);
-    }
-    try {
-        const patients = await User.find({ role: 'patient' }).select('-password');
-        res.status(200).json(patients);
-    } catch (err) {
-        console.error("Error fetching all patients:", err);
-        res.status(500).json({ message: 'Server error fetching patients' });
-    }
-});
-
-// NEW ROUTE: Patient fetching their own data
-app.get('/api/patient/me', authenticateToken, async (req, res) => {
-    if (req.user.role !== 'patient') {
-        return res.status(403).json({ message: "Forbidden: This route is for patients to fetch their own data." });
-    }
-    try {
-        // req.user.userId is the MongoDB _id of the logged-in patient from the token
-        const patient = await User.findById(req.user.userId).select('-password'); // Exclude password
-        if (!patient) {
-            return res.status(404).json({ message: "Patient data not found for the logged-in user." });
-        }
-        res.status(200).json(patient);
-    } catch (err) {
-        console.error("Error fetching patient's own data (/api/patient/me):", err);
-        res.status(500).json({ message: "Server error fetching your patient data." });
-    }
-});
-
-// Delete Specific Image
-// :userId here is PATIENT'S MongoDB _id
-app.delete('/api/patients/:userId/images/:imageId', authenticateToken, async (req, res) => {
-    const { userId, imageId } = req.params; // Patient's MongoDB _id
-
-    // Allow patient to delete their own, or admin/staff to delete for any patient
-    if (req.user.userId !== userId && req.user.role !== 'admin' && req.user.role !== 'medicalStaff') {
-        return res.status(403).json({ message: "Forbidden: You cannot delete this user's image data." });
-    }
-     if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(imageId)) {
-        return res.status(400).json({ message: 'Invalid User or Image ID format' });
-    }
-
-    try {
-        const user = await User.findById(userId); // Find patient by their MongoDB _id
-        if (!user) return res.status(404).json({ message: 'User not found' });
-
-        const image = user.imageData.id(imageId);
-        if (!image) return res.status(404).json({ message: 'Image not found in user data' });
-
-        const imagePathToDelete = image.imagePath;
-
-        // Remove image from imageData array using pull
-        user.imageData.pull({ _id: imageId });
-
-        // Remove associated chat history for this image
-        user.chatHistory = user.chatHistory.filter(ch => !ch.imageId.equals(imageId));
-
-        await user.save();
-
-        if (imagePathToDelete) {
-            const fullPath = path.join(__dirname, imagePathToDelete); // imagePath is like 'uploads/filename.jpg'
-            fs.unlink(fullPath, (err) => {
-                if (err && err.code === 'ENOENT') console.log(`File not found (already deleted?): ${fullPath}`);
-                else if (err) console.error(`Error deleting file ${fullPath}:`, err);
-                else console.log(`Successfully deleted file: ${fullPath}`);
-            });
-        }
-        res.status(200).json({ message: 'Image and associated chat history (if any) deleted successfully' });
-    } catch (err) {
-        console.error(`Error deleting image ${imageId} for user ${userId}:`, err);
-        res.status(500).json({ message: 'Server error deleting image' });
     }
 });
 
 
 // --- Server Start ---
 const PORT = process.env.PORT || 5001;
-const serverInstance = app.listen(PORT, '0.0.0.0', () => { // Save server instance
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`------------------------------------------------------`);
     console.log(`Server running on port ${PORT}`);
-    console.log(`Frontend URL (for CORS): ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
-    console.log(`MongoDB URI: ${mongoUri ? 'Set' : 'NOT SET!'}`);
-    console.log(`JWT Secret: ${jwtSecret ? 'Set' : 'NOT SET!'}`);
-    console.log(`Gemini API Key: ${geminiApiKey ? 'Set' : 'NOT SET! Chat disabled.'}`);
-    console.log(`Uploads directory: ${uploadsDir}`);
+    console.log(`Local access:   http://localhost:${PORT}`);
+    // Find local IP for network access (optional)
+    try {
+        const { networkInterfaces } = require('os');
+        const nets = networkInterfaces();
+        for (const name of Object.keys(nets)) {
+            for (const net of nets[name]) {
+                // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+                if (net.family === 'IPv4' && !net.internal) {
+                    console.log(`Network access: http://${net.address}:${PORT}`);
+                    break; // Show first non-internal IPv4
+                }
+            }
+        }
+    } catch(e) { console.log("Could not determine network IP.")}
+
+    console.log(`Frontend URL:   ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+    console.log(`Static files:   ${uploadsDir}`);
     console.log(`------------------------------------------------------`);
 });
 
 // --- Graceful Shutdown ---
 const gracefulShutdown = async (signal) => {
-    console.log(`\n${signal} signal received: closing server and MongoDB connection...`);
-    serverInstance.close(async () => { // Close HTTP server
-        console.log('HTTP server closed.');
-        try {
-            await mongoose.connection.close(false);
-            console.log('MongoDB connection closed successfully.');
-            process.exit(0);
-        } catch (err) {
-            console.error('Error closing MongoDB connection:', err);
-            process.exit(1);
-        }
-    });
+    console.log(`\n${signal} signal received: closing MongoDB connection...`);
+    try {
+        await mongoose.connection.close(false);
+        console.log('MongoDB connection closed successfully.');
+        process.exit(0);
+    } catch (err) {
+        console.error('Error closing MongoDB connection:', err);
+        process.exit(1);
+    }
 };
 
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+
+
