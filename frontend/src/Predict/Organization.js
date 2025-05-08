@@ -24,29 +24,29 @@
 // // // // // // // // // // // // // // // // //         console.error('Error fetching patients:', error);
 // // // // // // // // // // // // // // // // //       }
 // // // // // // // // // // // // // // // // //     };
-  
+
 // // // // // // // // // // // // // // // // //     fetchPatients();
 // // // // // // // // // // // // // // // // //   }, []);
-  
+
 
 // // // // // // // // // // // // // // // // //   const handleLogout = () => {
 // // // // // // // // // // // // // // // // //     localStorage.clear();
 // // // // // // // // // // // // // // // // //     navigate('/Login');
 // // // // // // // // // // // // // // // // //   };
-  
+
 // // // // // // // // // // // // // // // // //   const handleUpload = async (e) => {
 // // // // // // // // // // // // // // // // //     e.preventDefault();
-  
+
 // // // // // // // // // // // // // // // // //     if (!selectedPatientId || !file) {
 // // // // // // // // // // // // // // // // //       alert('Please select a patient ID and an image.');
 // // // // // // // // // // // // // // // // //       return;
 // // // // // // // // // // // // // // // // //     }
-  
+
 // // // // // // // // // // // // // // // // //     const formData = new FormData();
 // // // // // // // // // // // // // // // // //     formData.append('patientId', selectedPatientId);
 // // // // // // // // // // // // // // // // //     formData.append('organizationName', organizationName); // Include organization name
 // // // // // // // // // // // // // // // // //     formData.append('image', file);
-  
+
 // // // // // // // // // // // // // // // // //     try {
 // // // // // // // // // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
 // // // // // // // // // // // // // // // // //       // const response = await axios.post('http://localhost:5001/api/upload', formData, {
@@ -60,7 +60,7 @@
 // // // // // // // // // // // // // // // // //       alert('Failed to upload image.');
 // // // // // // // // // // // // // // // // //     }
 // // // // // // // // // // // // // // // // //   };
-  
+
 
 // // // // // // // // // // // // // // // // //   return (
 // // // // // // // // // // // // // // // // //     <div className="main-content">
@@ -1684,7 +1684,7 @@
 // // // // // // // // //     formData.append("patientId", selectedPatientId);
 // // // // // // // // //     formData.append("organizationName", organizationName);
 // // // // // // // // //     formData.append("image", file);
-    
+
 
 // // // // // // // // //     try {
 // // // // // // // // //       const response = await axios.post(`${process.env.REACT_APP_ORGANIZATION_RESPONSE_UPLOAD_URL}/api/upload`, formData, {
@@ -3222,7 +3222,7 @@
 // // //   const [selectedPatientId, setSelectedPatientId] = useState(null);
 // // //   const [isModalOpen, setIsModalOpen] = useState(false);
 // // //   const [searchTerm, setSearchTerm] = useState("");
-  
+
 // // //   const [newPatient, setNewPatient] = useState({
 // // //     firstName: "",
 // // //     lastName: "",
@@ -3635,7 +3635,7 @@
 // //   const handleAddNewPatient = async (e) => {
 // //     e.preventDefault();
 // //     const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
-    
+
 // //     // Combine first and last names for the 'name' field
 // //     const fullName = `${firstName} ${lastName}`.trim();
 // //     // Simple email generation (consider a more robust approach)
@@ -4515,7 +4515,7 @@ const Organization = () => {
         const fullName = firstName.trim(); // If only using firstName as 'name'
         const email = `${firstName.toLowerCase().replace(/\s+/g, '')}@gmail.com`; // Auto-generate or have a field
 
-        if (!fullName || !patientId || !dob || !gender || !referredDoctor ) { // Removed !lastName
+        if (!fullName || !patientId || !dob || !gender || !referredDoctor) { // Removed !lastName
             alert("All fields (First Name, Patient ID, DOB, Gender, Referred Doctor) are required.");
             return;
         }
@@ -4525,7 +4525,7 @@ const Organization = () => {
             return;
         }
         const token = localStorage.getItem('token');
-         if (!token) {
+        if (!token) {
             alert("Authentication error. Please log in again.");
             navigate("/Login");
             return;
@@ -4658,6 +4658,7 @@ const Organization = () => {
                                 <th>Images</th>
                                 <th>Select to Upload</th>
                                 <th>Image Details (Prediction/Action for 1st Image)</th>
+                                <th>Image Details (Prediction/Action for 1st Image)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -4704,7 +4705,7 @@ const Organization = () => {
                                             <td>
                                                 {firstImage ? (
                                                     <>
-                                                        <span>Pred: {firstImage.prediction || 'N/A'}</span>
+                                                        {/* <span>Pred: {firstImage.prediction || 'N/A'}</span> */}
                                                         <button
                                                             className="predict-btn"
                                                             onClick={() => handlePredict(patient._id, firstImage)} // Pass patient's MongoDB _id
@@ -4712,6 +4713,15 @@ const Organization = () => {
                                                         >
                                                             {(predicting[firstImageId] || savingPrediction[firstImageId]) ? 'Processing...' : 'Predict'}
                                                         </button>
+                                                    </>
+                                                ) : (
+                                                    <span className="no-image-text">N/A</span>
+                                                )}
+                                            </td>
+                                            <td>
+                                            {firstImage ? (
+                                                    <>
+                                                        <span>Pred: {firstImage.prediction || 'N/A'}</span>
                                                         {predicting[firstImageId] && <span className="status-indicator"> Predicting...</span>}
                                                         {savingPrediction[firstImageId] && <span className="status-indicator"> Saving...</span>}
                                                     </>
@@ -4742,7 +4752,7 @@ const Organization = () => {
                         </div>
                         <div className="upload-form-buttons">
                             <button type="submit" className="upload-submit-btn"> Upload Image </button>
-                            <button type="button" className="cancel-btn" onClick={() => { setFile(null); setSelectedPatientIdForUpload(null); if(document.getElementById('file')) document.getElementById('file').value = null;}}> Cancel </button>
+                            <button type="button" className="cancel-btn" onClick={() => { setFile(null); setSelectedPatientIdForUpload(null); if (document.getElementById('file')) document.getElementById('file').value = null; }}> Cancel </button>
                         </div>
                         {file && <p className="selected-file-info">Selected file: {file.name}</p>}
                     </form>

@@ -12,7 +12,7 @@ from flask_cors import CORS
 # --- Configuration ---
 # !!! IMPORTANT: Update this path to the actual location of your model file !!!
 # MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
-MODEL_PATH = 'Models\densenet_201_brain_tumor.pth'
+MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
 # !!! IMPORTANT: Update this path to the base directory where images are stored !!!
 # This should be the directory containing the 'uploads' folder (or similar)
 # referred to by imagePath in your patient data.
@@ -59,6 +59,7 @@ model.eval() # Set model to evaluation mode
 
 # --- Image Preprocessing ---
 def preprocess_image(image_path):
+    print("image_path ................................",image_path)
     try:
         transform = transforms.Compose([
             transforms.Resize((224, 224)),
