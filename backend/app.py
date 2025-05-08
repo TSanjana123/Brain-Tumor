@@ -112,8 +112,10 @@ def handle_prediction():
     print("data .................................................: ",data)
     relative_image_path = data.get('imagePath')
     print("relative_image_path : ",relative_image_path)
-    uploads/1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
-    Brain-Tumor\backend\uploads\1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # uploads/1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # uploads/1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # uploads/1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # uploads\1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
     # print("relative_image_path : ",relative_image_path)
     if not relative_image_path:
         return jsonify({"error": "Missing 'imagePath' in request body"}), 400
@@ -121,9 +123,15 @@ def handle_prediction():
 # backend\uploads\1746728396421-588194410-BARK8345.JPG
     # Construct the full path to the image file
     # Assumes IMAGE_BASE_PATH is the directory *containing* the 'uploads' folder
-    full_image_path = os.path.join(relative_image_path)
+    # uploads/1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # Brain-Tumor\backend\uploads\1746735838309-223634960-0b1410752fca26bd61b18ac95acad0_big_gallery.jpeg
+    # full_image_path = os.path.join(relative_image_path)
+    full_image_path = "backend\\" + relative_image_path.replace("/", "\\")
+    full_image_path = "Brain-Tumor\\" + full_image_path.replace("/","\\")
+    print("full_image_path : ",full_image_path)
     # full_image_path = os.path.join(IMAGE_BASE_PATH, relative_image_path)
-    full_image_path = os.path.normpath(full_image_path) # Normalize path separators
+    # full_image_path = os.path.normpath(full_image_path) # Normalize path separators
+    print("full_image_path_norm : ",full_image_path)
 
     print(f"Attempting to predict for image: {full_image_path}") # For debugging
 
