@@ -4356,7 +4356,7 @@ if (!fs.existsSync(uploadsDir)) {
     console.log(`Creating uploads directory at: ${uploadsDir}`);
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
-app.use('Brain-Tumor//backend//uploads', express.static(uploadsDir));
+app.use('/uploads', express.static(uploadsDir));
 console.log(`Serving static files from: ${uploadsDir}`);
 
 

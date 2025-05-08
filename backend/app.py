@@ -11,8 +11,8 @@ from flask_cors import CORS
 
 # --- Configuration ---
 # !!! IMPORTANT: Update this path to the actual location of your model file !!!
-# MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
-MODEL_PATH = 'Brain-Tumor\Models\densenet_201_brain_tumor.pth'
+MODEL_PATH = 'Models/densenet_201_brain_tumor.pth'
+# MODEL_PATH = 'Brain-Tumor\Models\densenet_201_brain_tumor.pth'
 # !!! IMPORTANT: Update this path to the base directory where images are stored !!!
 # This should be the directory containing the 'uploads' folder (or similar)
 # referred to by imagePath in your patient data.
@@ -127,7 +127,8 @@ def handle_prediction():
          print(f"Image file not found at constructed path: {full_image_path}")
          # Try an alternative if uploads is directly inside IMAGE_BASE_PATH
         #  alt_path = os.path.join(IMAGE_BASE_PATH, 'uploads', os.path.basename(relative_image_path))
-         alt_path = os.path.join(IMAGE_BASE_PATH, 'backend/uploads', os.path.basename(relative_image_path))
+         alt_path = os.path.join(IMAGE_BASE_PATH, '' \
+         '', os.path.basename(relative_image_path))
          alt_path = os.path.normpath(alt_path)
          if os.path.exists(alt_path):
              full_image_path = alt_path
