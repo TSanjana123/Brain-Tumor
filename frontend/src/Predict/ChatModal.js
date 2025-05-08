@@ -1,7 +1,6 @@
-// ChatModal.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
-import './ChatModal.css'; // We'll create this CSS file
+import './ChatModal.css'; // Ensure this CSS file exists and is styled
 
 const ChatModal = ({ userId, imageDetails, onClose, apiUrl }) => {
   const [messages, setMessages] = useState([]);
@@ -15,80 +14,106 @@ const ChatModal = ({ userId, imageDetails, onClose, apiUrl }) => {
     chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(scrollToBottom, [messages]); // Scroll whenever messages change
 
-  useEffect(() => {
-    const fetchHistory = async () => {
-      if (!imageDetails || !imageDetails.imageId || !userId) return;
-      setIsLoadingHistory(true);
-      setError('');
-      try {
-        const token = localStorage.getItem('token'); // Get token for authenticated request
-        const response = await axios.get(
-          `${apiUrl}/api/chat/${userId}/${imageDetails.imageId}/history`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        
-        if (response.data && response.data.messages) {
-          if (response.data.messages.length === 0) {
-            // If no history, start with a system message about the image
-            setMessages([{
-                role: 'model',
-                content: `Let's discuss the image "${imageDetails.imageName || 'this image'}". The current prediction is "${imageDetails.prediction || 'Pending'}". What would you like to ask?`,
-                timestamp: new Date().toISOString()
-            }]);
-          } else {
-             setMessages(response.data.messages);
-          }
-        } else {
-            // Fallback if API structure is different or empty
-             setMessages([{
-                role: 'model',
-                content: `Starting a new chat about "${imageDetails.imageName || 'this image'}". Prediction: "${imageDetails.prediction || 'Pending'}". Ask me anything.`,
-                timestamp: new Date().toISOString()
-            }]);
-        }
-      } catch (err) {
-        console.error("Error fetching chat history:", err);
-        setError('Failed to load chat history.');
-        // Initialize with a guiding message even on error
+  // Memoize fetchHistory to prevent re-creation if props don't change meaningfully
+  const fetchHistory = useCallback(async () => {
+    if (!imageDetails?.imageId || !userId) {
+      // console.warn("Missing imageId or userId for fetching chat history.");
+      // Provide an initial message if critical details are missing for API call
+      setMessages([{
+          role: 'model',
+          content: `Cannot load chat. Critical information missing. (Image: ${imageDetails?.imageName || 'Unknown'})`,
+          timestamp: new Date().toISOString()
+      }]);
+      return;
+    }
+
+    setIsLoadingHistory(true);
+    setError('');
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError("Authentication token not found. Please log in again.");
         setMessages([{
             role: 'model',
-            content: `I couldn't load previous messages for "${imageDetails.imageName || 'this image'}". How can I help you with it? Prediction: "${imageDetails.prediction || 'Pending'}"`,
+            content: "Cannot load chat: Missing authentication. Please log in.",
             timestamp: new Date().toISOString()
         }]);
-      } finally {
         setIsLoadingHistory(false);
+        return;
       }
-    };
+
+      const response = await axios.get(
+        `${apiUrl}/api/chat/${userId}/${imageDetails.imageId}/history`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      // Backend sends imageName and initialPrediction even if messages are empty
+      const { messages: fetchedMessages, imageName, initialPrediction } = response.data;
+
+      if (fetchedMessages && fetchedMessages.length > 0) {
+        setMessages(fetchedMessages);
+      } else {
+        // If no history, start with a system message using context from API
+        setMessages([{
+            role: 'model',
+            content: `Let's discuss the image "${imageName || imageDetails.imageName || 'this image'}". The current prediction is "${initialPrediction || imageDetails.prediction || 'Pending'}". What would you like to ask?`,
+            timestamp: new Date().toISOString()
+        }]);
+      }
+    } catch (err) {
+      console.error("Error fetching chat history:", err);
+      const errorMsg = err.response?.data?.message || "Failed to load chat history.";
+      setError(errorMsg);
+      setMessages([{
+          role: 'model',
+          content: `I couldn't load previous messages for "${imageDetails.imageName || 'this image'}". Prediction: "${imageDetails.prediction || 'Pending'}". Error: ${errorMsg}`,
+          timestamp: new Date().toISOString()
+      }]);
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  }, [userId, imageDetails, apiUrl]); // imageDetails is an object, ensure it's stable or use imageDetails.imageId
+
+  useEffect(() => {
     fetchHistory();
-  }, [userId, imageDetails, apiUrl]);
+  }, [fetchHistory]); // Call the memoized fetchHistory
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim() || isSendingMessage) return;
+    if (!newMessage.trim() || isSendingMessage || !imageDetails?.imageId || !userId) return;
 
     const userMsgContent = newMessage;
-    setNewMessage(''); // Clear input immediately
-
     const userMessage = { 
         role: 'user', 
         content: userMsgContent, 
-        timestamp: new Date().toISOString() 
+        timestamp: new Date().toISOString(),
+        // sentBy: userId // 'sentBy' is added by backend, not needed from client here for model
     };
+    
     setMessages(prev => [...prev, userMessage]);
+    setNewMessage(''); // Clear input immediately
     setIsSendingMessage(true);
     setError('');
 
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        setMessages(prev => [...prev, { 
+            role: 'model', 
+            content: "Cannot send message: Missing authentication. Please log in.",
+            timestamp: new Date().toISOString() 
+        }]);
+        setIsSendingMessage(false);
+        return;
+      }
       const response = await axios.post(
         `${apiUrl}/api/chat/${userId}/${imageDetails.imageId}/message`,
         { prompt: userMsgContent },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      // response.data.reply contains the AI's message
       const modelMessage = { 
           role: 'model', 
           content: response.data.reply, 
@@ -98,51 +123,56 @@ const ChatModal = ({ userId, imageDetails, onClose, apiUrl }) => {
 
     } catch (err) {
       console.error("Error sending message:", err);
-      const errorText = err.response?.data?.message || 'Sorry, I encountered an error. Please try again.';
+      const errorText = err.response?.data?.message || 'Sorry, I encountered an error sending your message. Please try again.';
       setMessages(prev => [...prev, { 
           role: 'model', 
           content: errorText,
           timestamp: new Date().toISOString() 
       }]);
-      setError('Failed to send message.');
+      // Don't setError state here as the error is displayed as a message. Or do, if you want a persistent error banner.
     } finally {
       setIsSendingMessage(false);
     }
   };
 
-  if (!imageDetails) return null;
+  if (!imageDetails) return null; // Should not happen if Patient.js logic is correct
 
   return (
-    <div className="chat-modal-overlay">
-      <div className="chat-modal-container">
+    <div className="chat-modal-overlay" onClick={onClose}>
+      <div className="chat-modal-container" onClick={(e) => e.stopPropagation()}>
         <div className="chat-modal-header">
-          <h3>Chat about: {imageDetails.imageName || 'Image'}</h3>
-          <button onClick={onClose} className="chat-modal-close-btn">&times;</button>
+          <h3>Chat: {imageDetails.imageName || 'Image'}</h3>
+          <button onClick={onClose} className="chat-modal-close-btn" aria-label="Close chat">&times;</button>
         </div>
         
         <div className="chat-modal-image-context">
-            <img 
-                src={`${apiUrl}/${imageDetails.imagePath}`} 
-                alt={imageDetails.imageName || 'Context Image'} 
-                className="chat-context-image"
-            />
-            <p>Current Prediction: <strong>{imageDetails.prediction || 'Pending'}</strong></p>
+            {imageDetails.imagePath ? (
+                <img 
+                    src={`${apiUrl}/${imageDetails.imagePath}`} 
+                    alt={imageDetails.imageName || 'Context Image'} 
+                    className="chat-context-image"
+                    onError={(e) => { e.target.style.display = 'none'; /* Hide broken image */ }}
+                />
+            ) : <p>No image preview available.</p>}
+            <p>Prediction: <strong>{imageDetails.prediction || 'Pending'}</strong></p>
         </div>
 
         <div className="chat-modal-messages-area">
-          {isLoadingHistory && <p>Loading history...</p>}
-          {error && <p className="chat-error-indicator">{error}</p>}
+          {isLoadingHistory && <p className="chat-system-info">Loading history...</p>}
+          {!isLoadingHistory && error && messages.length <=1 && <p className="chat-error-indicator">{error}</p>} 
+          {/* Show general error only if no messages or only initial system error message */}
+          
           {messages.map((msg, index) => (
-            <div key={index} className={`chat-message ${msg.role}`}>
+            <div key={`${msg.role}-${msg.timestamp}-${index}`} className={`chat-message ${msg.role}`}>
               <div className="message-bubble">
                 <p>{msg.content}</p>
                 <span className="message-timestamp">
-                  {new Date(msg.timestamp).toLocaleTimeString()}
+                  {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
             </div>
           ))}
-          <div ref={chatMessagesEndRef} /> {/* For auto-scrolling */}
+          <div ref={chatMessagesEndRef} />
         </div>
 
         <form onSubmit={handleSendMessage} className="chat-modal-input-form">
@@ -150,8 +180,9 @@ const ChatModal = ({ userId, imageDetails, onClose, apiUrl }) => {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type your message..."
+            placeholder="Type your message here..."
             disabled={isSendingMessage || isLoadingHistory}
+            aria-label="Chat message input"
           />
           <button type="submit" disabled={isSendingMessage || isLoadingHistory || !newMessage.trim()}>
             {isSendingMessage ? 'Sending...' : 'Send'}
@@ -163,5 +194,3 @@ const ChatModal = ({ userId, imageDetails, onClose, apiUrl }) => {
 };
 
 export default ChatModal;
-
-
