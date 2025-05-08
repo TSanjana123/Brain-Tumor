@@ -4513,7 +4513,7 @@ const Organization = () => {
         const { firstName, lastName, patientId, dob, gender, referredDoctor } = newPatient;
         // const fullName = `${firstName} ${lastName}`.trim(); // If using lastName
         const fullName = firstName.trim(); // If only using firstName as 'name'
-        const email = `${patientId.toLowerCase().replace(/\s+/g, '')}@exampleehr.com`; // Auto-generate or have a field
+        const email = `${patientId.toLowerCase().replace(/\s+/g, '')}@gmail.com`; // Auto-generate or have a field
 
         if (!fullName || !patientId || !dob || !gender || !referredDoctor ) { // Removed !lastName
             alert("All fields (First Name, Patient ID, DOB, Gender, Referred Doctor) are required.");

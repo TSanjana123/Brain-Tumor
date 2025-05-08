@@ -598,7 +598,7 @@ const Home = () => {
             <i className="fab fa-linkedin-in"></i>
           </a>
         </div>
-        <p>&copy; 2025 KMIT PASSED OUT | IT DEPT</p>
+        <p>&copy; 2025 KMIT | IT DEPT</p>
       </div>
     </div>
   );
