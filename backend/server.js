@@ -4853,10 +4853,10 @@ app.post('/api/chat/:userId/:imageId/message', authenticateToken, async (req, re
 
         const model = genAI.getGenerativeModel({
              model: "gemini-2.0-flash-exp", // Or your preferred model
-            //  systemInstruction: "You are a helpful medical assistant AI. You are discussing a medical image (e.g., a brain scan) with a patient. The image has a preliminary prediction. Be informative, empathetic, and clarify that you are not a doctor and your information is not a diagnosis. Always advise the user to consult with their doctor for any medical decisions or serious concerns.",
-           //  systemInstruction: "You are a helpful medical assistant AI. You are discussing a medical image (e.g., a brain scan) with a patient. The image has a preliminary prediction. Be informative, empathetic.",
+             systemInstruction: "You are a helpful medical assistant AI. You are discussing a medical image (e.g., a brain scan) with a patient. The image has a preliminary prediction. Be informative, empathetic, and clarify that you are not a doctor and your information is not a diagnosis. Always advise the user to consult with their doctor for any medical decisions or serious concerns.",
+            // systemInstruction: "You are a helpful medical assistant AI. You are discussing a medical image (e.g., a brain scan) with a patient. The image has a preliminary prediction. Be informative, empathetic.",
         //    systemInstruction: "You are an intelligent and compassionate AI assistant trained to interpret MRI brain scans using a deep learning model with 44 tumor classes. For every patient query, respond in exactly four concise lines. Explain the prediction, briefly describe the tumor type (if any), and offer supportive guidance. Always remind the user that final diagnosis and treatment decisions should be made by a medical professional."
-           systemInstruction: "give everything"
+        //    systemInstruction: "give everything"
 
         });
         
