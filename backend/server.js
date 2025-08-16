@@ -281,7 +281,7 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
     }
 });
 
-// Update Prediction for a Specific Image
+// Update Prediction for a Specific Images
 // TODO: Add authentication
 app.put('/api/patients/:patientId/images/:imageId/predict', async (req, res) => {
     const { patientId, imageId } = req.params;
