@@ -1,0 +1,47 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Frontend build artifacts
+frontend/build/
+frontend/.cache/
+
+# Secrets (commit *.example only)
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# Uploads / runtime data
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Model weights (large binaries)
+Models/*.pth
+Models/*.pt
+Models/*.bin
+
+# Logs
+*.log
+logs/
